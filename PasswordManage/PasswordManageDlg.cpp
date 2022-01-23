@@ -67,7 +67,10 @@ BEGIN_MESSAGE_MAP(CPasswordManageDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_WM_CONTEXTMENU()
+	ON_NOTIFY(NM_RCLICK, IDC_LIST_PWMANAGE, OnRclick)
 END_MESSAGE_MAP()
+
 
 
 // CPasswordManageDlg 消息处理程序
@@ -102,7 +105,7 @@ BOOL CPasswordManageDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-	m_PasswordList.SetExtendedStyle(m_PasswordList.GetExtendedStyle() | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE | LVS_EX_FULLROWSELECT);
+	m_PasswordList.SetExtendedStyle(m_PasswordList.GetExtendedStyle() | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 	m_PasswordList.InsertColumn(0, _T("名称"), LVCFMT_LEFT, 200);
 	m_PasswordList.InsertColumn(1, _T("用户名"), LVCFMT_LEFT, 200);
 	m_PasswordList.InsertColumn(2, _T("密码"), LVCFMT_LEFT, 200);
@@ -159,5 +162,18 @@ void CPasswordManageDlg::OnPaint()
 HCURSOR CPasswordManageDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
+}
+
+
+void CPasswordManageDlg::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	CMenu menu;
+	menu.LoadMenu(IDR_MENU_RIGHTCLICK);
+	CMenu* pMenu;
+	pMenu = menu.GetSubMenu(0);
+
+	CPoint	p;
+	GetCursorPos(&p);
+	int nMenuResult = pMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, p.x, p.y, this);
 }
 

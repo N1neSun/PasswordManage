@@ -8,6 +8,7 @@
 #define IDD_PASSWORDMANAGE_DIALOG       102
 #define IDR_MAINFRAME                   128
 #define IDR_MENU1                       130
+#define IDR_MENU_RIGHTCLICK             130
 #define IDC_LIST_PWMANAGE               1001
 #define IDC_BUTTON_SAVE                 1002
 #define ID_32771                        32771
