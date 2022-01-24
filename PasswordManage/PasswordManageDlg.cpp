@@ -173,6 +173,18 @@ void CPasswordManageDlg::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 
 	CPoint	p;
 	GetCursorPos(&p);
-	int nMenuResult = pMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, p.x, p.y, this);
+	int nMenuResult = pMenu->TrackPopupMenu(TPM_NONOTIFY | TPM_RETURNCMD | TPM_LEFTALIGN | TPM_RIGHTBUTTON, p.x, p.y, this);
+
+	switch (nMenuResult)
+	{
+	case ID_MENU_ADD:
+		break;
+	case ID_MENU_DELETE:
+		break;
+	case ID_MENU_EDIT:
+		break;
+	default:
+		break;
+	}
 }
 
