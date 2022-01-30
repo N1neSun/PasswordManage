@@ -6,6 +6,21 @@
 
 struct TableColumnInfo
 {
+	std::string name;
+	std::string type;
+	std::string attribute;
+};
+
+struct PasswordColumnInfo
+{
+	PasswordColumnInfo()
+	{
+		strName = "";
+		strUsername = "";
+		strPassword = "";
+		strUrl = "";
+		strNotes = "";
+	}
 	std::string strName;
 	std::string strUsername;
 	std::string strPassword;
@@ -13,7 +28,15 @@ struct TableColumnInfo
 	std::string strNotes;
 };
 
+
 class SqliteDatabase
 {
+protected:
+	SqliteDatabase();
+	virtual ~SqliteDatabase();
 
+	bool InitDatabase();
+
+private:
+	SQLite::Database* db;
 };
