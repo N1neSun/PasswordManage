@@ -21,6 +21,7 @@ struct PasswordColumnInfo
 		strUrl = "";
 		strNotes = "";
 	}
+	int id;
 	std::string strName;
 	std::string strUsername;
 	std::string strPassword;
@@ -36,6 +37,13 @@ protected:
 	virtual ~SqliteDatabase();
 
 	bool InitDatabase();
+
+public:
+	bool InsertPasswordInfo(PasswordColumnInfo& info);
+
+	bool UpdateControlInfo(PasswordColumnInfo& info);
+
+	static SqliteDatabase& GetDBController();
 
 private:
 	SQLite::Database* db;
