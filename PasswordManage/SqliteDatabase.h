@@ -15,18 +15,18 @@ struct PasswordColumnInfo
 {
 	PasswordColumnInfo()
 	{
-		strName = "";
-		strUsername = "";
-		strPassword = "";
-		strUrl = "";
-		strNotes = "";
+		Name = "";
+		Username = "";
+		Password = "";
+		Url = "";
+		Notes = "";
 	}
 	int id;
-	std::string strName;
-	std::string strUsername;
-	std::string strPassword;
-	std::string strUrl;
-	std::string strNotes;
+	std::string Name;
+	std::string Username;
+	std::string Password;
+	std::string Url;
+	std::string Notes;
 };
 
 
@@ -42,6 +42,8 @@ public:
 	bool InsertPasswordInfo(PasswordColumnInfo& info);
 
 	bool UpdateControlInfo(PasswordColumnInfo& info);
+
+	bool GetPasswordInfo(PasswordColumnInfo& control, const std::string& strName);
 
 	static SqliteDatabase& GetDBController();
 

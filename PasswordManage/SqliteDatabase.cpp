@@ -6,11 +6,11 @@
 
 static struct TableColumnInfo PASSWORD_TABLE_COLUMNS[] = {
 	{"id", "int", " identity(1,1) NOT NULL PRIMARY KEY"},
-	{"strName", "varchar(512)", "NOT NULL PRIMARY KEY"},
-	{"strUsername", "varchar(512)", "NOT NULL"},
-	{"strPassword", "varchar(512)", "NOT NULL"},
-	{"strUrl", "varchar(512)", "NOT NULL DEFAULT 100"},
-	{"strNotes", "text", "NOT NULL"}
+	{"Name", "varchar(512)", "NOT NULL PRIMARY KEY"},
+	{"Username", "varchar(512)", "NOT NULL"},
+	{"Password", "varchar(512)", "NOT NULL"},
+	{"Url", "varchar(512)", "NOT NULL DEFAULT 100"},
+	{"Notes", "text", "NOT NULL"}
 };
 static int PASSWORD_TABLE_COLUMNS_NUM = sizeof(PASSWORD_TABLE_COLUMNS) / sizeof(PASSWORD_TABLE_COLUMNS[0]);
 
@@ -89,7 +89,7 @@ bool SqliteDatabase::InsertPasswordInfo(PasswordColumnInfo& info)
 
 	CStringA insertControl;
 	insertControl.Format("INSERT INTO %s(strName,strUsername,strPassword,strUrl,strNotes)VALUES(\"%s\",\"%s\",\"%s\",\"%s\",\"%s\")",
-		MASTER_TABLE, info.strName.c_str(), info.strUsername.c_str(), info.strPassword.c_str(), info.strUrl.c_str(), info.strNotes.c_str());
+		MASTER_TABLE, info.Name.c_str(), info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str());
 
 	SQLite::Statement doInsertSQL(*db, insertControl.GetBuffer());
 
@@ -113,12 +113,47 @@ bool SqliteDatabase::UpdateControlInfo(PasswordColumnInfo& info)
 
 	CStringA updateControl;
 	updateControl.Format("UPDATE %s SET strName=\"%s\",strUsername=\"%s\", strPassword=\"%s\",strUrl=\"%s\", strNotes=\"%s\" WHERE id=%d",
-		MASTER_TABLE, info.strName.c_str(), info.strUsername.c_str(), info.strPassword.c_str(), info.strUrl.c_str(), info.strNotes.c_str(), info.id);
+		MASTER_TABLE, info.Name.c_str(), info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str(), info.id);
 	SQLite::Statement doUpdateSQL(*db, updateControl.GetBuffer());
 
 	try
 	{
 		doUpdateSQL.exec();
+	}
+	catch (const SQLite::Exception&)
+	{
+		assert(false);
+		bRet = false;
+		exit(0);
+	}
+
+	return bRet;
+}
+
+bool SqliteDatabase::GetPasswordInfo(PasswordColumnInfo& info, const std::string& strName)
+{
+	bool bRet = true;
+
+	CStringA getControlSQL;
+	getControlSQL.Format("SELECT * FROM %s where strName =\"%s\"", MASTER_TABLE, strName.c_str());
+
+	SQLite::Statement doGetSQL(*db, getControlSQL.GetBuffer());
+	try
+	{
+		doGetSQL.executeStep();
+		if (!doGetSQL.isDone())
+		{
+			info.id = doGetSQL.getColumn("id").getInt();
+			info.Name = doGetSQL.getColumn("Name").getString();
+			info.Username = doGetSQL.getColumn("Username").getInt();
+			info.Password = doGetSQL.getColumn("Password").getString();
+			info.Url = doGetSQL.getColumn("Url").getString();
+			info.Notes = doGetSQL.getColumn("Notes").getString();
+		}
+		else
+		{
+			bRet = false;
+		}
 	}
 	catch (const SQLite::Exception&)
 	{
