@@ -6,11 +6,12 @@
 
 static struct TableColumnInfo PASSWORD_TABLE_COLUMNS[] = {
 	{"id", "int", " identity(1,1) NOT NULL PRIMARY KEY"},
-	{"Name", "varchar(512)", "NOT NULL PRIMARY KEY"},
+	{"Name", "varchar(512)", "NOT NULL"},
 	{"Username", "varchar(512)", "NOT NULL"},
 	{"Password", "varchar(512)", "NOT NULL"},
-	{"Url", "varchar(512)", "NOT NULL DEFAULT 100"},
-	{"Notes", "text", "NOT NULL"}
+	{"Url", "varchar(512)", ""},
+	{"Notes", "text", ""},
+	{"Isdelete", "int", ""}
 };
 static int PASSWORD_TABLE_COLUMNS_NUM = sizeof(PASSWORD_TABLE_COLUMNS) / sizeof(PASSWORD_TABLE_COLUMNS[0]);
 
@@ -88,8 +89,8 @@ bool SqliteDatabase::InsertPasswordInfo(PasswordColumnInfo& info)
 	bool bRet = true;
 
 	CStringA insertControl;
-	insertControl.Format("INSERT INTO %s(strName,strUsername,strPassword,strUrl,strNotes)VALUES(\"%s\",\"%s\",\"%s\",\"%s\",\"%s\")",
-		MASTER_TABLE, info.Name.c_str(), info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str());
+	insertControl.Format("INSERT INTO %s(Name,Username,Password,Url,Notes,Isdelete)VALUES(\"%s\",\"%s\",\"%s\",\"%s\",\"%s\", %d)",
+		MASTER_TABLE, info.Name.c_str(), info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str(), info.Isdelete);
 
 	SQLite::Statement doInsertSQL(*db, insertControl.GetBuffer());
 
@@ -163,4 +164,22 @@ bool SqliteDatabase::GetPasswordInfo(PasswordColumnInfo& info, const std::string
 	}
 
 	return bRet;
+}
+
+bool SqliteDatabase::RemovePasswordInfo(const PasswordColumnInfo& info)
+{
+	CStringA deleteSQL;
+	deleteSQL.Format("UPDATE %s SET Isdelete=%d WHERE Name = \"%s\"", MASTER_TABLE, info.Isdelete, info.Name.c_str());
+	SQLite::Statement doDeleteSQL(*db, deleteSQL.GetBuffer());
+	try
+	{
+		doDeleteSQL.exec();
+	}
+	catch (const SQLite::Exception&)
+	{
+		assert(false);
+		exit(0);
+	}
+
+	return true;
 }

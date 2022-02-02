@@ -20,6 +20,7 @@ struct PasswordColumnInfo
 		Password = "";
 		Url = "";
 		Notes = "";
+		Isdelete = 0;
 	}
 	int id;
 	std::string Name;
@@ -27,6 +28,7 @@ struct PasswordColumnInfo
 	std::string Password;
 	std::string Url;
 	std::string Notes;
+	int Isdelete;
 };
 
 
@@ -44,6 +46,8 @@ public:
 	bool UpdateControlInfo(PasswordColumnInfo& info);
 
 	bool GetPasswordInfo(PasswordColumnInfo& control, const std::string& strName);
+
+	bool RemovePasswordInfo(const PasswordColumnInfo& info);
 
 	static SqliteDatabase& GetDBController();
 
