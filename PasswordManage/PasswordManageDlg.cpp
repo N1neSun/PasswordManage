@@ -7,6 +7,7 @@
 #include "PasswordManage.h"
 #include "PasswordManageDlg.h"
 #include "afxdialogex.h"
+#include "CSetInfoDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -176,9 +177,11 @@ void CPasswordManageDlg::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 	GetCursorPos(&p);
 	int nMenuResult = pMenu->TrackPopupMenu(TPM_NONOTIFY | TPM_RETURNCMD | TPM_LEFTALIGN | TPM_RIGHTBUTTON, p.x, p.y, this);
 
+	CSetInfo setInfoDlg;
 	switch (nMenuResult)
 	{
 	case ID_MENU_ADD:
+		setInfoDlg.DoModal();
 		break;
 	case ID_MENU_DELETE:
 		break;
