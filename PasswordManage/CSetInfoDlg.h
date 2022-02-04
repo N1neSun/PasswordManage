@@ -20,6 +20,11 @@ public:
 #endif
 
 private:
+	CEdit m_Name;
+	CEdit m_Username;
+	CEdit m_Password;
+	CEdit m_URL;
+	CEdit m_Notes;
 
 
 protected:
