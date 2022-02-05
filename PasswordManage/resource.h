@@ -16,7 +16,8 @@
 #define IDC_EDIT_PASSWORD               1008
 #define IDC_EDIT_URL                    1009
 #define IDC_EDIT_NOTES                  1010
-#define IDC_TAB1                        1011
+#define IDC_TAB2                        1014
+#define IDC_TAB_PASSWORD                1014
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_MENU_ADD                     32773
@@ -30,7 +31,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        133
 #define _APS_NEXT_COMMAND_VALUE         32777
-#define _APS_NEXT_CONTROL_VALUE         1012
+#define _APS_NEXT_CONTROL_VALUE         1015
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -62,6 +62,7 @@ void CPasswordManageDlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	
 	DDX_Control(pDX, IDC_LIST_PWMANAGE, m_PasswordList);
+	DDX_Control(pDX, IDC_TAB_PASSWORD, m_PasswordTab);
 }
 
 BEGIN_MESSAGE_MAP(CPasswordManageDlg, CDialogEx)
@@ -106,9 +107,9 @@ BOOL CPasswordManageDlg::OnInitDialog()
 
 	// TODO: 在此添加额外的初始化代码
 	m_PasswordList.SetExtendedStyle(m_PasswordList.GetExtendedStyle() | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
-	m_PasswordList.InsertColumn(0, _T("序号"), LVCFMT_LEFT, 200);
-	m_PasswordList.InsertColumn(1, _T("名称"), LVCFMT_LEFT, 200);
-	m_PasswordList.InsertColumn(2, _T("用户名"), LVCFMT_LEFT, 200);
+	m_PasswordList.InsertColumn(0, _T("序号"), LVCFMT_LEFT, 50);
+	m_PasswordList.InsertColumn(1, _T("名称"), LVCFMT_LEFT, 100);
+	m_PasswordList.InsertColumn(2, _T("用户名"), LVCFMT_LEFT, 100);
 	m_PasswordList.InsertColumn(3, _T("密码"), LVCFMT_LEFT, 200);
 	m_PasswordList.InsertColumn(4, _T("URL"), LVCFMT_LEFT, 200);
 	m_PasswordList.InsertColumn(5, _T("备注"), LVCFMT_LEFT, 200);

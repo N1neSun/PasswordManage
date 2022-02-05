@@ -29,6 +29,7 @@ struct PasswordColumnInfo
 	std::string Url;
 	std::string Notes;
 	int Isdelete;
+	std::string Group;
 };
 
 
