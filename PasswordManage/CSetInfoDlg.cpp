@@ -27,3 +27,10 @@ void CSetInfo::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CSetInfo, CDialogEx)
 END_MESSAGE_MAP()
+
+BOOL CSetInfo::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+	return TRUE;
+}

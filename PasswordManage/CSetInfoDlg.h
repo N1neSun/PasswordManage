@@ -29,7 +29,7 @@ private:
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
-	//virtual BOOL OnInitDialog();
+	virtual BOOL OnInitDialog();
 
 	DECLARE_MESSAGE_MAP()
 };
