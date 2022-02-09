@@ -26,6 +26,7 @@ void CSetInfo::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CSetInfo, CDialogEx)
+	ON_COMMAND(IDOK, OnOK)
 END_MESSAGE_MAP()
 
 BOOL CSetInfo::OnInitDialog()
@@ -33,4 +34,10 @@ BOOL CSetInfo::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	return TRUE;
+}
+
+void CSetInfo::OnOK()
+{
+	UpdateData(TRUE);
+
 }

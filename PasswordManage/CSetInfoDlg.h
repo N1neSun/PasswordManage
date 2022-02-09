@@ -30,6 +30,7 @@ private:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
+	afx_msg void OnOK();
 
 	DECLARE_MESSAGE_MAP()
 };
