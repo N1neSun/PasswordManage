@@ -8,6 +8,7 @@
 #include "PasswordManageDlg.h"
 #include "afxdialogex.h"
 #include "CSetInfoDlg.h"
+#include "SqliteDatabase.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

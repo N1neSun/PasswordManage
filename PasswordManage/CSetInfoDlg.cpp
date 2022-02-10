@@ -1,6 +1,7 @@
 #include "CSetInfoDlg.h"
 
 
+
 IMPLEMENT_DYNAMIC(CSetInfo, CDialogEx)
 
 CSetInfo::CSetInfo() : CDialogEx(CSetInfo::IDD)
@@ -17,11 +18,16 @@ void CSetInfo::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 
-	DDX_Control(pDX, IDC_EDIT_NAME, m_Name);
-	DDX_Control(pDX, IDC_EDIT_USERNAME, m_Username);
-	DDX_Control(pDX, IDC_EDIT_PASSWORD, m_Password);
-	DDX_Control(pDX, IDC_EDIT_URL, m_URL);
-	DDX_Control(pDX, IDC_EDIT_NOTES, m_Notes);
+	DDX_Control(pDX, IDC_EDIT_NAME, m_NameEdit);
+	DDX_Control(pDX, IDC_EDIT_USERNAME, m_UsernameEdit);
+	DDX_Control(pDX, IDC_EDIT_PASSWORD, m_PasswordEdit);
+	DDX_Control(pDX, IDC_EDIT_URL, m_URLEdit);
+	DDX_Control(pDX, IDC_EDIT_NOTES, m_NotesEdit);
+	DDX_Text(pDX, IDC_EDIT_NAME, m_strName);
+	DDX_Text(pDX, IDC_EDIT_USERNAME, m_strUsername);
+	DDX_Text(pDX, IDC_EDIT_PASSWORD, m_strPassword);
+	DDX_Text(pDX, IDC_EDIT_URL, m_strUrl);
+	DDX_Text(pDX, IDC_EDIT_NOTES, m_strNotes);
 }
 
 
@@ -39,5 +45,9 @@ BOOL CSetInfo::OnInitDialog()
 void CSetInfo::OnOK()
 {
 	UpdateData(TRUE);
-
+	m_PasswordInfo.Name = m_strName.GetBuffer();
+	m_PasswordInfo.Username = m_strUsername.GetBuffer();
+	m_PasswordInfo.Password = m_strPassword.GetBuffer();
+	m_PasswordInfo.Url = m_strUrl.GetBuffer();
+	m_PasswordInfo.Notes = m_strNotes.GetBuffer();
 }
