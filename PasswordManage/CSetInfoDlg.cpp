@@ -23,11 +23,13 @@ void CSetInfo::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_PASSWORD, m_PasswordEdit);
 	DDX_Control(pDX, IDC_EDIT_URL, m_URLEdit);
 	DDX_Control(pDX, IDC_EDIT_NOTES, m_NotesEdit);
+	DDX_Control(pDX, IDC_COMBO_GROUP, m_GroupComboBox);
 	DDX_Text(pDX, IDC_EDIT_NAME, m_strName);
 	DDX_Text(pDX, IDC_EDIT_USERNAME, m_strUsername);
 	DDX_Text(pDX, IDC_EDIT_PASSWORD, m_strPassword);
 	DDX_Text(pDX, IDC_EDIT_URL, m_strUrl);
 	DDX_Text(pDX, IDC_EDIT_NOTES, m_strNotes);
+	DDX_Text(pDX, IDC_COMBO_GROUP, m_strGroup);
 }
 
 
@@ -50,4 +52,5 @@ void CSetInfo::OnOK()
 	m_PasswordInfo.Password = m_strPassword.GetBuffer();
 	m_PasswordInfo.Url = m_strUrl.GetBuffer();
 	m_PasswordInfo.Notes = m_strNotes.GetBuffer();
+	m_PasswordInfo.Group = m_strGroup.GetBuffer();
 }

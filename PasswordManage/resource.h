@@ -18,6 +18,8 @@
 #define IDC_EDIT_NOTES                  1010
 #define IDC_TAB2                        1014
 #define IDC_TAB_PASSWORD                1014
+#define IDC_COMBO_                      1017
+#define IDC_COMBO_GROUP                 1017
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_MENU_ADD                     32773
@@ -31,7 +33,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        133
 #define _APS_NEXT_COMMAND_VALUE         32777
-#define _APS_NEXT_CONTROL_VALUE         1015
+#define _APS_NEXT_CONTROL_VALUE         1018
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

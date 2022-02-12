@@ -21,6 +21,7 @@ struct PasswordColumnInfo
 		Url = "";
 		Notes = "";
 		Isdelete = 0;
+		Group = "default";
 	}
 	int id;
 	std::string Name;

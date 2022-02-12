@@ -26,11 +26,13 @@ private:
 	CEdit m_PasswordEdit;
 	CEdit m_URLEdit;
 	CEdit m_NotesEdit;
+	CComboBox m_GroupComboBox;
 	CString m_strName;
 	CString m_strUsername;
 	CString m_strPassword;
 	CString m_strUrl;
 	CString m_strNotes;
+	CString m_strGroup;
 	PasswordColumnInfo m_PasswordInfo;
 
 
