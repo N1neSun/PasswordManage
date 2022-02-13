@@ -151,6 +151,44 @@ bool SqliteDatabase::GetPasswordInfo(PasswordColumnInfo& info, const std::string
 			info.Password = doGetSQL.getColumn("Password").getString();
 			info.Url = doGetSQL.getColumn("Url").getString();
 			info.Notes = doGetSQL.getColumn("Notes").getString();
+			info.Group = doGetSQL.getColumn("Group").getString();
+		}
+		else
+		{
+			bRet = false;
+		}
+	}
+	catch (const SQLite::Exception&)
+	{
+		assert(false);
+		bRet = false;
+		exit(0);
+	}
+
+	return bRet;
+}
+
+bool SqliteDatabase::IsExist(const std::string& strName)
+{
+	bool bRet = true;
+
+	CStringA getControlSQL;
+	getControlSQL.Format("SELECT * FROM %s where strName =\"%s\"", MASTER_TABLE, strName.c_str());
+
+	SQLite::Statement doGetSQL(*db, getControlSQL.GetBuffer());
+	try
+	{
+		doGetSQL.executeStep();
+		if (!doGetSQL.isDone())
+		{
+			if (doGetSQL.getColumn("Name").getString() == strName)
+			{
+				bRet = true;
+			}
+			else
+			{
+				bRet = false;
+			}
 		}
 		else
 		{

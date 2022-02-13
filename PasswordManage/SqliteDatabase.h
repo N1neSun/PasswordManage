@@ -49,6 +49,8 @@ public:
 
 	bool GetPasswordInfo(PasswordColumnInfo& control, const std::string& strName);
 
+	bool IsExist(const std::string& strName);
+
 	bool RemovePasswordInfo(const PasswordColumnInfo& info);
 
 	static SqliteDatabase& GetDBController();

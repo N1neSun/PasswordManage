@@ -53,4 +53,12 @@ void CSetInfo::OnOK()
 	m_PasswordInfo.Url = m_strUrl.GetBuffer();
 	m_PasswordInfo.Notes = m_strNotes.GetBuffer();
 	m_PasswordInfo.Group = m_strGroup.GetBuffer();
+	if (SqliteDatabase::GetDBController().IsExist(m_strName.GetBuffer()))
+	{
+		SqliteDatabase::GetDBController().UpdateControlInfo(m_PasswordInfo);
+	}
+	else
+	{
+		SqliteDatabase::GetDBController().InsertPasswordInfo(m_PasswordInfo);
+	}
 }
