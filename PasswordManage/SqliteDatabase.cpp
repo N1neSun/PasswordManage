@@ -5,14 +5,14 @@
 #define MASTER_TABLE "PasswordInfo"
 
 static struct TableColumnInfo PASSWORD_TABLE_COLUMNS[] = {
-	{"id", "int", " identity(1,1) NOT NULL PRIMARY KEY"},
+	{"id", "INTEGER", "NOT NULL PRIMARY KEY autoincrement"},
 	{"Name", "varchar(512)", "NOT NULL"},
 	{"Username", "varchar(512)", "NOT NULL"},
 	{"Password", "varchar(512)", "NOT NULL"},
 	{"Url", "varchar(512)", ""},
 	{"Notes", "text", ""},
 	{"Isdelete", "int", ""},
-	{"Group", "varchar(512)"}
+	{"GroupName", "varchar(512)", ""}
 };
 static int PASSWORD_TABLE_COLUMNS_NUM = sizeof(PASSWORD_TABLE_COLUMNS) / sizeof(PASSWORD_TABLE_COLUMNS[0]);
 
@@ -90,8 +90,8 @@ bool SqliteDatabase::InsertPasswordInfo(PasswordColumnInfo& info)
 	bool bRet = true;
 
 	CStringA insertControl;
-	insertControl.Format("INSERT INTO %s(Name,Username,Password,Url,Notes,Isdelete)VALUES(\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\", %d)",
-		MASTER_TABLE, info.Name.c_str(), info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str(), info.Group.c_str(), info.Isdelete);
+	insertControl.Format("INSERT INTO %s(Name,Username,Password,Url,Notes,GroupName,Isdelete)VALUES(\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\", %d)",
+		MASTER_TABLE, info.Name.c_str(), info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str(), info.GroupName.c_str(), info.Isdelete);
 
 	SQLite::Statement doInsertSQL(*db, insertControl.GetBuffer());
 
@@ -114,8 +114,8 @@ bool SqliteDatabase::UpdateControlInfo(PasswordColumnInfo& info)
 	bool bRet = true;
 
 	CStringA updateControl;
-	updateControl.Format("UPDATE %s SET Name=\"%s\", Username=\"%s\", Password=\"%s\", Url=\"%s\", Notes=\"%s\", Group=\"%s\"  WHERE id=%d",
-		MASTER_TABLE, info.Name.c_str(), info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str(), info.Group.c_str(), info.id);
+	updateControl.Format("UPDATE %s SET  Username=\"%s\", Password=\"%s\", Url=\"%s\", Notes=\"%s\", GroupName=\"%s\"  WHERE Name=\"%s\"",
+		MASTER_TABLE, info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str(), info.GroupName.c_str(), info.Name.c_str());
 	SQLite::Statement doUpdateSQL(*db, updateControl.GetBuffer());
 
 	try
@@ -137,7 +137,7 @@ bool SqliteDatabase::GetPasswordInfo(PasswordColumnInfo& info, const std::string
 	bool bRet = true;
 
 	CStringA getControlSQL;
-	getControlSQL.Format("SELECT * FROM %s where strName =\"%s\"", MASTER_TABLE, strName.c_str());
+	getControlSQL.Format("SELECT * FROM %s where Name =\"%s\"", MASTER_TABLE, strName.c_str());
 
 	SQLite::Statement doGetSQL(*db, getControlSQL.GetBuffer());
 	try
@@ -151,7 +151,7 @@ bool SqliteDatabase::GetPasswordInfo(PasswordColumnInfo& info, const std::string
 			info.Password = doGetSQL.getColumn("Password").getString();
 			info.Url = doGetSQL.getColumn("Url").getString();
 			info.Notes = doGetSQL.getColumn("Notes").getString();
-			info.Group = doGetSQL.getColumn("Group").getString();
+			info.GroupName = doGetSQL.getColumn("GroupName").getString();
 		}
 		else
 		{
@@ -173,7 +173,7 @@ bool SqliteDatabase::IsExist(const std::string& strName)
 	bool bRet = true;
 
 	CStringA getControlSQL;
-	getControlSQL.Format("SELECT * FROM %s where strName =\"%s\"", MASTER_TABLE, strName.c_str());
+	getControlSQL.Format("SELECT * FROM %s where Name =\"%s\"", MASTER_TABLE, strName.c_str());
 
 	SQLite::Statement doGetSQL(*db, getControlSQL.GetBuffer());
 	try

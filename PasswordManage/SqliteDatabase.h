@@ -21,7 +21,7 @@ struct PasswordColumnInfo
 		Url = "";
 		Notes = "";
 		Isdelete = 0;
-		Group = "default";
+		GroupName = "default";
 	}
 	int id;
 	std::string Name;
@@ -30,7 +30,7 @@ struct PasswordColumnInfo
 	std::string Url;
 	std::string Notes;
 	int Isdelete;
-	std::string Group;
+	std::string GroupName;
 };
 
 
