@@ -115,6 +115,9 @@ BOOL CPasswordManageDlg::OnInitDialog()
 	m_PasswordList.InsertColumn(4, _T("URL"), LVCFMT_LEFT, 200);
 	m_PasswordList.InsertColumn(5, _T("备注"), LVCFMT_LEFT, 200);
 
+	std::vector<PasswordColumnInfo> vectPasswordInfoList;
+	SqliteDatabase::GetDBController().GetPasswordInfoList(vectPasswordInfoList);
+
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
