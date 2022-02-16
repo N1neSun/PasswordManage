@@ -12,7 +12,7 @@ class CPasswordManageDlg : public CDialogEx
 public:
 	CPasswordManageDlg(CWnd* pParent = nullptr);	// 标准构造函数
 	CListCtrl m_PasswordList;
-	CTabCtrl	m_PasswordTab;
+	//CTabCtrl	m_PasswordTab;
 
 // 对话框数据
 #ifdef AFX_DESIGN_TIME

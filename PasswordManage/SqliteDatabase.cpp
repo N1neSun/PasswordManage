@@ -185,7 +185,7 @@ bool SqliteDatabase::GetPasswordInfoList(std::vector<PasswordColumnInfo>& vecPas
 
 			info.id = doGetSQL.getColumn("id").getInt();
 			info.Name = doGetSQL.getColumn("Name").getString();
-			info.Username = doGetSQL.getColumn("Username").getInt();
+			info.Username = doGetSQL.getColumn("Username").getString();
 			info.Password = doGetSQL.getColumn("Password").getString();
 			info.Url = doGetSQL.getColumn("Url").getString();
 			info.Notes = doGetSQL.getColumn("Notes").getString();

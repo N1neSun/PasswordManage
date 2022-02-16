@@ -63,14 +63,14 @@ void CPasswordManageDlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	
 	DDX_Control(pDX, IDC_LIST_PWMANAGE, m_PasswordList);
-	DDX_Control(pDX, IDC_TAB_PASSWORD, m_PasswordTab);
+	//DDX_Control(pDX, IDC_TAB_PASSWORD, m_PasswordTab);
 }
 
 BEGIN_MESSAGE_MAP(CPasswordManageDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_NOTIFY(NM_RCLICK, IDC_LIST_PWMANAGE, OnRclick)
+	//ON_NOTIFY(NM_RCLICK, IDC_LIST_PWMANAGE, OnRclick)
 END_MESSAGE_MAP()
 
 
@@ -80,6 +80,7 @@ END_MESSAGE_MAP()
 BOOL CPasswordManageDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+	UpdateData(TRUE);
 
 	// 将“关于...”菜单项添加到系统菜单中。
 
@@ -117,6 +118,17 @@ BOOL CPasswordManageDlg::OnInitDialog()
 
 	std::vector<PasswordColumnInfo> vectPasswordInfoList;
 	SqliteDatabase::GetDBController().GetPasswordInfoList(vectPasswordInfoList);
+	for each (auto info in vectPasswordInfoList)
+	{
+		int nCnt = m_PasswordList.GetItemCount();
+		int index = m_PasswordList.InsertItem(nCnt, "", 0);
+		m_PasswordList.SetItemText(index, 0, std::to_string(index).c_str());
+		m_PasswordList.SetItemText(index, 1, info.Name.c_str());
+		m_PasswordList.SetItemText(index, 2, info.Username.c_str());
+		m_PasswordList.SetItemText(index, 3, info.Password.c_str());
+		m_PasswordList.SetItemText(index, 4, info.Url.c_str());
+		m_PasswordList.SetItemText(index, 5, info.Notes.c_str());
+	}
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }

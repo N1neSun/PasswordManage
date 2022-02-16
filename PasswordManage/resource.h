@@ -18,7 +18,6 @@
 #define IDC_EDIT_NOTES                  1010
 #define IDC_TAB2                        1014
 #define IDC_TAB_PASSWORD                1014
-#define IDC_COMBO_                      1017
 #define IDC_COMBO_GROUP                 1017
 #define ID_32771                        32771
 #define ID_32772                        32772
