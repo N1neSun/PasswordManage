@@ -70,7 +70,7 @@ BEGIN_MESSAGE_MAP(CPasswordManageDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	//ON_NOTIFY(NM_RCLICK, IDC_LIST_PWMANAGE, OnRclick)
+	ON_NOTIFY(NM_RCLICK, IDC_LIST_PWMANAGE, OnRclick)
 END_MESSAGE_MAP()
 
 
@@ -116,19 +116,7 @@ BOOL CPasswordManageDlg::OnInitDialog()
 	m_PasswordList.InsertColumn(4, _T("URL"), LVCFMT_LEFT, 200);
 	m_PasswordList.InsertColumn(5, _T("备注"), LVCFMT_LEFT, 200);
 
-	std::vector<PasswordColumnInfo> vectPasswordInfoList;
-	SqliteDatabase::GetDBController().GetPasswordInfoList(vectPasswordInfoList);
-	for each (auto info in vectPasswordInfoList)
-	{
-		int nCnt = m_PasswordList.GetItemCount();
-		int index = m_PasswordList.InsertItem(nCnt, "", 0);
-		m_PasswordList.SetItemText(index, 0, std::to_string(index).c_str());
-		m_PasswordList.SetItemText(index, 1, info.Name.c_str());
-		m_PasswordList.SetItemText(index, 2, info.Username.c_str());
-		m_PasswordList.SetItemText(index, 3, info.Password.c_str());
-		m_PasswordList.SetItemText(index, 4, info.Url.c_str());
-		m_PasswordList.SetItemText(index, 5, info.Notes.c_str());
-	}
+	ShowList();
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -182,9 +170,28 @@ HCURSOR CPasswordManageDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+void  CPasswordManageDlg::ShowList()
+{
+	std::vector<PasswordColumnInfo> vectPasswordInfoList;
+	SqliteDatabase::GetDBController().GetPasswordInfoList(vectPasswordInfoList);
+	for each (auto info in vectPasswordInfoList)
+	{
+		int nCnt = m_PasswordList.GetItemCount();
+		int index = m_PasswordList.InsertItem(nCnt, "", 0);
+		m_PasswordList.SetItemText(index, 0, std::to_string(index).c_str());
+		m_PasswordList.SetItemText(index, 1, info.Name.c_str());
+		m_PasswordList.SetItemText(index, 2, info.Username.c_str());
+		m_PasswordList.SetItemText(index, 3, info.Password.c_str());
+		m_PasswordList.SetItemText(index, 4, info.Url.c_str());
+		m_PasswordList.SetItemText(index, 5, info.Notes.c_str());
+	}
+}
+
 
 void CPasswordManageDlg::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
+	POSITION pos = m_PasswordList.GetFirstSelectedItemPosition();
+	int nIndex = m_PasswordList.GetNextSelectedItem(pos);
 	CMenu menu;
 	menu.LoadMenu(IDR_MENU_RIGHTCLICK);
 	CMenu* pMenu;
@@ -194,10 +201,12 @@ void CPasswordManageDlg::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 	GetCursorPos(&p);
 	int nMenuResult = pMenu->TrackPopupMenu(TPM_NONOTIFY | TPM_RETURNCMD | TPM_LEFTALIGN | TPM_RIGHTBUTTON, p.x, p.y, this);
 
-	CSetInfo setInfoDlg;
+	PasswordColumnInfo tmpInfo;
+	CSetInfo setInfoDlg(tmpInfo);
 	switch (nMenuResult)
 	{
 	case ID_MENU_ADD:
+
 		setInfoDlg.DoModal();
 		break;
 	case ID_MENU_DELETE:

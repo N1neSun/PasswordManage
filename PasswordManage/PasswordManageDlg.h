@@ -14,6 +14,8 @@ public:
 	CListCtrl m_PasswordList;
 	//CTabCtrl	m_PasswordTab;
 
+	void ShowList();
+
 // 对话框数据
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_PASSWORDMANAGE_DIALOG };
