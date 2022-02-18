@@ -168,7 +168,7 @@ bool SqliteDatabase::GetPasswordInfo(PasswordColumnInfo& info, const std::string
 	return bRet;
 }
 
-bool SqliteDatabase::GetPasswordInfoList(std::vector<PasswordColumnInfo>& vecPasswordInfolList)
+bool SqliteDatabase::GetPasswordInfoList(std::vector<PasswordColumnInfo*>& vecPasswordInfolList)
 {
 	CStringA getControlSQL;
 	getControlSQL.Format("SELECT * FROM %s", MASTER_TABLE);
@@ -181,15 +181,15 @@ bool SqliteDatabase::GetPasswordInfoList(std::vector<PasswordColumnInfo>& vecPas
 			if (doGetSQL.isDone())
 				break;
 
-			PasswordColumnInfo info;
+			PasswordColumnInfo* info = new PasswordColumnInfo();
 
-			info.id = doGetSQL.getColumn("id").getInt();
-			info.Name = doGetSQL.getColumn("Name").getString();
-			info.Username = doGetSQL.getColumn("Username").getString();
-			info.Password = doGetSQL.getColumn("Password").getString();
-			info.Url = doGetSQL.getColumn("Url").getString();
-			info.Notes = doGetSQL.getColumn("Notes").getString();
-			info.GroupName = doGetSQL.getColumn("GroupName").getString();
+			info->id = doGetSQL.getColumn("id").getInt();
+			info->Name = doGetSQL.getColumn("Name").getString();
+			info->Username = doGetSQL.getColumn("Username").getString();
+			info->Password = doGetSQL.getColumn("Password").getString();
+			info->Url = doGetSQL.getColumn("Url").getString();
+			info->Notes = doGetSQL.getColumn("Notes").getString();
+			info->GroupName = doGetSQL.getColumn("GroupName").getString();
 
 			vecPasswordInfolList.push_back(info);
 		}

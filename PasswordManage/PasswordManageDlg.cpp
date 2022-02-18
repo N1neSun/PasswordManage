@@ -172,18 +172,19 @@ HCURSOR CPasswordManageDlg::OnQueryDragIcon()
 
 void  CPasswordManageDlg::ShowList()
 {
-	std::vector<PasswordColumnInfo> vectPasswordInfoList;
+	std::vector<PasswordColumnInfo*> vectPasswordInfoList;
 	SqliteDatabase::GetDBController().GetPasswordInfoList(vectPasswordInfoList);
 	for each (auto info in vectPasswordInfoList)
 	{
 		int nCnt = m_PasswordList.GetItemCount();
 		int index = m_PasswordList.InsertItem(nCnt, "", 0);
 		m_PasswordList.SetItemText(index, 0, std::to_string(index).c_str());
-		m_PasswordList.SetItemText(index, 1, info.Name.c_str());
-		m_PasswordList.SetItemText(index, 2, info.Username.c_str());
-		m_PasswordList.SetItemText(index, 3, info.Password.c_str());
-		m_PasswordList.SetItemText(index, 4, info.Url.c_str());
-		m_PasswordList.SetItemText(index, 5, info.Notes.c_str());
+		m_PasswordList.SetItemText(index, 1, info->Name.c_str());
+		m_PasswordList.SetItemText(index, 2, info->Username.c_str());
+		m_PasswordList.SetItemText(index, 3, info->Password.c_str());
+		m_PasswordList.SetItemText(index, 4, info->Url.c_str());
+		m_PasswordList.SetItemText(index, 5, info->Notes.c_str());
+		m_PasswordList.SetItemData(index, (DWORD)info);
 	}
 }
 
@@ -201,8 +202,8 @@ void CPasswordManageDlg::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 	GetCursorPos(&p);
 	int nMenuResult = pMenu->TrackPopupMenu(TPM_NONOTIFY | TPM_RETURNCMD | TPM_LEFTALIGN | TPM_RIGHTBUTTON, p.x, p.y, this);
 
-	PasswordColumnInfo tmpInfo;
-	CSetInfo setInfoDlg(tmpInfo);
+	PasswordColumnInfo* ptmpInfo = (PasswordColumnInfo*)m_PasswordList.GetItemData(nIndex);
+	CSetInfo setInfoDlg(*ptmpInfo);
 	switch (nMenuResult)
 	{
 	case ID_MENU_ADD:

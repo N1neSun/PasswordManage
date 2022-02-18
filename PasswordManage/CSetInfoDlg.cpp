@@ -6,6 +6,8 @@ IMPLEMENT_DYNAMIC(CSetInfo, CDialogEx)
 
 CSetInfo::CSetInfo(const PasswordColumnInfo& info) : CDialogEx(CSetInfo::IDD)
 {
+	if (info.id == -1)
+		return;
 	m_strName = info.Name.c_str();
 	m_strUsername = info.Username.c_str();
 	m_strPassword = info.Password.c_str();

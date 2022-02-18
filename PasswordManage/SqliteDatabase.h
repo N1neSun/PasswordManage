@@ -15,6 +15,7 @@ struct PasswordColumnInfo
 {
 	PasswordColumnInfo()
 	{
+		id = -1;
 		Name = "";
 		Username = "";
 		Password = "";
@@ -49,7 +50,7 @@ public:
 
 	bool GetPasswordInfo(PasswordColumnInfo& control, const std::string& strName);
 
-	bool GetPasswordInfoList(std::vector<PasswordColumnInfo>& vecPasswordInfolList);
+	bool GetPasswordInfoList(std::vector<PasswordColumnInfo*>& vecPasswordInfolList);
 
 	bool IsExist(const std::string& strName);
 
