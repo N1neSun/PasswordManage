@@ -8,7 +8,7 @@ class CSetInfo : public CDialogEx
 	DECLARE_DYNAMIC(CSetInfo)
 
 public:
-	CSetInfo(const PasswordColumnInfo& info);
+	CSetInfo(PasswordColumnInfo* info);
 	virtual ~CSetInfo();
 
 	enum {

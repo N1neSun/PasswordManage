@@ -191,19 +191,27 @@ void  CPasswordManageDlg::ShowList()
 
 void CPasswordManageDlg::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 {
+	PasswordColumnInfo* ptmpInfo = NULL;
 	POSITION pos = m_PasswordList.GetFirstSelectedItemPosition();
 	int nIndex = m_PasswordList.GetNextSelectedItem(pos);
 	CMenu menu;
 	menu.LoadMenu(IDR_MENU_RIGHTCLICK);
 	CMenu* pMenu;
 	pMenu = menu.GetSubMenu(0);
+	if (nIndex == -1)
+	{
+		pMenu->EnableMenuItem(ID_MENU_DELETE, MF_DISABLED);
+		pMenu->EnableMenuItem(ID_MENU_EDIT, MF_DISABLED);
+	}
+	
 
 	CPoint	p;
 	GetCursorPos(&p);
 	int nMenuResult = pMenu->TrackPopupMenu(TPM_NONOTIFY | TPM_RETURNCMD | TPM_LEFTALIGN | TPM_RIGHTBUTTON, p.x, p.y, this);
 
-	PasswordColumnInfo* ptmpInfo = (PasswordColumnInfo*)m_PasswordList.GetItemData(nIndex);
-	CSetInfo setInfoDlg(*ptmpInfo);
+	if(nIndex != -1)
+		ptmpInfo = (PasswordColumnInfo*)m_PasswordList.GetItemData(nIndex);
+	CSetInfo setInfoDlg(ptmpInfo);
 	switch (nMenuResult)
 	{
 	case ID_MENU_ADD:

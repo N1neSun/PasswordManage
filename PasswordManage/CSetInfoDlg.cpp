@@ -4,16 +4,18 @@
 
 IMPLEMENT_DYNAMIC(CSetInfo, CDialogEx)
 
-CSetInfo::CSetInfo(const PasswordColumnInfo& info) : CDialogEx(CSetInfo::IDD)
+CSetInfo::CSetInfo(PasswordColumnInfo* info) : CDialogEx(CSetInfo::IDD)
 {
-	if (info.id == -1)
+	if (info == NULL)
 		return;
-	m_strName = info.Name.c_str();
-	m_strUsername = info.Username.c_str();
-	m_strPassword = info.Password.c_str();
-	m_strUrl = info.Url.c_str();
-	m_strNotes = info.Notes.c_str();
-	m_strGroup = info.GroupName.c_str();
+	if (info->id == -1)
+		return;
+	m_strName = info->Name.c_str();
+	m_strUsername = info->Username.c_str();
+	m_strPassword = info->Password.c_str();
+	m_strUrl = info->Url.c_str();
+	m_strNotes = info->Notes.c_str();
+	m_strGroup = info->GroupName.c_str();
 }
 
 CSetInfo::~CSetInfo()
