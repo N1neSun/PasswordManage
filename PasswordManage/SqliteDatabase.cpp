@@ -171,7 +171,7 @@ bool SqliteDatabase::GetPasswordInfo(PasswordColumnInfo& info, const std::string
 bool SqliteDatabase::GetPasswordInfoList(std::vector<PasswordColumnInfo*>& vecPasswordInfolList)
 {
 	CStringA getControlSQL;
-	getControlSQL.Format("SELECT * FROM %s", MASTER_TABLE);
+	getControlSQL.Format("SELECT * FROM %s where Isdelete=0", MASTER_TABLE);
 
 	SQLite::Statement doGetSQL(*db, getControlSQL.GetBuffer());
 	while(true)

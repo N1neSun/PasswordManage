@@ -172,6 +172,7 @@ HCURSOR CPasswordManageDlg::OnQueryDragIcon()
 
 void  CPasswordManageDlg::ShowList()
 {
+	m_PasswordList.DeleteAllItems();
 	std::vector<PasswordColumnInfo*> vectPasswordInfoList;
 	SqliteDatabase::GetDBController().GetPasswordInfoList(vectPasswordInfoList);
 	for each (auto info in vectPasswordInfoList)
@@ -209,7 +210,7 @@ void CPasswordManageDlg::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 	GetCursorPos(&p);
 	int nMenuResult = pMenu->TrackPopupMenu(TPM_NONOTIFY | TPM_RETURNCMD | TPM_LEFTALIGN | TPM_RIGHTBUTTON, p.x, p.y, this);
 
-	if(nIndex != -1)
+	if(nIndex != -1 && (nMenuResult == ID_MENU_EDIT || nMenuResult == ID_MENU_DELETE))
 		ptmpInfo = (PasswordColumnInfo*)m_PasswordList.GetItemData(nIndex);
 	CSetInfo setInfoDlg(ptmpInfo);
 	switch (nMenuResult)
@@ -217,10 +218,19 @@ void CPasswordManageDlg::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 	case ID_MENU_ADD:
 
 		setInfoDlg.DoModal();
+		ShowList();
 		break;
 	case ID_MENU_DELETE:
+		if (ptmpInfo != NULL)
+		{
+			ptmpInfo->Isdelete = 1;
+			SqliteDatabase::GetDBController().RemovePasswordInfo(*ptmpInfo);
+		}
+		ShowList();
 		break;
 	case ID_MENU_EDIT:
+		setInfoDlg.DoModal();
+		ShowList();
 		break;
 	default:
 		break;
