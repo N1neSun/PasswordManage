@@ -168,6 +168,32 @@ bool SqliteDatabase::GetPasswordInfo(PasswordColumnInfo& info, const std::string
 	return bRet;
 }
 
+bool SqliteDatabase::GetGroupInfoList(std::vector<std::string>& vecGroupInfo)
+{
+	CStringA getControlSQL;
+	getControlSQL.Format("SELECT * FROM %s Group by GroupName", MASTER_TABLE);
+
+	SQLite::Statement doGetSQL(*db, getControlSQL.GetBuffer());
+
+	while (true)
+	{
+		if (doGetSQL.executeStep())
+		{
+			if (doGetSQL.isDone())
+				break;
+
+			vecGroupInfo.push_back(doGetSQL.getColumn("GroupName").getString());
+		}
+		else
+		{
+			break;
+		}
+
+	}
+
+	return true;
+}
+
 bool SqliteDatabase::GetPasswordInfoList(std::vector<PasswordColumnInfo*>& vecPasswordInfolList)
 {
 	CStringA getControlSQL;

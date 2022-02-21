@@ -11,6 +11,8 @@ public:
 	CSetInfo(PasswordColumnInfo* info);
 	virtual ~CSetInfo();
 
+	void SetGroupComboBox();
+
 	enum {
 		IDD = IDD_PASSWORDINFO
 	};

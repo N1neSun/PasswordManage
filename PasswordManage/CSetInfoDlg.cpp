@@ -16,6 +16,7 @@ CSetInfo::CSetInfo(PasswordColumnInfo* info) : CDialogEx(CSetInfo::IDD)
 	m_strUrl = info->Url.c_str();
 	m_strNotes = info->Notes.c_str();
 	m_strGroup = info->GroupName.c_str();
+	
 }
 
 CSetInfo::~CSetInfo()
@@ -50,6 +51,7 @@ BOOL CSetInfo::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	SetGroupComboBox();
 	return TRUE;
 }
 
@@ -71,4 +73,23 @@ void CSetInfo::OnOK()
 		SqliteDatabase::GetDBController().InsertPasswordInfo(m_PasswordInfo);
 	}
 	EndDialog(0);
+}
+
+void CSetInfo::SetGroupComboBox()
+{
+	std::vector<std::string> vecInfo;
+	SqliteDatabase::GetDBController().GetGroupInfoList(vecInfo);
+	int iIndex = 0;
+	if (!vecInfo.size())
+	{
+		m_GroupComboBox.InsertString(iIndex++, "default");
+	}
+	else
+	{
+		for each (auto strGroupName in vecInfo)
+		{
+			m_GroupComboBox.InsertString(iIndex++, strGroupName.c_str());
+		}
+	}
+	m_GroupComboBox.SetCurSel(iIndex-1);
 }
