@@ -7,3 +7,5 @@ std::string aes_256_cbc_encode(const std::string& password, const std::string& d
 std::string aes_256_cbc_decode(const std::string& password, const std::string& strData);
 
 void GetRandString(LPSTR szStr, DWORD len);
+
+BOOL CreateUUID(char* szBuffer);

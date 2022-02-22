@@ -6,6 +6,7 @@
 
 static struct TableColumnInfo PASSWORD_TABLE_COLUMNS[] = {
 	{"id", "INTEGER", "NOT NULL PRIMARY KEY autoincrement"},
+	{"PasswordId", "varchar(512)", "NOT NULL"},
 	{"Name", "varchar(512)", "NOT NULL"},
 	{"Username", "varchar(512)", "NOT NULL"},
 	{"Password", "varchar(512)", "NOT NULL"},
@@ -90,8 +91,8 @@ bool SqliteDatabase::InsertPasswordInfo(PasswordColumnInfo& info)
 	bool bRet = true;
 
 	CStringA insertControl;
-	insertControl.Format("INSERT INTO %s(Name,Username,Password,Url,Notes,GroupName,Isdelete)VALUES(\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\", %d)",
-		MASTER_TABLE, info.Name.c_str(), info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str(), info.GroupName.c_str(), info.Isdelete);
+	insertControl.Format("INSERT INTO %s(PasswordId,Name,Username,Password,Url,Notes,GroupName,Isdelete)VALUES(\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\", %d)",
+		MASTER_TABLE, info.PasswordId.c_str(), info.Name.c_str(), info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str(), info.GroupName.c_str(), info.Isdelete);
 
 	SQLite::Statement doInsertSQL(*db, insertControl.GetBuffer());
 
@@ -114,8 +115,8 @@ bool SqliteDatabase::UpdateControlInfo(PasswordColumnInfo& info)
 	bool bRet = true;
 
 	CStringA updateControl;
-	updateControl.Format("UPDATE %s SET  Username=\"%s\", Password=\"%s\", Url=\"%s\", Notes=\"%s\", GroupName=\"%s\"  WHERE Name=\"%s\"",
-		MASTER_TABLE, info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str(), info.GroupName.c_str(), info.Name.c_str());
+	updateControl.Format("UPDATE %s SET Name=\"%s\", Username=\"%s\", Password=\"%s\", Url=\"%s\", Notes=\"%s\", GroupName=\"%s\"  WHERE PasswordId=\"%s\"",
+		MASTER_TABLE, info.Name.c_str(), info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str(), info.GroupName.c_str(), info.PasswordId.c_str());
 	SQLite::Statement doUpdateSQL(*db, updateControl.GetBuffer());
 
 	try
@@ -146,6 +147,7 @@ bool SqliteDatabase::GetPasswordInfo(PasswordColumnInfo& info, const std::string
 		if (!doGetSQL.isDone())
 		{
 			info.id = doGetSQL.getColumn("id").getInt();
+			info.PasswordId = doGetSQL.getColumn("PasswordId").getString();
 			info.Name = doGetSQL.getColumn("Name").getString();
 			info.Username = doGetSQL.getColumn("Username").getInt();
 			info.Password = doGetSQL.getColumn("Password").getString();
@@ -210,6 +212,7 @@ bool SqliteDatabase::GetPasswordInfoList(std::vector<PasswordColumnInfo*>& vecPa
 			PasswordColumnInfo* info = new PasswordColumnInfo();
 
 			info->id = doGetSQL.getColumn("id").getInt();
+			info->PasswordId = doGetSQL.getColumn("PasswordId").getString();
 			info->Name = doGetSQL.getColumn("Name").getString();
 			info->Username = doGetSQL.getColumn("Username").getString();
 			info->Password = doGetSQL.getColumn("Password").getString();

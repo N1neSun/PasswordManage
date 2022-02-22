@@ -16,6 +16,7 @@ struct PasswordColumnInfo
 	PasswordColumnInfo()
 	{
 		id = -1;
+		PasswordId = "";
 		Name = "";
 		Username = "";
 		Password = "";
@@ -25,6 +26,7 @@ struct PasswordColumnInfo
 		GroupName = "default";
 	}
 	int id;
+	std::string PasswordId;
 	std::string Name;
 	std::string Username;
 	std::string Password;

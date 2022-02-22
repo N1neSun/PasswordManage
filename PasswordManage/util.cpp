@@ -8,6 +8,8 @@
 #pragma comment(lib,"libcrypto.lib")
 #pragma comment(lib,"libssl.lib")
 
+#define KEY_MAX_LEN 256
+
 std::string aes_256_cbc_encode(const std::string& password, const std::string& data)
 {
 	unsigned char iv[AES_BLOCK_SIZE] = { '0','0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0' };
@@ -87,4 +89,18 @@ void GetRandString(LPSTR szStr, DWORD len)
 		strcpy(szStr, singleCode);
 	}
 
+}
+
+BOOL CreateUUID(char* szBuffer)
+{
+	char szTempBuffer[KEY_MAX_LEN] = { 0 };
+	GUID guid;
+	if (CoCreateGuid(&guid))
+	{
+		return FALSE;
+	}
+	sprintf(szTempBuffer, "%08x%04x%04x%02x%02x%02x%02x%02x%02x%02x%02x", guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1]
+		, guid.Data4[2], guid.Data4[3], guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7]);
+	memcpy(szBuffer, szTempBuffer, KEY_MAX_LEN * sizeof(char));
+	return TRUE;
 }
