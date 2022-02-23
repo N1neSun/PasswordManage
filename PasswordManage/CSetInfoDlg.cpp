@@ -10,6 +10,7 @@ CSetInfo::CSetInfo(PasswordColumnInfo* info) : CDialogEx(CSetInfo::IDD)
 		return;
 	if (info->id == -1)
 		return;
+	m_strPasswordID = info->PasswordId.c_str();
 	m_strName = info->Name.c_str();
 	m_strUsername = info->Username.c_str();
 	m_strPassword = info->Password.c_str();
@@ -58,13 +59,14 @@ BOOL CSetInfo::OnInitDialog()
 void CSetInfo::OnOK()
 {
 	UpdateData(TRUE);
+	m_PasswordInfo.PasswordId = m_strPasswordID.GetBuffer();
 	m_PasswordInfo.Name = m_strName.GetBuffer();
 	m_PasswordInfo.Username = m_strUsername.GetBuffer();
 	m_PasswordInfo.Password = m_strPassword.GetBuffer();
 	m_PasswordInfo.Url = m_strUrl.GetBuffer();
 	m_PasswordInfo.Notes = m_strNotes.GetBuffer();
 	m_PasswordInfo.GroupName = m_strGroup.GetBuffer();
-	if (SqliteDatabase::GetDBController().IsExist(m_strName.GetBuffer()))
+	if (SqliteDatabase::GetDBController().IsExist(m_strPasswordID.GetBuffer()))
 	{
 		SqliteDatabase::GetDBController().UpdateControlInfo(m_PasswordInfo);
 	}

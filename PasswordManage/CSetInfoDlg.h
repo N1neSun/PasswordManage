@@ -29,6 +29,7 @@ private:
 	CEdit m_URLEdit;
 	CEdit m_NotesEdit;
 	CComboBox m_GroupComboBox;
+	CString m_strPasswordID;
 	CString m_strName;
 	CString m_strUsername;
 	CString m_strPassword;

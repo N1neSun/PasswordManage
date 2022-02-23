@@ -1,5 +1,6 @@
 #include "SqliteDatabase.h"
 #include <atlstr.h>
+#include "util.h"
 
 #define DATABASE "PasswordDB.db"
 #define MASTER_TABLE "PasswordInfo"
@@ -90,6 +91,9 @@ bool SqliteDatabase::InsertPasswordInfo(PasswordColumnInfo& info)
 {
 	bool bRet = true;
 
+	char szUUID[KEY_MAX_LEN] = { 0 };
+	CreateUUID(szUUID);
+	info.PasswordId = szUUID;
 	CStringA insertControl;
 	insertControl.Format("INSERT INTO %s(PasswordId,Name,Username,Password,Url,Notes,GroupName,Isdelete)VALUES(\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\", %d)",
 		MASTER_TABLE, info.PasswordId.c_str(), info.Name.c_str(), info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str(), info.GroupName.c_str(), info.Isdelete);
@@ -133,12 +137,12 @@ bool SqliteDatabase::UpdateControlInfo(PasswordColumnInfo& info)
 	return bRet;
 }
 
-bool SqliteDatabase::GetPasswordInfo(PasswordColumnInfo& info, const std::string& strName)
+bool SqliteDatabase::GetPasswordInfo(PasswordColumnInfo& info, const std::string& strPasswordId)
 {
 	bool bRet = true;
 
 	CStringA getControlSQL;
-	getControlSQL.Format("SELECT * FROM %s where Name =\"%s\"", MASTER_TABLE, strName.c_str());
+	getControlSQL.Format("SELECT * FROM %s where PasswordId =\"%s\"", MASTER_TABLE, strPasswordId.c_str());
 
 	SQLite::Statement doGetSQL(*db, getControlSQL.GetBuffer());
 	try
@@ -233,12 +237,12 @@ bool SqliteDatabase::GetPasswordInfoList(std::vector<PasswordColumnInfo*>& vecPa
 	return true;
 }
 
-bool SqliteDatabase::IsExist(const std::string& strName)
+bool SqliteDatabase::IsExist(const std::string& strPasswordId)
 {
 	bool bRet = true;
 
 	CStringA getControlSQL;
-	getControlSQL.Format("SELECT * FROM %s where Name =\"%s\"", MASTER_TABLE, strName.c_str());
+	getControlSQL.Format("SELECT * FROM %s where PasswordId =\"%s\"", MASTER_TABLE, strPasswordId.c_str());
 
 	SQLite::Statement doGetSQL(*db, getControlSQL.GetBuffer());
 	try
@@ -246,7 +250,7 @@ bool SqliteDatabase::IsExist(const std::string& strName)
 		doGetSQL.executeStep();
 		if (!doGetSQL.isDone())
 		{
-			if (doGetSQL.getColumn("Name").getString() == strName)
+			if (doGetSQL.getColumn("PasswordId").getString() == strPasswordId)
 			{
 				bRet = true;
 			}
@@ -273,7 +277,7 @@ bool SqliteDatabase::IsExist(const std::string& strName)
 bool SqliteDatabase::RemovePasswordInfo(const PasswordColumnInfo& info)
 {
 	CStringA deleteSQL;
-	deleteSQL.Format("UPDATE %s SET Isdelete=%d WHERE Name = \"%s\"", MASTER_TABLE, info.Isdelete, info.Name.c_str());
+	deleteSQL.Format("UPDATE %s SET Isdelete=%d WHERE PasswordId = \"%s\"", MASTER_TABLE, info.Isdelete, info.PasswordId.c_str());
 	SQLite::Statement doDeleteSQL(*db, deleteSQL.GetBuffer());
 	try
 	{

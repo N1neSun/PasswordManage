@@ -8,8 +8,6 @@
 #pragma comment(lib,"libcrypto.lib")
 #pragma comment(lib,"libssl.lib")
 
-#define KEY_MAX_LEN 256
-
 std::string aes_256_cbc_encode(const std::string& password, const std::string& data)
 {
 	unsigned char iv[AES_BLOCK_SIZE] = { '0','0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0' };
