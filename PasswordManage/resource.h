@@ -9,6 +9,7 @@
 #define IDR_MAINFRAME                   128
 #define IDR_MENU_RIGHTCLICK             130
 #define IDD_PASSWORDINFO                131
+#define IDD_LOGIN                       133
 #define IDC_LIST_PWMANAGE               1001
 #define IDC_BUTTON_SAVE                 1002
 #define IDC_EDIT_NAME                   1006
@@ -20,6 +21,8 @@
 #define IDC_TAB_PASSWORD                1014
 #define IDC_COMBO_GROUP                 1017
 #define IDC_BUTTON1                     1018
+#define IDC_EDIT1                       1019
+#define IDC_EDIT_LOGIN                  1019
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_MENU_ADD                     32773
@@ -31,9 +34,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        133
+#define _APS_NEXT_RESOURCE_VALUE        135
 #define _APS_NEXT_COMMAND_VALUE         32777
-#define _APS_NEXT_CONTROL_VALUE         1019
+#define _APS_NEXT_CONTROL_VALUE         1020
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
