@@ -1,5 +1,6 @@
 #pragma once
 #include "resource.h"
+#include <iostream>
 #include "afxdialogex.h"
 
 class CLogin : public CDialogEx
@@ -10,6 +11,8 @@ public:
 	CLogin();
 	virtual ~CLogin();
 
+	std::string getToken() { return m_strKey; }
+	std::string setToken(std::string strToken) { m_strKey = strToken; }
 
 	enum {
 		IDD = IDD_LOGIN
@@ -28,6 +31,7 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
 	//afx_msg void OnOK();
+	std::string m_strKey;
 
 	DECLARE_MESSAGE_MAP()
 };

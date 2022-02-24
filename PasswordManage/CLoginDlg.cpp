@@ -6,7 +6,7 @@ IMPLEMENT_DYNAMIC(CLogin, CDialogEx)
 
 CLogin::CLogin() : CDialogEx(CLogin::IDD)
 {
-
+	m_strKey.clear();
 }
 
 CLogin::~CLogin()
