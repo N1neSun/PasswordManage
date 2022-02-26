@@ -117,7 +117,7 @@ BOOL CPasswordManageDlg::OnInitDialog()
 	m_PasswordList.InsertColumn(4, _T("URL"), LVCFMT_LEFT, 200);
 	m_PasswordList.InsertColumn(5, _T("备注"), LVCFMT_LEFT, 200);
 
-	ShowList();
+	//ShowList();
 	m_wndTabControl.Create(WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, CRect(0, 0, 0, 0), this, 100);
 	AddGroup("11111");
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE

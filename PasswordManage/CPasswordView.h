@@ -9,9 +9,6 @@ protected:
 	virtual ~CPasswordView();
 	DECLARE_DYNCREATE(CPasswordView)
 
-	int m_nSortedCol;
-	bool m_bAscending;
-
 	virtual void OnDraw(CDC* pDC);
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual BOOL OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult);

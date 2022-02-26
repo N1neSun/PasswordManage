@@ -6,7 +6,7 @@ IMPLEMENT_DYNCREATE(CPasswordView, CListView)
 
 CPasswordView::CPasswordView()
 {
-
+	m_pListCtrl = NULL;
 }
 
 CPasswordView::~CPasswordView()
@@ -15,6 +15,8 @@ CPasswordView::~CPasswordView()
 }
 
 BEGIN_MESSAGE_MAP(CPasswordView, CListView)
+	ON_WM_SIZE()
+	ON_WM_LBUTTONDOWN()
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
 END_MESSAGE_MAP()
 
