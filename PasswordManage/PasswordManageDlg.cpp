@@ -16,38 +16,6 @@
 #endif
 
 
-// 用于应用程序“关于”菜单项的 CAboutDlg 对话框
-
-class CAboutDlg : public CDialogEx
-{
-public:
-	CAboutDlg();
-
-// 对话框数据
-#ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_ABOUTBOX };
-#endif
-
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
-
-// 实现
-protected:
-	DECLARE_MESSAGE_MAP()
-};
-
-CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
-{
-}
-
-void CAboutDlg::DoDataExchange(CDataExchange* pDX)
-{
-	CDialogEx::DoDataExchange(pDX);
-}
-
-BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
-END_MESSAGE_MAP()
-
 
 // CPasswordManageDlg 对话框
 
@@ -119,7 +87,7 @@ BOOL CPasswordManageDlg::OnInitDialog()
 
 	//ShowList();
 	m_wndTabControl.Create(WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, CRect(0, 0, 0, 0), this, 100);
-	AddGroup("11111");
+
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -127,8 +95,8 @@ void CPasswordManageDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
-		CAboutDlg dlgAbout;
-		dlgAbout.DoModal();
+		//CAboutDlg dlgAbout;
+		//dlgAbout.DoModal();
 	}
 	else
 	{
@@ -170,54 +138,6 @@ void CPasswordManageDlg::OnPaint()
 HCURSOR CPasswordManageDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
-}
-
-BOOL CPasswordManageDlg::AddView(CRuntimeClass* pViewClass, LPCTSTR lpszTitle)
-{
-	CCreateContext contextT;
-	contextT.m_pCurrentDoc = NULL;
-	contextT.m_pNewViewClass = pViewClass;
-	contextT.m_pNewDocTemplate = NULL;
-
-	CWnd* pWnd;
-	TRY
-	{
-		pWnd = (CWnd*)pViewClass->CreateObject();
-		if (pWnd == NULL)
-		{
-			AfxThrowMemoryException();
-		}
-	}
-		CATCH_ALL(e)
-	{
-		TRACE0("Out of memory creating a view.\n");
-		// Note: DELETE_EXCEPTION(e) not required
-		return FALSE;
-	}
-	END_CATCH_ALL
-		DWORD dwStyle = AFX_WS_DEFAULT_VIEW;
-	dwStyle &= ~WS_BORDER;
-
-	int nTab = m_wndTabControl.GetItemCount();
-	CRect rect(0, 0, 0, 0);
-	if (!pWnd->Create(NULL, NULL, dwStyle,
-		rect, &m_wndTabControl, (AFX_IDW_PANE_FIRST + nTab), &contextT))
-	{
-		TRACE0("Warning: couldn't create client tab for view.\n");
-		// pWnd will be cleaned up by PostNcDestroy
-		return NULL;
-	}
-	m_wndTabControl.InsertItem(nTab, lpszTitle);
-	
-	pWnd->SetOwner(this);
-
-	return TRUE;
-}
-
-BOOL CPasswordManageDlg::AddGroup(LPCTSTR lpszTitle)
-{
-	BOOL Result = AddView(RUNTIME_CLASS(CPasswordView), lpszTitle);
-	return Result;
 }
 
 void  CPasswordManageDlg::ShowList()
