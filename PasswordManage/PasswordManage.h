@@ -18,7 +18,6 @@ class CPasswordManageApp : public CWinApp
 {
 public:
 	CPasswordManageApp() noexcept;
-	CView* m_pConnectView;
 
 	// 重写
 public:

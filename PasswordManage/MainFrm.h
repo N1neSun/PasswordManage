@@ -5,7 +5,9 @@
 
 #pragma once
 
-class CMainFrame : public CFrameWnd
+#define CMDIFrameWnd CMDIFrameWndEx
+
+class CMainFrame : public CMDIFrameWnd
 {
 
 protected: // 仅从序列化创建

@@ -5,7 +5,7 @@
 #pragma once
 
 
-class CPasswordManageView : public CView
+class CPasswordManageView : public CTabView
 {
 protected: // 仅从序列化创建
 	CPasswordManageView() noexcept;
@@ -18,8 +18,6 @@ public:
 
 	// 操作
 public:
-	BOOL AddView(CRuntimeClass* pViewClass, LPCTSTR lpszTitle);
-	BOOL AddGroup(LPCTSTR lpszTitle);
 	// 重写
 public:
 	virtual void OnDraw(CDC* pDC);  // 重写以绘制该视图
@@ -31,10 +29,10 @@ protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+	afx_msg void OnFilePrintPreview();
 
 	// 实现
 public:
-	CTabCtrl m_wndTabControl;
 	virtual ~CPasswordManageView();
 #ifdef _DEBUG
 	virtual void AssertValid() const;

@@ -86,7 +86,7 @@ BOOL CPasswordManageDlg::OnInitDialog()
 	m_PasswordList.InsertColumn(5, _T("备注"), LVCFMT_LEFT, 200);
 
 	//ShowList();
-	m_wndTabControl.Create(WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, CRect(0, 0, 0, 0), this, 100);
+	//m_wndTabControl.Create(WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, CRect(0, 0, 0, 0), this, 100);
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }

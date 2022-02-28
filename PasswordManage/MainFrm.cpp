@@ -14,9 +14,9 @@
 
 // CMainFrame
 
-IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
+IMPLEMENT_DYNCREATE(CMainFrame, CMDIFrameWnd)
 
-BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
+BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
@@ -59,9 +59,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators) / sizeof(UINT));
 
 	// TODO: 如果不需要可停靠工具栏，则删除这三行
-	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
-	EnableDocking(CBRS_ALIGN_ANY);
-	DockControlBar(&m_wndToolBar);
+	//m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
+	//EnableDocking(CBRS_ALIGN_ANY);
+	//DockPane(&m_wndToolBar);
 
 
 	return 0;

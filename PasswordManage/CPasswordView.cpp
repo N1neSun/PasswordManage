@@ -1,6 +1,8 @@
 #include "CPasswordView.h"
 #include "SqliteDatabase.h"
 #include "CSetInfoDlg.h"
+#include "PasswordManage.h"
+#include <afxcontrolbars.h>
 
 IMPLEMENT_DYNCREATE(CPasswordView, CListView)
 
@@ -17,6 +19,8 @@ CPasswordView::~CPasswordView()
 BEGIN_MESSAGE_MAP(CPasswordView, CListView)
 	ON_WM_SIZE()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_CONTEXTMENU()
+	ON_WM_WINDOWPOSCHANGING()
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
 END_MESSAGE_MAP()
 
@@ -38,7 +42,7 @@ void CPasswordView::OnInitialUpdate()
 	m_pListCtrl = &GetListCtrl();
 
 	m_pListCtrl->SetExtendedStyle(LVS_EX_CHECKBOXES | LVS_EX_FULLROWSELECT /*| LVS_EX_FLATSB*/ |
-		LVS_EX_ONECLICKACTIVATE | LVS_EX_UNDERLINEHOT | LVS_EX_SUBITEMIMAGES /*| LVS_EX_GRIDLINES*/);
+		LVS_EX_ONECLICKACTIVATE | LVS_EX_UNDERLINEHOT | LVS_EX_SUBITEMIMAGES | LVS_EX_GRIDLINES*);
 	m_pListCtrl->InsertColumn(0, _T("序号"), LVCFMT_LEFT, 50);
 	m_pListCtrl->InsertColumn(1, _T("名称"), LVCFMT_LEFT, 100);
 	m_pListCtrl->InsertColumn(2, _T("用户名"), LVCFMT_LEFT, 100);
@@ -77,6 +81,34 @@ void  CPasswordView::ShowList()
 		m_pListCtrl->SetItemText(index, 4, info->Url.c_str());
 		m_pListCtrl->SetItemText(index, 5, info->Notes.c_str());
 		m_pListCtrl->SetItemData(index, (DWORD)info);
+	}
+}
+
+void CPasswordView::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
+{
+	//theApp.ShowPopupMenu(IDR_MENU_RIGHTCLICK, point, this);
+}
+
+void CPasswordView::OnWindowPosChanging(WINDOWPOS FAR* lpwndpos)
+{
+	CListView::OnWindowPosChanging(lpwndpos);
+
+	// Hide horizontal scrollbar:
+	ShowScrollBar(SB_HORZ, FALSE);
+	ModifyStyle(WS_HSCROLL, 0, SWP_DRAWFRAME);
+}
+
+void CPasswordView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	CListView::OnKeyDown(nChar, nRepCnt, nFlags);
+
+	if (nChar == VK_LEFT || nChar == VK_RIGHT)
+	{
+		// Assume scroll left or right. Synchronize scorll bars:
+		CMFCTabCtrl* pTabWnd = DYNAMIC_DOWNCAST(CMFCTabCtrl, GetParent());
+		ASSERT_VALID(pTabWnd);
+
+		pTabWnd->SynchronizeScrollBar();
 	}
 }
 

@@ -20,6 +20,9 @@ public:
 protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnRclick(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+	afx_msg void OnWindowPosChanging(WINDOWPOS FAR* lpwndpos);
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 
 	DECLARE_MESSAGE_MAP()
 };
