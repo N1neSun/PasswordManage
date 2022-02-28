@@ -19,6 +19,7 @@ class CPasswordManageApp : public CWinApp
 public:
 	CPasswordManageApp() noexcept;
 
+
 	// 重写
 public:
 	virtual BOOL InitInstance();

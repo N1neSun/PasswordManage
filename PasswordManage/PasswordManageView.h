@@ -14,22 +14,18 @@ protected: // 仅从序列化创建
 	// 特性
 public:
 	CPasswordManageDoc* GetDocument() const;
-	void UpdateDocTitle();
 
 	// 操作
 public:
+
 	// 重写
 public:
 	virtual void OnDraw(CDC* pDC);  // 重写以绘制该视图
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnSelectedChanged(NMHDR* pNMHDR, LRESULT* pResult);
-
 protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
-	afx_msg void OnFilePrintPreview();
 
 	// 实现
 public:
@@ -42,6 +38,7 @@ public:
 protected:
 
 	// 生成的消息映射函数
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 protected:
 	DECLARE_MESSAGE_MAP()
 };

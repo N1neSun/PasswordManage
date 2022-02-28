@@ -42,7 +42,7 @@ void CPasswordView::OnInitialUpdate()
 	m_pListCtrl = &GetListCtrl();
 
 	m_pListCtrl->SetExtendedStyle(LVS_EX_CHECKBOXES | LVS_EX_FULLROWSELECT /*| LVS_EX_FLATSB*/ |
-		LVS_EX_ONECLICKACTIVATE | LVS_EX_UNDERLINEHOT | LVS_EX_SUBITEMIMAGES | LVS_EX_GRIDLINES*);
+		LVS_EX_ONECLICKACTIVATE | LVS_EX_UNDERLINEHOT | LVS_EX_SUBITEMIMAGES | LVS_EX_GRIDLINES);
 	m_pListCtrl->InsertColumn(0, _T("序号"), LVCFMT_LEFT, 50);
 	m_pListCtrl->InsertColumn(1, _T("名称"), LVCFMT_LEFT, 100);
 	m_pListCtrl->InsertColumn(2, _T("用户名"), LVCFMT_LEFT, 100);

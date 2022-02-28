@@ -1,18 +1,14 @@
-#pragma once
 
 // MainFrm.h: CMainFrame 类的接口
 //
 
 #pragma once
 
-#define CMDIFrameWnd CMDIFrameWndEx
-
 class CMainFrame : public CMDIFrameWnd
 {
-
-protected: // 仅从序列化创建
+	DECLARE_DYNAMIC(CMainFrame)
+public:
 	CMainFrame() noexcept;
-	DECLARE_DYNCREATE(CMainFrame)
 
 	// 特性
 public:

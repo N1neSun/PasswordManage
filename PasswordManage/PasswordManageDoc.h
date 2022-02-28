@@ -1,4 +1,3 @@
-#pragma once
 
 // PasswordManageDoc.h: CPasswordManageDoc 类的接口
 //

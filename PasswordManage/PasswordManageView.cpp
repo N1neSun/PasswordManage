@@ -18,7 +18,6 @@
 #define new DEBUG_NEW
 #endif
 
-#define IDC_TABCONTROL 100
 
 // CPasswordManageView
 
@@ -27,9 +26,9 @@ IMPLEMENT_DYNCREATE(CPasswordManageView, CTabView)
 BEGIN_MESSAGE_MAP(CPasswordManageView, CTabView)
 	// 标准打印命令
 	ON_WM_CREATE()
-	ON_COMMAND(ID_FILE_PRINT, CTabView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_DIRECT, CTabView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, OnFilePrintPreview)
+	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
 END_MESSAGE_MAP()
 
 // CPasswordManageView 构造/析构
@@ -64,10 +63,17 @@ void CPasswordManageView::OnDraw(CDC* /*pDC*/)
 	// TODO: 在此处为本机数据添加绘制代码
 }
 
-void CPasswordManageView::OnFilePrintPreview()
+int CPasswordManageView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	AFXPrintPreview(this);
+	if (CTabView::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	AddView(RUNTIME_CLASS(CPasswordView), _T("List"), 100);
+
+
+	return 0;
 }
+
 
 // CPasswordManageView 打印
 
@@ -110,24 +116,3 @@ CPasswordManageDoc* CPasswordManageView::GetDocument() const // 非调试版本是内联
 
 
 // CPasswordManageView 消息处理程序
-
-int CPasswordManageView::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if (CView::OnCreate(lpCreateStruct) == -1)
-		return -1;
-
-
-	AddView(RUNTIME_CLASS(CPasswordView), _T("1111"), IDC_TABCONTROL);
-	// TODO: Add your specialized creation code here
-	//m_wndTabControl.Create("1", "2", WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, CRect(0, 0, 0, 0), this, IDC_TABCONTROL);
-	//m_wndTabControl.Create(WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, CRect(0, 0, 0, 0), this, IDC_TABCONTROL);
-;
-	//AddGroup(_T("11111"));
-	//m_wndTabControl.SetCurSel(0);
-	return 0;
-}
-
-void CPasswordManageView::UpdateDocTitle()
-{
-	GetDocument()->UpdateFrameCounts();
-}
