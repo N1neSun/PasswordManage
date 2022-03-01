@@ -14,6 +14,7 @@ protected:
 	virtual BOOL OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 public:
 	CListCtrl* m_pListCtrl;
+	CHeaderCtrl m_header;
 	virtual void OnInitialUpdate();
 	void  ShowList();
 

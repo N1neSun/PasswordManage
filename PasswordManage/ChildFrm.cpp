@@ -17,6 +17,7 @@
 IMPLEMENT_DYNCREATE(CChildFrame, CMDIChildWnd)
 
 BEGIN_MESSAGE_MAP(CChildFrame, CMDIChildWnd)
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 // CChildFrame 构造/析构
@@ -40,6 +41,19 @@ BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 	return TRUE;
 }
 
+
+void CChildFrame::ActivateFrame(int nCmdShow)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+	nCmdShow = SW_MAXIMIZE;
+	CMDIChildWnd::ActivateFrame(nCmdShow);
+}
+
+void CChildFrame::OnSize(UINT nType, int cx, int cy)
+{
+	CMDIChildWnd::OnSize(nType, cx, cy);
+
+}
 // CChildFrame 诊断
 
 #ifdef _DEBUG

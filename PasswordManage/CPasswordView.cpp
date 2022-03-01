@@ -26,8 +26,8 @@ END_MESSAGE_MAP()
 
 void CPasswordView::OnDraw(CDC* pDC)
 {
-	CDocument* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
+	//CDocument* pDoc = GetDocument();
+	//ASSERT_VALID(pDoc);
 }
 
 BOOL CPasswordView::PreCreateWindow(CREATESTRUCT& cs)
@@ -49,14 +49,21 @@ void CPasswordView::OnInitialUpdate()
 	m_pListCtrl->InsertColumn(3, _T("ÃÜÂë"), LVCFMT_LEFT, 200);
 	m_pListCtrl->InsertColumn(4, _T("URL"), LVCFMT_LEFT, 200);
 	m_pListCtrl->InsertColumn(5, _T("±¸×¢"), LVCFMT_LEFT, 200);
-	m_pListCtrl->SetTextColor(RGB(255, 0, 255));
-	m_pListCtrl->SetTextBkColor(CLR_NONE);
+	//m_pListCtrl->SetTextColor(RGB(255, 0, 255));
+	//m_pListCtrl->SetTextBkColor(CLR_NONE);
+	
+	//HWND hWndHeader = m_pListCtrl->GetDlgItem(0)->GetSafeHwnd();
+	//m_header.SubclassWindow(hWndHeader);
+	//m_header.enable
+
+	ShowList();
+	Invalidate();
 }
 
 void CPasswordView::OnSize(UINT nType, int cx, int cy)
 {
 	CListView::OnSize(nType, cx, cy);
-
+	
 }
 
 BOOL CPasswordView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
@@ -67,7 +74,7 @@ BOOL CPasswordView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 
 void  CPasswordView::ShowList()
 {
-	m_pListCtrl->DeleteAllItems();
+	//m_pListCtrl->DeleteAllItems();
 	std::vector<PasswordColumnInfo*> vectPasswordInfoList;
 	SqliteDatabase::GetDBController().GetPasswordInfoList(vectPasswordInfoList);
 	for each (auto info in vectPasswordInfoList)

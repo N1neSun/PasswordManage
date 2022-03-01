@@ -26,6 +26,7 @@ IMPLEMENT_DYNCREATE(CPasswordManageView, CTabView)
 BEGIN_MESSAGE_MAP(CPasswordManageView, CTabView)
 	// ±ê×¼´òÓ¡ÃüÁî
 	ON_WM_CREATE()
+	ON_WM_SIZE()
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
@@ -68,10 +69,19 @@ int CPasswordManageView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CTabView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	AddView(RUNTIME_CLASS(CPasswordView), _T("List"), 100);
+	AddView(RUNTIME_CLASS(CPasswordView), _T("List"), 101);
+	AddView(RUNTIME_CLASS(CPasswordView), _T("1111"), 101);
+	AddView(RUNTIME_CLASS(CPasswordView), _T("2222"), 101);
 
-
+	Invalidate();
 	return 0;
+}
+
+void CPasswordManageView::OnSize(UINT nType, int cx, int cy)
+{
+	nType = SIZE_MAXIMIZED;
+	CTabView::OnSize(nType, cx, cy);
+
 }
 
 
