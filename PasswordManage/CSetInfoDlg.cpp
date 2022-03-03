@@ -53,6 +53,12 @@ BOOL CSetInfo::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	SetGroupComboBox();
+	if (m_strGroup)
+	{
+		int nIndex = m_GroupComboBox.FindString(0, m_strGroup);
+		m_GroupComboBox.SetCurSel(nIndex);
+	}
+	
 	return TRUE;
 }
 
@@ -93,5 +99,4 @@ void CSetInfo::SetGroupComboBox()
 			m_GroupComboBox.InsertString(iIndex++, strGroupName.c_str());
 		}
 	}
-	m_GroupComboBox.SetCurSel(iIndex-1);
 }

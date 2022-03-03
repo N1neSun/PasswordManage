@@ -26,8 +26,8 @@ END_MESSAGE_MAP()
 
 void CPasswordView::OnDraw(CDC* pDC)
 {
-	//CDocument* pDoc = GetDocument();
-	//ASSERT_VALID(pDoc);
+	CDocument* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
 }
 
 BOOL CPasswordView::PreCreateWindow(CREATESTRUCT& cs)
@@ -49,15 +49,8 @@ void CPasswordView::OnInitialUpdate()
 	m_pListCtrl->InsertColumn(3, _T("ÃÜÂë"), LVCFMT_LEFT, 200);
 	m_pListCtrl->InsertColumn(4, _T("URL"), LVCFMT_LEFT, 200);
 	m_pListCtrl->InsertColumn(5, _T("±¸×¢"), LVCFMT_LEFT, 200);
-	//m_pListCtrl->SetTextColor(RGB(255, 0, 255));
-	//m_pListCtrl->SetTextBkColor(CLR_NONE);
-	
-	//HWND hWndHeader = m_pListCtrl->GetDlgItem(0)->GetSafeHwnd();
-	//m_header.SubclassWindow(hWndHeader);
-	//m_header.enable
 
 	ShowList();
-	Invalidate();
 }
 
 void CPasswordView::OnSize(UINT nType, int cx, int cy)
@@ -74,14 +67,14 @@ BOOL CPasswordView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 
 void  CPasswordView::ShowList()
 {
-	//m_pListCtrl->DeleteAllItems();
+	m_pListCtrl->DeleteAllItems();
 	std::vector<PasswordColumnInfo*> vectPasswordInfoList;
 	SqliteDatabase::GetDBController().GetPasswordInfoList(vectPasswordInfoList);
 	for each (auto info in vectPasswordInfoList)
 	{
 		int nCnt = m_pListCtrl->GetItemCount();
 		int index = m_pListCtrl->InsertItem(nCnt, "", 0);
-		m_pListCtrl->SetItemText(index, 0, std::to_string(index).c_str());
+		m_pListCtrl->SetItemText(index, 0, std::to_string(index+1).c_str());
 		m_pListCtrl->SetItemText(index, 1, info->Name.c_str());
 		m_pListCtrl->SetItemText(index, 2, info->Username.c_str());
 		m_pListCtrl->SetItemText(index, 3, info->Password.c_str());
@@ -93,14 +86,13 @@ void  CPasswordView::ShowList()
 
 void CPasswordView::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
-	//theApp.ShowPopupMenu(IDR_MENU_RIGHTCLICK, point, this);
+
 }
 
 void CPasswordView::OnWindowPosChanging(WINDOWPOS FAR* lpwndpos)
 {
 	CListView::OnWindowPosChanging(lpwndpos);
 
-	// Hide horizontal scrollbar:
 	ShowScrollBar(SB_HORZ, FALSE);
 	ModifyStyle(WS_HSCROLL, 0, SWP_DRAWFRAME);
 }
@@ -111,7 +103,6 @@ void CPasswordView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 	if (nChar == VK_LEFT || nChar == VK_RIGHT)
 	{
-		// Assume scroll left or right. Synchronize scorll bars:
 		CMFCTabCtrl* pTabWnd = DYNAMIC_DOWNCAST(CMFCTabCtrl, GetParent());
 		ASSERT_VALID(pTabWnd);
 

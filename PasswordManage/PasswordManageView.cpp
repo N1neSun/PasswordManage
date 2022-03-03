@@ -73,7 +73,6 @@ int CPasswordManageView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	AddView(RUNTIME_CLASS(CPasswordView), _T("1111"), 101);
 	AddView(RUNTIME_CLASS(CPasswordView), _T("2222"), 101);
 
-	Invalidate();
 	return 0;
 }
 

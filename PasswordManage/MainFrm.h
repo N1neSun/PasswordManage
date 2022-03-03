@@ -4,6 +4,8 @@
 
 #pragma once
 
+#define CMDIFrameWnd CMDIFrameWndEx
+
 class CMainFrame : public CMDIFrameWnd
 {
 	DECLARE_DYNAMIC(CMainFrame)
@@ -29,8 +31,9 @@ public:
 #endif
 
 protected:  // 控件条嵌入成员
-	CToolBar          m_wndToolBar;
-	CStatusBar        m_wndStatusBar;
+	CMFCMenuBar	m_wndMenuBar;
+	CMFCStatusBar	m_wndStatusBar;
+	CMFCToolBar	m_wndToolBar;
 
 	// 生成的消息映射函数
 protected:
