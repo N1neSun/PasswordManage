@@ -4,6 +4,8 @@
 #include "PasswordManage.h"
 #include <afxcontrolbars.h>
 
+extern CTabView* g_pTabView;
+
 IMPLEMENT_DYNCREATE(CPasswordView, CListView)
 
 CPasswordView::CPasswordView()
@@ -40,7 +42,6 @@ void CPasswordView::OnInitialUpdate()
 {
 	CListView::OnInitialUpdate();
 	m_pListCtrl = &GetListCtrl();
-
 	m_pListCtrl->SetExtendedStyle(LVS_EX_CHECKBOXES | LVS_EX_FULLROWSELECT /*| LVS_EX_FLATSB*/ |
 		LVS_EX_ONECLICKACTIVATE | LVS_EX_UNDERLINEHOT | LVS_EX_SUBITEMIMAGES | LVS_EX_GRIDLINES);
 	m_pListCtrl->InsertColumn(0, _T("ÐòºÅ"), LVCFMT_LEFT, 50);

@@ -14,7 +14,6 @@ protected: // 仅从序列化创建
 	// 特性
 public:
 	CPasswordManageDoc* GetDocument() const;
-
 	// 操作
 public:
 

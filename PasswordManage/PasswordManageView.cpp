@@ -19,6 +19,7 @@
 #endif
 
 
+CTabView* g_pTabView;
 // CPasswordManageView
 
 IMPLEMENT_DYNCREATE(CPasswordManageView, CTabView)
@@ -37,7 +38,7 @@ END_MESSAGE_MAP()
 CPasswordManageView::CPasswordManageView() noexcept
 {
 	// TODO: 在此处添加构造代码
-
+	g_pTabView = this;
 }
 
 CPasswordManageView::~CPasswordManageView()
@@ -69,7 +70,7 @@ int CPasswordManageView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CTabView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	AddView(RUNTIME_CLASS(CPasswordView), _T("List"), 101);
+	AddView(RUNTIME_CLASS(CPasswordView), _T("1111"), 101);
 	AddView(RUNTIME_CLASS(CPasswordView), _T("1111"), 101);
 	AddView(RUNTIME_CLASS(CPasswordView), _T("2222"), 101);
 
