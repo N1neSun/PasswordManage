@@ -1,6 +1,8 @@
 #pragma once
 #include "resource.h"
 #include "afxcview.h"
+#include "SqliteDatabase.h"
+
 
 class CPasswordView : public CListView
 {
@@ -14,9 +16,10 @@ protected:
 	virtual BOOL OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 public:
 	CListCtrl* m_pListCtrl;
+
 	//CHeaderCtrl m_header;
 	virtual void OnInitialUpdate();
-	void  ShowList();
+	void  ShowList(std::vector<PasswordColumnInfo*> vectPasswordInfoList);
 
 protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);

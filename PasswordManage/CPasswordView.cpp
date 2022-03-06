@@ -1,5 +1,5 @@
 #include "CPasswordView.h"
-#include "SqliteDatabase.h"
+
 #include "CSetInfoDlg.h"
 #include "PasswordManage.h"
 #include <afxcontrolbars.h>
@@ -51,7 +51,6 @@ void CPasswordView::OnInitialUpdate()
 	m_pListCtrl->InsertColumn(4, _T("URL"), LVCFMT_LEFT, 200);
 	m_pListCtrl->InsertColumn(5, _T("±¸×¢"), LVCFMT_LEFT, 200);
 
-	ShowList();
 }
 
 void CPasswordView::OnSize(UINT nType, int cx, int cy)
@@ -66,11 +65,10 @@ BOOL CPasswordView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 	return CListView::OnNotify(wParam, lParam, pResult);
 }
 
-void  CPasswordView::ShowList()
+void  CPasswordView::ShowList(std::vector<PasswordColumnInfo*> vectPasswordInfoList)
 {
 	m_pListCtrl->DeleteAllItems();
-	std::vector<PasswordColumnInfo*> vectPasswordInfoList;
-	SqliteDatabase::GetDBController().GetPasswordInfoList(vectPasswordInfoList);
+
 	for each (auto info in vectPasswordInfoList)
 	{
 		int nCnt = m_pListCtrl->GetItemCount();
@@ -139,7 +137,7 @@ void CPasswordView::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 	case ID_MENU_ADD:
 
 		setInfoDlg.DoModal();
-		ShowList();
+		//ShowList();
 		break;
 	case ID_MENU_DELETE:
 		if (ptmpInfo != NULL)
@@ -147,11 +145,11 @@ void CPasswordView::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 			ptmpInfo->Isdelete = 1;
 			SqliteDatabase::GetDBController().RemovePasswordInfo(*ptmpInfo);
 		}
-		ShowList();
+		//ShowList();
 		break;
 	case ID_MENU_EDIT:
 		setInfoDlg.DoModal();
-		ShowList();
+		//ShowList();
 		break;
 	default:
 		break;
