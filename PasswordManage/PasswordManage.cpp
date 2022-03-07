@@ -12,11 +12,13 @@
 #include "ChildFrm.h"
 #include "PasswordManageDoc.h"
 #include "PasswordManageView.h"
+#include "CPasswordView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+extern CTabView* g_pTabView;
 
 // CPasswordManageApp
 
@@ -134,6 +136,8 @@ BOOL CPasswordManageApp::InitInstance()
 	pMainFrame->ShowWindow(m_nCmdShow);
 	pMainFrame->UpdateWindow();
 
+	CPasswordView* pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(0));
+	pView->LoadPasswordInfo();
 	return TRUE;
 }
 

@@ -69,9 +69,9 @@ void CPasswordView::LoadPasswordInfo()
 {
 	std::vector<PasswordColumnInfo*> vecPasswordInfo;
 	SqliteDatabase::GetDBController().GetPasswordInfoList(vecPasswordInfo);
-	BOOL bFind = false;
 	for each (auto info in vecPasswordInfo)
 	{
+		BOOL bFind = false;
 		int nTabs = g_pTabView->GetTabControl().GetTabsNum();
 		for (int nTabIndex = 0; nTabIndex < nTabs; nTabIndex++)
 		{
