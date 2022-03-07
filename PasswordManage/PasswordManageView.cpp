@@ -63,16 +63,14 @@ void CPasswordManageView::OnDraw(CDC* /*pDC*/)
 		return;
 
 	// TODO: 在此处为本机数据添加绘制代码
-}
+} 
 
 int CPasswordManageView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CTabView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	AddView(RUNTIME_CLASS(CPasswordView), _T("1111"), 101);
-	AddView(RUNTIME_CLASS(CPasswordView), _T("1111"), 101);
-	AddView(RUNTIME_CLASS(CPasswordView), _T("2222"), 101);
+	AddView(RUNTIME_CLASS(CPasswordView), _T("default"));
 
 	return 0;
 }
@@ -81,7 +79,6 @@ void CPasswordManageView::OnSize(UINT nType, int cx, int cy)
 {
 	nType = SIZE_MAXIMIZED;
 	CTabView::OnSize(nType, cx, cy);
-
 }
 
 

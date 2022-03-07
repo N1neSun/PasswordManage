@@ -19,7 +19,9 @@ public:
 
 	//CHeaderCtrl m_header;
 	virtual void OnInitialUpdate();
+	void LoadPasswordInfo();
 	void  ShowList(std::vector<PasswordColumnInfo*> vectPasswordInfoList);
+	void InsertListInfo(PasswordColumnInfo* info);
 
 protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);

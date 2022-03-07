@@ -65,10 +65,38 @@ BOOL CPasswordView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 	return CListView::OnNotify(wParam, lParam, pResult);
 }
 
+void CPasswordView::LoadPasswordInfo()
+{
+	std::vector<PasswordColumnInfo*> vecPasswordInfo;
+	SqliteDatabase::GetDBController().GetPasswordInfoList(vecPasswordInfo);
+	BOOL bFind = false;
+	for each (auto info in vecPasswordInfo)
+	{
+		int nTabs = g_pTabView->GetTabControl().GetTabsNum();
+		for (int nTabIndex = 0; nTabIndex < nTabs; nTabIndex++)
+		{
+			CString strTmpGroupName;
+			g_pTabView->GetTabControl().GetTabLabel(nTabIndex, strTmpGroupName);
+			if (strTmpGroupName == info->GroupName.c_str())
+			{
+				bFind = true;
+				CPasswordView* pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(nTabIndex));
+				pView->InsertListInfo(info);
+			}
+		}
+		if (!bFind)
+		{
+			g_pTabView->AddView(RUNTIME_CLASS(CPasswordView), info->GroupName.c_str());
+			CPasswordView* pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(nTabs));
+			pView->InsertListInfo(info);
+		}
+	}
+}
+
 void  CPasswordView::ShowList(std::vector<PasswordColumnInfo*> vectPasswordInfoList)
 {
 	m_pListCtrl->DeleteAllItems();
-
+	
 	for each (auto info in vectPasswordInfoList)
 	{
 		int nCnt = m_pListCtrl->GetItemCount();
@@ -81,6 +109,19 @@ void  CPasswordView::ShowList(std::vector<PasswordColumnInfo*> vectPasswordInfoL
 		m_pListCtrl->SetItemText(index, 5, info->Notes.c_str());
 		m_pListCtrl->SetItemData(index, (DWORD)info);
 	}
+}
+
+void CPasswordView::InsertListInfo(PasswordColumnInfo* info)
+{
+	int nCnt = m_pListCtrl->GetItemCount();
+	int index = m_pListCtrl->InsertItem(nCnt, "", 0);
+	m_pListCtrl->SetItemText(index, 0, std::to_string(index + 1).c_str());
+	m_pListCtrl->SetItemText(index, 1, info->Name.c_str());
+	m_pListCtrl->SetItemText(index, 2, info->Username.c_str());
+	m_pListCtrl->SetItemText(index, 3, info->Password.c_str());
+	m_pListCtrl->SetItemText(index, 4, info->Url.c_str());
+	m_pListCtrl->SetItemText(index, 5, info->Notes.c_str());
+	m_pListCtrl->SetItemData(index, (DWORD)info);
 }
 
 void CPasswordView::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
