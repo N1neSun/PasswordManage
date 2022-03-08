@@ -4,15 +4,12 @@
 //
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
-#define IDP_OLE_INIT_FAILED			100
+#define IDP_OLE_INIT_FAILED             100
 #define IDS_ABOUTBOX                    101
-#define IDD_PASSWORDMANAGE_DIALOG       102
 #define IDR_MAINFRAME                   128
 #define IDR_MENU_RIGHTCLICK             130
 #define IDD_PASSWORDINFO                131
 #define IDD_LOGIN                       133
-#define IDC_LIST_PWMANAGE               1001
-#define IDC_BUTTON_SAVE                 1002
 #define IDC_EDIT_NAME                   1006
 #define IDC_EDIT_USERNAME               1007
 #define IDC_EDIT_PASSWORD               1008

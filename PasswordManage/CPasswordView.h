@@ -1,6 +1,7 @@
 #pragma once
 #include "resource.h"
 #include "afxcview.h"
+#include "CSetInfoDlg.h"
 #include "SqliteDatabase.h"
 
 

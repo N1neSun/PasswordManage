@@ -1,8 +1,7 @@
 #include "CPasswordView.h"
-
-#include "CSetInfoDlg.h"
 #include "PasswordManage.h"
 #include <afxcontrolbars.h>
+
 
 extern CTabView* g_pTabView;
 
@@ -88,6 +87,7 @@ void CPasswordView::LoadPasswordInfo()
 		{
 			g_pTabView->AddView(RUNTIME_CLASS(CPasswordView), info->GroupName.c_str());
 			CPasswordView* pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(nTabs));
+			pView->OnInitialUpdate();
 			pView->InsertListInfo(info);
 		}
 	}
@@ -173,24 +173,33 @@ void CPasswordView::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 	if (nIndex != -1 && (nMenuResult == ID_MENU_EDIT || nMenuResult == ID_MENU_DELETE))
 		ptmpInfo = (PasswordColumnInfo*)m_pListCtrl->GetItemData(nIndex);
 	CSetInfo setInfoDlg(ptmpInfo);
+	std::vector<PasswordColumnInfo*> vecPasswordInfolList;
+	int nTab = g_pTabView->GetTabControl().GetActiveTab();
+	CPasswordView* pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(nTab));
 	switch (nMenuResult)
 	{
 	case ID_MENU_ADD:
 
 		setInfoDlg.DoModal();
-		//ShowList();
 		break;
 	case ID_MENU_DELETE:
 		if (ptmpInfo != NULL)
 		{
 			ptmpInfo->Isdelete = 1;
 			SqliteDatabase::GetDBController().RemovePasswordInfo(*ptmpInfo);
+			SqliteDatabase::GetDBController().GetGroupListInfo(vecPasswordInfolList, ptmpInfo->GroupName);
+			if (vecPasswordInfolList.size())
+			{
+				pView->ShowList(vecPasswordInfolList);
+			}
+			else
+			{
+				g_pTabView->RemoveView(nTab);
+			}
 		}
-		//ShowList();
 		break;
 	case ID_MENU_EDIT:
 		setInfoDlg.DoModal();
-		//ShowList();
 		break;
 	default:
 		break;

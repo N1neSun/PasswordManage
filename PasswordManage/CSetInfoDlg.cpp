@@ -1,6 +1,8 @@
+#include "CPasswordView.h"
 #include "CSetInfoDlg.h"
+#include <afxcontrolbars.h>
 
-
+extern CTabView* g_pTabView;
 
 IMPLEMENT_DYNAMIC(CSetInfo, CDialogEx)
 
@@ -53,11 +55,12 @@ BOOL CSetInfo::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	SetGroupComboBox();
-	if (m_strGroup)
-	{
-		int nIndex = m_GroupComboBox.FindString(0, m_strGroup);
-		m_GroupComboBox.SetCurSel(nIndex);
-	}
+
+	CString strTmpGroupName;
+	int nIndex = g_pTabView->GetTabControl().GetActiveTab();
+	g_pTabView->GetTabControl().GetTabLabel(nIndex, strTmpGroupName);
+	int ntab = m_GroupComboBox.FindString(0, strTmpGroupName);
+	m_GroupComboBox.SetCurSel(ntab);
 	
 	return TRUE;
 }
@@ -72,6 +75,24 @@ void CSetInfo::OnOK()
 	m_PasswordInfo.Url = m_strUrl.GetBuffer();
 	m_PasswordInfo.Notes = m_strNotes.GetBuffer();
 	m_PasswordInfo.GroupName = m_strGroup.GetBuffer();
+	int nTabs = g_pTabView->GetTabControl().GetTabsNum();
+	CPasswordView* pView = NULL;
+	std::vector<PasswordColumnInfo*> vecPasswordInfolList;
+	for (int nIndex = 0; nIndex < nTabs; nIndex++)
+	{
+		CString strTmpGroupName;
+		g_pTabView->GetTabControl().GetTabLabel(nIndex, strTmpGroupName);
+		if (strTmpGroupName == m_PasswordInfo.GroupName.c_str())
+		{
+			pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(nIndex));
+		}
+	}
+	if (pView == NULL)
+	{
+		g_pTabView->AddView(RUNTIME_CLASS(CPasswordView), m_PasswordInfo.GroupName.c_str());
+		pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(nTabs));
+		pView->OnInitialUpdate();
+	}
 	if (SqliteDatabase::GetDBController().IsExist(m_strPasswordID.GetBuffer()))
 	{
 		SqliteDatabase::GetDBController().UpdateControlInfo(m_PasswordInfo);
@@ -80,6 +101,8 @@ void CSetInfo::OnOK()
 	{
 		SqliteDatabase::GetDBController().InsertPasswordInfo(m_PasswordInfo);
 	}
+	SqliteDatabase::GetDBController().GetGroupListInfo(vecPasswordInfolList, m_PasswordInfo.GroupName);
+	pView->ShowList(vecPasswordInfolList);
 	EndDialog(0);
 }
 

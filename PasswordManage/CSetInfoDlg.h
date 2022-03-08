@@ -1,7 +1,9 @@
 #pragma once
+
 #include "resource.h"
 #include "afxdialogex.h"
 #include "SqliteDatabase.h"
+
 
 class CSetInfo : public CDialogEx
 {
