@@ -104,7 +104,7 @@ void  CPasswordView::ShowList(std::vector<PasswordColumnInfo*> vectPasswordInfoL
 		m_pListCtrl->SetItemText(index, 0, std::to_string(index+1).c_str());
 		m_pListCtrl->SetItemText(index, 1, info->Name.c_str());
 		m_pListCtrl->SetItemText(index, 2, info->Username.c_str());
-		m_pListCtrl->SetItemText(index, 3, info->Password.c_str());
+		m_pListCtrl->SetItemText(index, 3, _T("******"));
 		m_pListCtrl->SetItemText(index, 4, info->Url.c_str());
 		m_pListCtrl->SetItemText(index, 5, info->Notes.c_str());
 		m_pListCtrl->SetItemData(index, (DWORD)info);
@@ -118,7 +118,7 @@ void CPasswordView::InsertListInfo(PasswordColumnInfo* info)
 	m_pListCtrl->SetItemText(index, 0, std::to_string(index + 1).c_str());
 	m_pListCtrl->SetItemText(index, 1, info->Name.c_str());
 	m_pListCtrl->SetItemText(index, 2, info->Username.c_str());
-	m_pListCtrl->SetItemText(index, 3, info->Password.c_str());
+	m_pListCtrl->SetItemText(index, 3, _T("******"));
 	m_pListCtrl->SetItemText(index, 4, info->Url.c_str());
 	m_pListCtrl->SetItemText(index, 5, info->Notes.c_str());
 	m_pListCtrl->SetItemData(index, (DWORD)info);
