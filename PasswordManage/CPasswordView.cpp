@@ -23,6 +23,7 @@ BEGIN_MESSAGE_MAP(CPasswordView, CListView)
 	ON_WM_CONTEXTMENU()
 	ON_WM_WINDOWPOSCHANGING()
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
+	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDoubleclick)
 END_MESSAGE_MAP()
 
 void CPasswordView::OnDraw(CDC* pDC)
@@ -204,4 +205,16 @@ void CPasswordView::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 	default:
 		break;
 	}
+}
+
+void CPasswordView::OnDoubleclick(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	PasswordColumnInfo* ptmpInfo = NULL;
+	POSITION pos = m_pListCtrl->GetFirstSelectedItemPosition();
+	int nIndex = m_pListCtrl->GetNextSelectedItem(pos);
+	if (nIndex == -1)
+		return;
+	ptmpInfo = (PasswordColumnInfo*)m_pListCtrl->GetItemData(nIndex);
+	CSetInfo setInfoDlg(ptmpInfo);
+	setInfoDlg.DoModal();
 }
