@@ -38,6 +38,22 @@ BOOL CPasswordView::PreCreateWindow(CREATESTRUCT& cs)
 	return CListView::PreCreateWindow(cs);
 }
 
+BOOL CPasswordView::PreTranslateMessage(MSG* pMsg)
+{
+	//复制用户名
+	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == 'X' && GetAsyncKeyState(VK_CONTROL))
+	{
+		
+	}
+	//复制密码
+	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == 'C' && GetAsyncKeyState(VK_CONTROL))
+	{
+		
+	}
+	
+	return CListView::PreTranslateMessage(pMsg);
+}
+
 void CPasswordView::OnInitialUpdate()
 {
 	CListView::OnInitialUpdate();
