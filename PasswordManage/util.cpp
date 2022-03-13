@@ -102,3 +102,28 @@ BOOL CreateUUID(char* szBuffer)
 	memcpy(szBuffer, szTempBuffer, KEY_MAX_LEN * sizeof(char));
 	return TRUE;
 }
+
+
+BOOL CopyStringToClipboard(const std::string strText)
+{
+	if (!::OpenClipboard(NULL))
+	{
+		return FALSE;
+	}
+
+	::EmptyClipboard();
+	int len = strText.length();
+	int size = (len + 1) * 2;
+	HGLOBAL clipbuffer = GlobalAlloc(GMEM_DDESHARE, size);
+	if (!clipbuffer)
+	{
+		::CloseClipboard();
+		return FALSE;
+	}
+	char* buffer = (char*)::GlobalLock(clipbuffer);
+	memcpy(buffer, strText.c_str(), size);
+	::GlobalUnlock(clipbuffer);
+	::SetClipboardData(CF_UNICODETEXT, clipbuffer);
+	::CloseClipboard();
+	return TRUE;
+}
