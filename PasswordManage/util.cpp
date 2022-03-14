@@ -4,6 +4,7 @@
 #include<openssl/rsa.h>
 #include<openssl/pem.h>
 #include<openssl/err.h>
+#include<atlstr.h>
 
 #pragma comment(lib,"libcrypto.lib")
 #pragma comment(lib,"libssl.lib")
@@ -111,19 +112,14 @@ BOOL CopyStringToClipboard(const std::string strText)
 		return FALSE;
 	}
 
+	CString src = strText.c_str();
 	::EmptyClipboard();
-	int len = strText.length();
-	int size = (len + 1) * 2;
-	HGLOBAL clipbuffer = GlobalAlloc(GMEM_DDESHARE, size);
-	if (!clipbuffer)
-	{
-		::CloseClipboard();
-		return FALSE;
-	}
-	char* buffer = (char*)::GlobalLock(clipbuffer);
-	memcpy(buffer, strText.c_str(), size);
-	::GlobalUnlock(clipbuffer);
-	::SetClipboardData(CF_UNICODETEXT, clipbuffer);
+	size_t cbStr = (src.GetLength() + 1) * sizeof(TCHAR);
+	HGLOBAL hData = GlobalAlloc(GMEM_MOVEABLE, cbStr);
+	memcpy_s(GlobalLock(hData), cbStr, src.LockBuffer(), cbStr);
+	::GlobalUnlock(hData);
+	src.UnlockBuffer();
+	::SetClipboardData(CF_TEXT, hData);
 	::CloseClipboard();
 	return TRUE;
 }

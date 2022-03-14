@@ -1,6 +1,8 @@
 #include "CPasswordView.h"
 #include "PasswordManage.h"
+#include "util.h"
 #include <afxcontrolbars.h>
+
 
 
 extern CTabView* g_pTabView;
@@ -40,15 +42,23 @@ BOOL CPasswordView::PreCreateWindow(CREATESTRUCT& cs)
 
 BOOL CPasswordView::PreTranslateMessage(MSG* pMsg)
 {
+	PasswordColumnInfo* ptmpInfo = NULL;
+	POSITION pos = m_pListCtrl->GetFirstSelectedItemPosition();
+	int nIndex = m_pListCtrl->GetNextSelectedItem(pos);
+	if (nIndex == -1)
+	{
+		return FALSE;
+	}
+	ptmpInfo = (PasswordColumnInfo*)m_pListCtrl->GetItemData(nIndex);
 	//复制用户名
 	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == 'X' && GetAsyncKeyState(VK_CONTROL))
 	{
-		
+		CopyStringToClipboard(ptmpInfo->Username);
 	}
 	//复制密码
 	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == 'C' && GetAsyncKeyState(VK_CONTROL))
 	{
-		
+		CopyStringToClipboard(ptmpInfo->Password);
 	}
 	
 	return CListView::PreTranslateMessage(pMsg);
