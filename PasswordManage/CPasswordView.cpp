@@ -190,6 +190,8 @@ void CPasswordView::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 		pMenu->EnableMenuItem(ID_MENU_DELETE, MF_DISABLED);
 		pMenu->EnableMenuItem(ID_MENU_EDIT, MF_DISABLED);
+		pMenu->EnableMenuItem(ID_COPYUSERNAME, MF_DISABLED);
+		pMenu->EnableMenuItem(ID_COPYPASSWORD, MF_DISABLED);
 	}
 
 
@@ -197,7 +199,9 @@ void CPasswordView::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 	GetCursorPos(&p);
 	int nMenuResult = pMenu->TrackPopupMenu(TPM_NONOTIFY | TPM_RETURNCMD | TPM_LEFTALIGN | TPM_RIGHTBUTTON, p.x, p.y, this);
 
-	if (nIndex != -1 && (nMenuResult == ID_MENU_EDIT || nMenuResult == ID_MENU_DELETE))
+	if (nIndex != -1 &&
+		(nMenuResult == ID_MENU_EDIT || nMenuResult == ID_MENU_DELETE
+			|| nMenuResult == ID_COPYUSERNAME || nMenuResult == ID_COPYPASSWORD))
 		ptmpInfo = (PasswordColumnInfo*)m_pListCtrl->GetItemData(nIndex);
 	CSetInfo setInfoDlg(ptmpInfo);
 	std::vector<PasswordColumnInfo*> vecPasswordInfolList;
@@ -227,6 +231,12 @@ void CPasswordView::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 		break;
 	case ID_MENU_EDIT:
 		setInfoDlg.DoModal();
+		break;
+	case ID_COPYUSERNAME:
+		CopyStringToClipboard(ptmpInfo->Username);
+		break;
+	case ID_COPYPASSWORD:
+		CopyStringToClipboard(ptmpInfo->Password);
 		break;
 	default:
 		break;

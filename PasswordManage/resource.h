@@ -27,13 +27,17 @@
 #define ID_MENU_DELETE                  32774
 #define ID_32775                        32775
 #define ID_MENU_EDIT                    32776
+#define ID_32777                        32777
+#define ID_COPYUSERNAME                 32778
+#define ID_32779                        32779
+#define ID_COPYPASSWORD                 32780
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        135
-#define _APS_NEXT_COMMAND_VALUE         32777
+#define _APS_NEXT_COMMAND_VALUE         32781
 #define _APS_NEXT_CONTROL_VALUE         1020
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
