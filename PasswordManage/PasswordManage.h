@@ -18,7 +18,7 @@ class CPasswordManageApp : public CWinApp
 {
 public:
 	CPasswordManageApp() noexcept;
-
+	std::string m_strKey;
 
 	// 重写
 public:
