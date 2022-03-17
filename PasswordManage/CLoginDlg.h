@@ -12,7 +12,7 @@ public:
 	virtual ~CLogin();
 
 	std::string getToken() { return m_strKey; }
-	std::string setToken(std::string strToken) { m_strKey = strToken; }
+	std::string setToken(std::string strKey) { m_strKey = strKey; }
 
 	enum {
 		IDD = IDD_LOGIN
@@ -32,6 +32,9 @@ protected:
 	virtual BOOL OnInitDialog();
 	//afx_msg void OnOK();
 	std::string m_strKey;
+	CString m_strLoginPassword;
 
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedOk();
 };
