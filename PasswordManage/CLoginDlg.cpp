@@ -39,6 +39,6 @@ void CLogin::OnBnClickedOk()
 {
 	UpdateData();
 	// TODO: 在此添加控件通知处理程序代码
-
+	m_strKey = m_strLoginPassword.GetBuffer();
 	this->EndDialog(0);
 }
