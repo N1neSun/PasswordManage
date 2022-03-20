@@ -15,6 +15,8 @@ public:
 
 	void SetGroupComboBox();
 
+	std::string m_strKey;
+
 	enum {
 		IDD = IDD_PASSWORDINFO
 	};

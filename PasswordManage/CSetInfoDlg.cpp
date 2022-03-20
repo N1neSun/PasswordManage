@@ -1,4 +1,5 @@
 #include "CPasswordView.h"
+#include "PasswordManage.h"
 #include "CSetInfoDlg.h"
 #include <afxcontrolbars.h>
 
@@ -19,7 +20,8 @@ CSetInfo::CSetInfo(PasswordColumnInfo* info) : CDialogEx(CSetInfo::IDD)
 	m_strUrl = info->Url.c_str();
 	m_strNotes = info->Notes.c_str();
 	m_strGroup = info->GroupName.c_str();
-	
+	CPasswordManageApp* pApp = (CPasswordManageApp*)AfxGetApp();
+	m_strKey = pApp->m_strKey;
 }
 
 CSetInfo::~CSetInfo()
