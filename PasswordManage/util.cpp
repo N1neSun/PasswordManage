@@ -6,6 +6,8 @@
 #include<openssl/err.h>
 #include<atlstr.h>
 
+#define KEY_FILE "DecryptKey.key"
+
 #pragma comment(lib,"libcrypto.lib")
 #pragma comment(lib,"libssl.lib")
 
@@ -122,4 +124,157 @@ BOOL CopyStringToClipboard(const std::string strText)
 	::SetClipboardData(CF_TEXT, hData);
 	::CloseClipboard();
 	return TRUE;
+}
+
+BOOL LoadDecryptKey(const CHAR* pczPin /*= ""*/, std::string& strDecryptKey)
+{
+	BOOL bRet = FALSE;
+
+	do
+	{
+		TCHAR szFirmware[MAX_PATH] = { 0 };
+		GetModuleFileName(NULL, szFirmware, MAX_PATH);
+		PathRemoveFileSpec(szFirmware);
+		PathAppend(szFirmware, KEY_FILE);
+
+		if (!PathFileExists(szFirmware))
+		{
+			break;
+		}
+
+		std::string strData = "";
+		if (!ReadFileToString(szFirmware, strData))
+		{
+			break;
+		}
+
+
+		std::string strDecrypt = aes_256_cbc_decode(pczPin, strData);
+		if (strDecrypt.empty())
+		{
+			break;
+		}
+		strDecryptKey = strDecrypt;
+		
+		bRet = TRUE;
+
+	} while (FALSE);
+
+	return bRet;
+}
+
+BOOL SaveDecryptKey(const CHAR* pczPin /*= ""*/, const std::string& strDecryptKey)
+{
+	BOOL bRet = FALSE;
+
+	do
+	{
+		TCHAR szKeyFile[MAX_PATH] = { 0 };
+		GetModuleFileName(NULL, szKeyFile, MAX_PATH);
+		PathRemoveFileSpec(szKeyFile);
+		PathAppend(szKeyFile, KEY_FILE);
+
+		if (!PathFileExists(szKeyFile))
+		{
+			break;
+		}
+
+		std::string strEncrypt = aes_256_cbc_encode(pczPin, strDecryptKey);
+		if (strEncrypt.empty())
+		{
+			break;
+		}
+
+		if (!WriteStringToFile(szKeyFile, strEncrypt))
+		{
+			break;
+		}
+		bRet = TRUE;
+	} while (FALSE);
+
+	return bRet;
+}
+
+bool ReadFileToString(const char* pFilePath, std::string& strData)
+{
+	FILE* pFile = NULL;
+	char* buf = NULL;
+	int len = 0;
+	bool bRet = false;
+	strData.clear();
+	pFile = fopen(pFilePath, "rb");
+	if (NULL == pFile)
+	{
+		return false;
+	}
+
+	fseek(pFile, 0, SEEK_END);
+	len = ftell(pFile);
+	rewind(pFile);
+
+	buf = new char[len];
+	if (NULL == buf)
+	{
+		fclose(pFile);
+		return false;
+	}
+
+	bRet = (1 == fread(buf, len, 1, pFile));
+	fclose(pFile);
+	if (bRet)
+	{
+		strData.assign(buf, len);
+	}
+	delete[] buf;
+	return bRet;
+}
+
+
+bool ReadFileToString(const wchar_t* pFilePath, std::string& strData)
+{
+	FILE* pFile = NULL;
+	char* buf = NULL;
+	int len = 0;
+	bool bRet = false;
+	strData.clear();
+	pFile = _wfopen(pFilePath, L"rb");
+	if (NULL == pFile)
+	{
+		return false;
+	}
+
+	fseek(pFile, 0, SEEK_END);
+	len = ftell(pFile);
+	rewind(pFile);
+
+	buf = new char[len];
+	if (NULL == buf)
+	{
+		fclose(pFile);
+		return false;
+	}
+
+	bRet = (1 == fread(buf, len, 1, pFile));
+	fclose(pFile);
+	if (bRet)
+	{
+		strData.assign(buf, len);
+	}
+	delete[] buf;
+	return bRet;
+}
+
+bool WriteStringToFile(const char* pFilePath, const std::string& strData)
+{
+	FILE* pFile = NULL;
+	char* buf = NULL;
+	bool bRet = false;
+	pFile = fopen(pFilePath, "wb");
+	if (NULL == pFile)
+	{
+		return false;
+	}
+	bRet = (1 == fwrite(strData.c_str(), strData.size(), 1, pFile));
+	fclose(pFile);
+	return bRet;
 }
