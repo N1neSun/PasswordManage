@@ -14,3 +14,11 @@ void GetRandString(LPSTR szStr, DWORD len);
 BOOL CreateUUID(char* szBuffer);
 
 BOOL CopyStringToClipboard(const std::string strText);
+
+BOOL LoadDecryptKey(const CHAR* pczPin /*= ""*/, std::string& strDecryptKey);
+
+BOOL SaveDecryptKey(const CHAR* pczPin /*= ""*/, const std::string& strDecryptKey);
+
+bool ReadFileToString(const char* pFilePath, std::string& strData);
+
+bool WriteStringToFile(const char* pFilePath, const std::string& strData);

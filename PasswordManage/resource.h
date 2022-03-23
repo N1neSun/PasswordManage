@@ -11,6 +11,7 @@
 #define IDD_PASSWORDINFO                131
 #define IDD_LOGIN                       133
 #define IDD_DIALOG1                     135
+#define IDD_DIALOG_SETPASSWORD          135
 #define IDC_EDIT_NAME                   1006
 #define IDC_EDIT_USERNAME               1007
 #define IDC_EDIT_PASSWORD               1008
@@ -23,7 +24,6 @@
 #define IDC_EDIT1                       1019
 #define IDC_EDIT_LOGIN                  1019
 #define IDC_EDIT_SETPASSWORD            1019
-#define IDC_EDIT_CONFIRM                1020
 #define IDC_EDIT_CONFIRMPASSWORD        1020
 #define ID_32771                        32771
 #define ID_32772                        32772

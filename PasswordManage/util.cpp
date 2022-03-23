@@ -229,41 +229,6 @@ bool ReadFileToString(const char* pFilePath, std::string& strData)
 	return bRet;
 }
 
-
-bool ReadFileToString(const wchar_t* pFilePath, std::string& strData)
-{
-	FILE* pFile = NULL;
-	char* buf = NULL;
-	int len = 0;
-	bool bRet = false;
-	strData.clear();
-	pFile = _wfopen(pFilePath, L"rb");
-	if (NULL == pFile)
-	{
-		return false;
-	}
-
-	fseek(pFile, 0, SEEK_END);
-	len = ftell(pFile);
-	rewind(pFile);
-
-	buf = new char[len];
-	if (NULL == buf)
-	{
-		fclose(pFile);
-		return false;
-	}
-
-	bRet = (1 == fread(buf, len, 1, pFile));
-	fclose(pFile);
-	if (bRet)
-	{
-		strData.assign(buf, len);
-	}
-	delete[] buf;
-	return bRet;
-}
-
 bool WriteStringToFile(const char* pFilePath, const std::string& strData)
 {
 	FILE* pFile = NULL;
