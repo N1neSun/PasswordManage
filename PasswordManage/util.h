@@ -4,6 +4,7 @@
 
 
 #define KEY_MAX_LEN 256
+#define KEY_FILE "DecryptKey.key"
 
 std::string aes_256_cbc_encode(const std::string& password, const std::string& data);
 

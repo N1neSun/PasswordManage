@@ -6,8 +6,6 @@
 #include<openssl/err.h>
 #include<atlstr.h>
 
-#define KEY_FILE "DecryptKey.key"
-
 #pragma comment(lib,"libcrypto.lib")
 #pragma comment(lib,"libssl.lib")
 

@@ -20,6 +20,8 @@ public:
 #endif
 
 private:
+	CString m_strPassword;
+	CString m_strConfirmPassword;
 
 
 protected:
