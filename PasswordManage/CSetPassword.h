@@ -20,6 +20,8 @@ public:
 #endif
 
 private:
+	CEdit m_SetPasswordEdit;
+	CEdit m_ConfirmPasswordEdit;
 	CString m_strPassword;
 	CString m_strConfirmPassword;
 

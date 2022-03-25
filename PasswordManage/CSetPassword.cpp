@@ -17,7 +17,11 @@ void CSetPassword::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 
+	DDX_Control(pDX, IDC_EDIT_SETPASSWORD, m_SetPasswordEdit);
+	DDX_Control(pDX, IDC_EDIT_CONFIRMPASSWORD, m_ConfirmPasswordEdit);
 
+	DDX_Text(pDX, IDC_EDIT_SETPASSWORD, m_strPassword);
+	DDX_Text(pDX, IDC_EDIT_CONFIRMPASSWORD, m_strConfirmPassword);
 }
 
 
