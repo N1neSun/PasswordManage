@@ -24,11 +24,13 @@ private:
 	CEdit m_ConfirmPasswordEdit;
 	CString m_strPassword;
 	CString m_strConfirmPassword;
+	HANDLE m_hFile;
 
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
+	afx_msg void OnOK();
 
 	DECLARE_MESSAGE_MAP()
 };
