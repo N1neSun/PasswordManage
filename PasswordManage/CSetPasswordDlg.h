@@ -24,7 +24,6 @@ private:
 	CEdit m_ConfirmPasswordEdit;
 	CString m_strPassword;
 	CString m_strConfirmPassword;
-	HANDLE m_hFile;
 
 
 protected:

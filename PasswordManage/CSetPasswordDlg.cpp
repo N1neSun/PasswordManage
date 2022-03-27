@@ -33,16 +33,6 @@ BOOL CSetPassword::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	TCHAR szKeyFile[MAX_PATH] = { 0 };
-	GetModuleFileName(NULL, szKeyFile, MAX_PATH);
-	PathRemoveFileSpec(szKeyFile);
-	PathAppend(szKeyFile, KEY_FILE);
-
-	if (!PathFileExists(szKeyFile))
-	{
-		m_hFile = CreateFile(szKeyFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-	}
-
 	return TRUE;
 }
 

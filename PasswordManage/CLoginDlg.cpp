@@ -1,4 +1,5 @@
 #include "CLoginDlg.h"
+#include "util.h"
 
 
 
@@ -31,6 +32,7 @@ END_MESSAGE_MAP()
 BOOL CLogin::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+
 
 	return TRUE;
 }
