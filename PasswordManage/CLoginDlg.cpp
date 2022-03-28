@@ -1,5 +1,6 @@
 #include "CLoginDlg.h"
 #include "util.h"
+#include "CSetPasswordDlg.h"
 
 
 
@@ -32,7 +33,16 @@ END_MESSAGE_MAP()
 BOOL CLogin::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+	TCHAR szKeyFile[MAX_PATH] = { 0 };
+	GetModuleFileName(NULL, szKeyFile, MAX_PATH);
+	PathRemoveFileSpec(szKeyFile);
+	PathAppend(szKeyFile, KEY_FILE);
 
+	if (!PathFileExists(szKeyFile))
+	{
+		CSetPassword setPasswordDlg;
+		setPasswordDlg.DoModal();
+	}
 
 	return TRUE;
 }
