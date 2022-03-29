@@ -18,7 +18,7 @@ BOOL CopyStringToClipboard(const std::string strText);
 
 BOOL LoadDecryptKey(const CHAR* pczPin /*= ""*/, std::string& strDecryptKey);
 
-BOOL SaveDecryptKey(const CHAR* pczPin /*= ""*/, const std::string& strDecryptKey);
+BOOL SaveDecryptKey(const std::string& pczPin /*= ""*/, const std::string& strDecryptKey);
 
 bool ReadFileToString(const char* pFilePath, std::string& strData);
 

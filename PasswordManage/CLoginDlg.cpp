@@ -51,6 +51,10 @@ void CLogin::OnBnClickedOk()
 {
 	UpdateData();
 	// TODO: 在此添加控件通知处理程序代码
-	m_strKey = m_strLoginPassword.GetBuffer();
+	if (!LoadDecryptKey(m_strLoginPassword.GetBuffer(), m_strKey))
+	{
+		AfxMessageBox(_T("登录失败！"));
+		return;
+	}
 	this->EndDialog(0);
 }

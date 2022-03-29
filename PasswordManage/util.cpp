@@ -161,7 +161,7 @@ BOOL LoadDecryptKey(const CHAR* pczPin /*= ""*/, std::string& strDecryptKey)
 	return bRet;
 }
 
-BOOL SaveDecryptKey(const CHAR* pczPin /*= ""*/, const std::string& strDecryptKey)
+BOOL SaveDecryptKey(const std::string& pczPin /*= ""*/, const std::string& strDecryptKey)
 {
 	BOOL bRet = FALSE;
 

@@ -33,6 +33,18 @@ BOOL CSetPassword::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	TCHAR szKeyFile[MAX_PATH] = { 0 };
+	GetModuleFileName(NULL, szKeyFile, MAX_PATH);
+	PathRemoveFileSpec(szKeyFile);
+	PathAppend(szKeyFile, KEY_FILE);
+
+	if (!PathFileExists(szKeyFile))
+	{
+		HANDLE handle = CreateFile(szKeyFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+		CloseHandle(handle);
+	}
+
+
 	return TRUE;
 }
 
@@ -40,7 +52,7 @@ void CSetPassword::OnOK()
 {
 	UpdateData();
 
-	if (m_strPassword || m_strConfirmPassword)
+	if (!m_strPassword || !m_strConfirmPassword)
 	{
 		return;
 	}
@@ -52,7 +64,7 @@ void CSetPassword::OnOK()
 	}
 	char szUUID[KEY_MAX_LEN] = { 0 };
 	CreateUUID(szUUID);
-	if (SaveDecryptKey(m_strPassword, szUUID))
+	if (SaveDecryptKey(m_strPassword.GetBuffer(), szUUID))
 	{
 		AfxMessageBox(_T("key创建成功！"));
 	}
