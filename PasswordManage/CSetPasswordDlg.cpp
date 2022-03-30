@@ -1,5 +1,6 @@
 #include "CSetPasswordDlg.h"
 #include "util.h"
+#include "hash.h"
 
 IMPLEMENT_DYNAMIC(CSetPassword, CDialogEx)
 
@@ -64,7 +65,9 @@ void CSetPassword::OnOK()
 	}
 	char szUUID[KEY_MAX_LEN] = { 0 };
 	CreateUUID(szUUID);
-	if (SaveDecryptKey(m_strPassword.GetBuffer(), szUUID))
+	std::string strMD5Password = "";
+	md5_buffer_string((const unsigned char*)m_strPassword.GetBuffer(), m_strPassword.GetLength(), strMD5Password);
+	if (SaveDecryptKey(strMD5Password.c_str(), szUUID))
 	{
 		AfxMessageBox(_T("key创建成功！"));
 	}
