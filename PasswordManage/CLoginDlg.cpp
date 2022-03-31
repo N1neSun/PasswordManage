@@ -1,6 +1,7 @@
 #include "CLoginDlg.h"
 #include "util.h"
 #include "CSetPasswordDlg.h"
+#include "hash.h"
 
 
 
@@ -51,7 +52,9 @@ void CLogin::OnBnClickedOk()
 {
 	UpdateData();
 	// TODO: 在此添加控件通知处理程序代码
-	if (!LoadDecryptKey(m_strLoginPassword.GetBuffer(), m_strKey))
+	std::string strMD5Password = "";
+	md5_buffer_string((const unsigned char*)m_strLoginPassword.GetBuffer(), m_strLoginPassword.GetLength(), strMD5Password);
+	if (!LoadDecryptKey(strMD5Password.c_str(), m_strKey))
 	{
 		AfxMessageBox(_T("登录失败！"));
 		return;
