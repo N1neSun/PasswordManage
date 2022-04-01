@@ -148,7 +148,7 @@ BOOL LoadDecryptKey(const CHAR* pczPin /*= ""*/, std::string& strDecryptKey)
 
 
 		std::string strDecrypt = aes_256_cbc_decode(pczPin, strData);
-		if (strDecrypt.empty())
+		if (strDecrypt.empty() || (strDecrypt.find(SIGN) != 0))
 		{
 			break;
 		}
