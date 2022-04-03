@@ -2,6 +2,7 @@
 #include "PasswordManage.h"
 #include "CSetInfoDlg.h"
 #include <afxcontrolbars.h>
+#include "util.h"
 
 extern CTabView* g_pTabView;
 
@@ -13,15 +14,16 @@ CSetInfo::CSetInfo(PasswordColumnInfo* info) : CDialogEx(CSetInfo::IDD)
 		return;
 	if (info->id == -1)
 		return;
+	CPasswordManageApp* pApp = (CPasswordManageApp*)AfxGetApp();
+	m_strKey = pApp->m_strKey;
 	m_strPasswordID = info->PasswordId.c_str();
 	m_strName = info->Name.c_str();
 	m_strUsername = info->Username.c_str();
-	m_strPassword = info->Password.c_str();
+	m_strPassword = aes_256_cbc_decode(m_strKey, info->Password).c_str();
 	m_strUrl = info->Url.c_str();
 	m_strNotes = info->Notes.c_str();
 	m_strGroup = info->GroupName.c_str();
-	CPasswordManageApp* pApp = (CPasswordManageApp*)AfxGetApp();
-	m_strKey = pApp->m_strKey;
+
 }
 
 CSetInfo::~CSetInfo()
@@ -73,7 +75,7 @@ void CSetInfo::OnOK()
 	m_PasswordInfo.PasswordId = m_strPasswordID.GetBuffer();
 	m_PasswordInfo.Name = m_strName.GetBuffer();
 	m_PasswordInfo.Username = m_strUsername.GetBuffer();
-	m_PasswordInfo.Password = m_strPassword.GetBuffer();
+	m_PasswordInfo.Password = aes_256_cbc_encode(m_strKey, m_strPassword.GetBuffer());
 	m_PasswordInfo.Url = m_strUrl.GetBuffer();
 	m_PasswordInfo.Notes = m_strNotes.GetBuffer();
 	m_PasswordInfo.GroupName = m_strGroup.GetBuffer();

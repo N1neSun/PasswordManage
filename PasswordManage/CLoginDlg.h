@@ -11,8 +11,8 @@ public:
 	CLogin();
 	virtual ~CLogin();
 
-	std::string getToken() { return m_strKey; }
-	std::string setToken(std::string strKey) { m_strKey = strKey; }
+	std::string getKey() { return m_strKey; }
+	std::string setKey(std::string strKey) { m_strKey = strKey; }
 
 	enum {
 		IDD = IDD_LOGIN
