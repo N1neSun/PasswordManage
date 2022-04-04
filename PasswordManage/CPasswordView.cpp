@@ -43,6 +43,7 @@ BOOL CPasswordView::PreCreateWindow(CREATESTRUCT& cs)
 BOOL CPasswordView::PreTranslateMessage(MSG* pMsg)
 {
 	PasswordColumnInfo* ptmpInfo = NULL;
+	CPasswordManageApp* pApp = (CPasswordManageApp*)AfxGetApp();
 	POSITION pos = m_pListCtrl->GetFirstSelectedItemPosition();
 	int nIndex = m_pListCtrl->GetNextSelectedItem(pos);
 	if (nIndex == -1)
@@ -58,7 +59,7 @@ BOOL CPasswordView::PreTranslateMessage(MSG* pMsg)
 	//¸´ÖÆÃÜÂë
 	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == 'C' && GetAsyncKeyState(VK_CONTROL))
 	{
-		CopyStringToClipboard(ptmpInfo->Password);
+		CopyStringToClipboard(aes_256_cbc_decode(pApp->m_strKey.substr(7), ptmpInfo->Password));
 	}
 	
 	return CListView::PreTranslateMessage(pMsg);

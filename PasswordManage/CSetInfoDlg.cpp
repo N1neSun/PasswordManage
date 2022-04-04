@@ -10,12 +10,12 @@ IMPLEMENT_DYNAMIC(CSetInfo, CDialogEx)
 
 CSetInfo::CSetInfo(PasswordColumnInfo* info) : CDialogEx(CSetInfo::IDD)
 {
+	CPasswordManageApp* pApp = (CPasswordManageApp*)AfxGetApp();
+	m_strKey = pApp->m_strKey.substr(7);
 	if (info == NULL)
 		return;
 	if (info->id == -1)
 		return;
-	CPasswordManageApp* pApp = (CPasswordManageApp*)AfxGetApp();
-	m_strKey = pApp->m_strKey;
 	m_strPasswordID = info->PasswordId.c_str();
 	m_strName = info->Name.c_str();
 	m_strUsername = info->Username.c_str();

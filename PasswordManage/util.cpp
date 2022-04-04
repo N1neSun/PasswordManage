@@ -152,7 +152,7 @@ BOOL LoadDecryptKey(const CHAR* pczPin /*= ""*/, std::string& strDecryptKey)
 		{
 			break;
 		}
-		strDecryptKey = strDecrypt;
+		strDecryptKey = strDecrypt.c_str();
 		
 		bRet = TRUE;
 
