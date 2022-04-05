@@ -105,8 +105,13 @@ BOOL CPasswordManageApp::InitInstance()
 	// TODO: 应适当修改该字符串，
 	// 例如修改为公司或组织名
 	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
-	LoadStdProfileSettings(4);  // 加载标准 INI 文件选项(包括 MRU)
+	LoadStdProfileSettings();  // 加载标准 INI 文件选项(包括 MRU)
 
+
+	SetRegistryBase(_T("Settings"));
+
+	InitContextMenuManager();
+	InitKeyboardManager();
 
 	// 注册应用程序的文档模板。  文档模板
 	// 将用作文档、框架窗口和视图之间的连接

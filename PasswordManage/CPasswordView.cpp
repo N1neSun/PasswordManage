@@ -1,7 +1,8 @@
 #include "CPasswordView.h"
+#include <afxcontrolbars.h>
 #include "PasswordManage.h"
 #include "util.h"
-#include <afxcontrolbars.h>
+
 
 
 

@@ -1,7 +1,8 @@
 #include "CPasswordView.h"
+#include <afxcontrolbars.h>
 #include "PasswordManage.h"
 #include "CSetInfoDlg.h"
-#include <afxcontrolbars.h>
+
 #include "util.h"
 
 extern CTabView* g_pTabView;
