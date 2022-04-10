@@ -33,8 +33,8 @@
 #define IDC_CHECK_LOWER                 1024
 #define IDC_CHECK_UPPER                 1025
 #define IDC_EDIT_PASS_NUM               1026
-#define IDC_LIST1                       1027
 #define IDC_LIST_PASSWORD               1027
+#define IDC_STATIC_RAND_PW              1028
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_MENU_ADD                     32773
@@ -52,7 +52,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        139
 #define _APS_NEXT_COMMAND_VALUE         32781
-#define _APS_NEXT_CONTROL_VALUE         1028
+#define _APS_NEXT_CONTROL_VALUE         1029
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

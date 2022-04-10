@@ -49,4 +49,6 @@ protected:
 	afx_msg void OnOK();
 
 	DECLARE_MESSAGE_MAP()
+public:
+
 };

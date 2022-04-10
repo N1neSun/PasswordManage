@@ -2,6 +2,7 @@
 #include <afxcontrolbars.h>
 #include "PasswordManage.h"
 #include "CSetInfoDlg.h"
+#include "CSetRandomPasswordDlg.h"
 
 #include "util.h"
 
