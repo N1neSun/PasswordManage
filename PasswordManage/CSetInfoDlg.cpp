@@ -54,6 +54,7 @@ void CSetInfo::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CSetInfo, CDialogEx)
 	ON_COMMAND(IDOK, OnOK)
+	ON_BN_CLICKED(IDC_BUTTON_RAND_PASS, &CSetInfo::OnBnClickedButtonRandPass)
 END_MESSAGE_MAP()
 
 BOOL CSetInfo::OnInitDialog()
@@ -128,4 +129,11 @@ void CSetInfo::SetGroupComboBox()
 			m_GroupComboBox.InsertString(iIndex++, strGroupName.c_str());
 		}
 	}
+}
+
+void CSetInfo::OnBnClickedButtonRandPass()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CSetRandomPassword dlg;
+	dlg.DoModal();
 }

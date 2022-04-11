@@ -22,6 +22,7 @@
 #define IDC_COMBO_GROUP                 1017
 #define IDC_BUTTON1                     1018
 #define IDC_BUTTON_RANDOM               1018
+#define IDC_BUTTON_RAND_PASS            1018
 #define IDC_EDIT1                       1019
 #define IDC_EDIT_LOGIN                  1019
 #define IDC_EDIT_SETPASSWORD            1019
@@ -34,7 +35,7 @@
 #define IDC_CHECK_UPPER                 1025
 #define IDC_EDIT_PASS_NUM               1026
 #define IDC_LIST_PASSWORD               1027
-#define IDC_STATIC_RAND_PW              1028
+#define IDC_COMBO1                      1029
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_MENU_ADD                     32773
@@ -52,7 +53,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        139
 #define _APS_NEXT_COMMAND_VALUE         32781
-#define _APS_NEXT_CONTROL_VALUE         1029
+#define _APS_NEXT_CONTROL_VALUE         1030
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

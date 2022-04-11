@@ -20,12 +20,12 @@ void CSetRandomPassword::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_RAN_PASSWORD, m_SetPasswordEdit);
 	DDX_Control(pDX, IDC_LIST_PASSWORD, m_PasswordList);
 
-	DDX_Text(pDX, IDC_CHECK_NUM, m_IsNum);
-	DDX_Text(pDX, IDC_CHECK_CHAR, m_IsChar);
-	DDX_Text(pDX, IDC_CHECK_SYMBOL, m_IsSymbol);
+	DDX_Check(pDX, IDC_CHECK_NUM, m_IsNum);
+	DDX_Check(pDX, IDC_CHECK_CHAR, m_IsChar);
+	DDX_Check(pDX, IDC_CHECK_SYMBOL, m_IsSymbol);
 	DDX_Text(pDX, IDC_EDIT_PASS_NUM, m_PasswordCount);
-	DDX_Text(pDX, IDC_CHECK_LOWER, m_IsLower);
-	DDX_Text(pDX, IDC_CHECK_UPPER, m_IsUpper);
+	DDX_Check(pDX, IDC_CHECK_LOWER, m_IsLower);
+	DDX_Check(pDX, IDC_CHECK_UPPER, m_IsUpper);
 }
 
 
