@@ -241,3 +241,60 @@ bool WriteStringToFile(const char* pFilePath, const std::string& strData)
 	fclose(pFile);
 	return bRet;
 }
+
+bool GetRandomNum(std::string& strNum, int nCount)
+{
+	strNum.clear();
+	char  singleCode[2];
+	char  verificationValue[11] = "0123456789";
+	memset(singleCode, 0, 2);
+	srand((unsigned int)time((time_t*)NULL));
+	for (unsigned int i = 1; i <= nCount; ++i)
+	{
+		sprintf(singleCode, "%c", verificationValue[(rand() % 9) + 1]);
+		strNum += singleCode;
+	}
+}
+
+bool GetRandomLowerChar(std::string& strChar, int nCount)
+{
+	strChar.clear();
+	char  singleCode[2];
+	char  verificationValue[27] = "abcdefghijklmnopqrstuvwxyz";
+	memset(singleCode, 0, 2);
+	srand((unsigned int)time((time_t*)NULL));
+	for (unsigned int i = 1; i <= nCount; ++i)
+	{
+		sprintf(singleCode, "%c", verificationValue[(rand() % 25) + 1]);
+		strChar += singleCode;
+	}
+}
+
+bool GetRandomUpperChar(std::string& strChar, int nCount)
+{
+	strChar.clear();
+	char  singleCode[2];
+	char  verificationValue[27] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	memset(singleCode, 0, 2);
+	srand((unsigned int)time((time_t*)NULL));
+	for (unsigned int i = 1; i <= nCount; ++i)
+	{
+		sprintf(singleCode, "%c", verificationValue[(rand() % 25) + 1]);
+		strChar += singleCode;
+	}
+	
+}
+
+bool GetRandomSymbol(std::string& strSymbol, int nCount)
+{
+	strSymbol.clear();
+	char  singleCode[2];
+	char  verificationValue[29] = "`~!@#$%^&*()_-+={}|[]:;,.<>?";
+	memset(singleCode, 0, 2);
+	srand((unsigned int)time((time_t*)NULL));
+	for (unsigned int i = 1; i <= nCount; ++i)
+	{
+		sprintf(singleCode, "%c", verificationValue[(rand() % 27) + 1]);
+		strSymbol += singleCode;
+	}
+}

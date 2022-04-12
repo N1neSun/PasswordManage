@@ -24,3 +24,11 @@ BOOL SaveDecryptKey(const CHAR* pczPin /*= ""*/, const std::string& strDecryptKe
 bool ReadFileToString(const char* pFilePath, std::string& strData);
 
 bool WriteStringToFile(const char* pFilePath, const std::string& strData);
+
+bool GetRandomNum(std::string& strNum, int nCount);
+
+bool GetRandomLowerChar(std::string& strChar, int nCount);
+
+bool GetRandomUpperChar(std::string& strChar, int nCount);
+
+bool GetRandomSymbol(std::string& strSymbol, int nCount);
