@@ -1,4 +1,5 @@
 #include "CSetRandomPasswordDlg.h"
+#include "util.h"
 
 
 IMPLEMENT_DYNAMIC(CSetRandomPassword, CDialogEx)
@@ -20,6 +21,7 @@ void CSetRandomPassword::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_RAN_PASSWORD, m_SetPasswordEdit);
 	DDX_Control(pDX, IDC_LIST_PASSWORD, m_PasswordList);
 
+	DDX_Text(pDX, IDC_EDIT_RAN_PASSWORD, m_strPassword);
 	DDX_Check(pDX, IDC_CHECK_NUM, m_IsNum);
 	DDX_Check(pDX, IDC_CHECK_CHAR, m_IsChar);
 	DDX_Check(pDX, IDC_CHECK_SYMBOL, m_IsSymbol);
@@ -31,6 +33,7 @@ void CSetRandomPassword::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CSetRandomPassword, CDialogEx)
 	ON_COMMAND(IDOK, OnOK)
+	ON_BN_CLICKED(IDC_BUTTON_RANDOM, &CSetRandomPassword::OnBnClickedButtonRandom)
 END_MESSAGE_MAP()
 
 BOOL CSetRandomPassword::OnInitDialog()
@@ -42,5 +45,12 @@ BOOL CSetRandomPassword::OnInitDialog()
 
 void CSetRandomPassword::OnOK()
 {
+
+}
+
+void CSetRandomPassword::OnBnClickedButtonRandom()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(TRUE);
 
 }

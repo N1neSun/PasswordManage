@@ -28,6 +28,7 @@ private:
 	BOOL m_IsLower;
 	BOOL m_IsUpper;
 	CListCtrl m_PasswordList;
+	CString m_strPassword;
 
 
 protected:
@@ -36,4 +37,6 @@ protected:
 	afx_msg void OnOK();
 
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedButtonRandom();
 };

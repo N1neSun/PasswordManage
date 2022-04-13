@@ -254,6 +254,7 @@ bool GetRandomNum(std::string& strNum, int nCount)
 		sprintf(singleCode, "%c", verificationValue[(rand() % 9) + 1]);
 		strNum += singleCode;
 	}
+	return true;
 }
 
 bool GetRandomLowerChar(std::string& strChar, int nCount)
@@ -268,6 +269,7 @@ bool GetRandomLowerChar(std::string& strChar, int nCount)
 		sprintf(singleCode, "%c", verificationValue[(rand() % 25) + 1]);
 		strChar += singleCode;
 	}
+	return true;
 }
 
 bool GetRandomUpperChar(std::string& strChar, int nCount)
@@ -282,7 +284,7 @@ bool GetRandomUpperChar(std::string& strChar, int nCount)
 		sprintf(singleCode, "%c", verificationValue[(rand() % 25) + 1]);
 		strChar += singleCode;
 	}
-	
+	return true;
 }
 
 bool GetRandomSymbol(std::string& strSymbol, int nCount)
@@ -297,4 +299,5 @@ bool GetRandomSymbol(std::string& strSymbol, int nCount)
 		sprintf(singleCode, "%c", verificationValue[(rand() % 27) + 1]);
 		strSymbol += singleCode;
 	}
+	return true;
 }
