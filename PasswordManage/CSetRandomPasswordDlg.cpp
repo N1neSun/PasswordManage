@@ -52,5 +52,25 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	UpdateData(TRUE);
-
+	std::string strMark;
+	if (m_IsNum)
+		strMark += "1";
+	else
+		strMark += "0";
+	if (m_IsChar)
+		strMark += "1";
+	else
+		strMark += "0";
+	if (m_IsSymbol)
+		strMark += "1";
+	else
+		strMark += "0";
+	if (m_IsLower)
+		strMark += "1";
+	else
+		strMark += "0";
+	if (m_IsUpper)
+		strMark += "1";
+	else
+		strMark += "0";
 }
