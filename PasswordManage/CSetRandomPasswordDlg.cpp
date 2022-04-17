@@ -54,6 +54,7 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 	UpdateData(TRUE);
 	std::string strMark;
 	int nType = 0;
+	int nPassword;
 	m_IsNum ? strMark += "1" : strMark += "0";
 	m_IsChar ? strMark += "1" : strMark += "0";
 	m_IsSymbol ? strMark += "1" : strMark += "0";
@@ -64,8 +65,8 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 		if (var == '1')
 			nType++;
 	}
-	for each (auto var in strMark)
-	{
-
-	}
+	if (m_PasswordCount < nType)
+		nPassword = 1;
+	else
+		nPassword = m_PasswordCount / nType;
 }
