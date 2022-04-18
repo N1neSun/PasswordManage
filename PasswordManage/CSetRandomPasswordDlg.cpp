@@ -6,7 +6,10 @@ IMPLEMENT_DYNAMIC(CSetRandomPassword, CDialogEx)
 
 CSetRandomPassword::CSetRandomPassword() : CDialogEx(CSetRandomPassword::IDD)
 {
-
+	m_FunctionMap[0] = GetRandomNum;
+	m_FunctionMap[1] = GetRandomLowerChar;
+	m_FunctionMap[2] = GetRandomUpperChar;
+	m_FunctionMap[3] = GetRandomSymbol;
 }
 
 CSetRandomPassword::~CSetRandomPassword()
@@ -55,6 +58,7 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 	std::string strMark;
 	int nType = 0;
 	int nPassword;
+	int nIndex = 0;
 	m_IsNum ? strMark += "1" : strMark += "0";
 	m_IsChar ? strMark += "1" : strMark += "0";
 	m_IsSymbol ? strMark += "1" : strMark += "0";
@@ -69,4 +73,5 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 		nPassword = 1;
 	else
 		nPassword = m_PasswordCount / nType;
+
 }

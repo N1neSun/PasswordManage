@@ -1,6 +1,10 @@
 #pragma once
 #include "resource.h"
 #include "afxdialogex.h"
+#include <map>
+
+typedef bool (*RandomFuc)(std::string&, int);
+typedef std::map<int, RandomFuc> FcuntionMap;
 
 class CSetRandomPassword : public CDialogEx
 {
@@ -29,6 +33,7 @@ private:
 	BOOL m_IsUpper;
 	CListCtrl m_PasswordList;
 	CString m_strPassword;
+	FcuntionMap m_FunctionMap;
 
 
 protected:
