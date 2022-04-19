@@ -60,18 +60,18 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 	int nPassword;
 	int nIndex = 0;
 	m_IsNum ? strMark += "1" : strMark += "0";
-	m_IsChar ? strMark += "1" : strMark += "0";
-	m_IsSymbol ? strMark += "1" : strMark += "0";
 	m_IsLower ? strMark += "1" : strMark += "0";
 	m_IsUpper ? strMark += "1" : strMark += "0";
-	for each (auto var in strMark)
-	{
-		if (var == '1')
-			nType++;
-	}
-	if (m_PasswordCount < nType)
-		nPassword = 1;
-	else
-		nPassword = m_PasswordCount / nType;
+	m_IsSymbol ? strMark += "1" : strMark += "0";
 
+	std::string strTmp;
+	std::string strPassword;
+	for (int i = 0; i < strMark.length(); i++)
+	{
+		if (strMark[i] == '1')
+		{
+			m_FunctionMap[i](strTmp, m_PasswordCount);
+			strPassword += strTmp;
+		}
+	}
 }
