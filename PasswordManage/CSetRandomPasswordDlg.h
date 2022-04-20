@@ -2,8 +2,9 @@
 #include "resource.h"
 #include "afxdialogex.h"
 #include <map>
+#include <string>
 
-typedef bool (*RandomFuc)(std::string&, int);
+typedef void (*RandomFuc)(std::string&, int);
 typedef std::map<int, RandomFuc> FcuntionMap;
 
 class CSetRandomPassword : public CDialogEx

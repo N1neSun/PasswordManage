@@ -1,5 +1,6 @@
 #include "CSetRandomPasswordDlg.h"
 #include "util.h"
+#include <vector>
 
 
 IMPLEMENT_DYNAMIC(CSetRandomPassword, CDialogEx)
@@ -42,7 +43,8 @@ END_MESSAGE_MAP()
 BOOL CSetRandomPassword::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-
+	m_PasswordList.SetExtendedStyle(LVS_EX_FULLROWSELECT /*| LVS_EX_FLATSB*/ |
+		LVS_EX_ONECLICKACTIVATE | LVS_EX_UNDERLINEHOT | LVS_EX_SUBITEMIMAGES | LVS_EX_GRIDLINES);
 	return TRUE;
 }
 
@@ -55,6 +57,8 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	UpdateData(TRUE);
+	m_PasswordList.DeleteAllItems();
+	std::vector<std::string> vecPasswordList;
 	std::string strMark;
 	int nType = 0;
 	int nPassword;
@@ -63,7 +67,7 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 	m_IsLower ? strMark += "1" : strMark += "0";
 	m_IsUpper ? strMark += "1" : strMark += "0";
 	m_IsSymbol ? strMark += "1" : strMark += "0";
-
+ 
 	std::string strTmp;
 	std::string strPassword;
 	for (int i = 0; i < strMark.length(); i++)
@@ -74,4 +78,14 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 			strPassword += strTmp;
 		}
 	}
+	if (strPassword.empty())
+		return;
+	for (int i = 0; i < 10; i++)
+	{
+		Sleep(100);
+		m_PasswordList.InsertItem(i, "", 0);
+		m_PasswordList.SetItemText(i, 0, GetRandomPassword(strPassword, m_PasswordCount).c_str());
+	}
+	//m_strPassword = strRandomPassword.c_str();
+	UpdateData(FALSE);
 }

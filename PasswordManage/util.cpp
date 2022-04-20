@@ -242,7 +242,7 @@ bool WriteStringToFile(const char* pFilePath, const std::string& strData)
 	return bRet;
 }
 
-bool GetRandomNum(std::string& strNum, int nCount)
+void GetRandomNum(std::string& strNum, int nCount)
 {
 	strNum.clear();
 	char  singleCode[2];
@@ -251,13 +251,12 @@ bool GetRandomNum(std::string& strNum, int nCount)
 	srand((unsigned int)time((time_t*)NULL));
 	for (unsigned int i = 1; i <= nCount; ++i)
 	{
-		sprintf(singleCode, "%c", verificationValue[(rand() % 9) + 1]);
+		sprintf(singleCode, "%c", verificationValue[(rand() % 10)]);
 		strNum += singleCode;
 	}
-	return true;
 }
 
-bool GetRandomLowerChar(std::string& strChar, int nCount)
+void GetRandomLowerChar(std::string& strChar, int nCount)
 {
 	strChar.clear();
 	char  singleCode[2];
@@ -266,13 +265,12 @@ bool GetRandomLowerChar(std::string& strChar, int nCount)
 	srand((unsigned int)time((time_t*)NULL));
 	for (unsigned int i = 1; i <= nCount; ++i)
 	{
-		sprintf(singleCode, "%c", verificationValue[(rand() % 25) + 1]);
+		sprintf(singleCode, "%c", verificationValue[(rand() % 26)]);
 		strChar += singleCode;
 	}
-	return true;
 }
 
-bool GetRandomUpperChar(std::string& strChar, int nCount)
+void GetRandomUpperChar(std::string& strChar, int nCount)
 {
 	strChar.clear();
 	char  singleCode[2];
@@ -281,13 +279,12 @@ bool GetRandomUpperChar(std::string& strChar, int nCount)
 	srand((unsigned int)time((time_t*)NULL));
 	for (unsigned int i = 1; i <= nCount; ++i)
 	{
-		sprintf(singleCode, "%c", verificationValue[(rand() % 25) + 1]);
+		sprintf(singleCode, "%c", verificationValue[(rand() % 26)]);
 		strChar += singleCode;
 	}
-	return true;
 }
 
-bool GetRandomSymbol(std::string& strSymbol, int nCount)
+void GetRandomSymbol(std::string& strSymbol, int nCount)
 {
 	strSymbol.clear();
 	char  singleCode[2];
@@ -296,8 +293,21 @@ bool GetRandomSymbol(std::string& strSymbol, int nCount)
 	srand((unsigned int)time((time_t*)NULL));
 	for (unsigned int i = 1; i <= nCount; ++i)
 	{
-		sprintf(singleCode, "%c", verificationValue[(rand() % 27) + 1]);
+		sprintf(singleCode, "%c", verificationValue[(rand() % 28)]);
 		strSymbol += singleCode;
 	}
-	return true;
+}
+
+std::string GetRandomPassword(const std::string& strPassword, int nCount)
+{
+	std::string strRandomPassword;
+	char  singleCode[2];
+	memset(singleCode, 0, 2);
+	srand((unsigned int)time((time_t*)NULL));
+	for (int nIndex = 0; nIndex < nCount; nIndex++)
+	{
+		sprintf(singleCode, "%c", strPassword[(rand() % strPassword.length())]);
+		strRandomPassword += singleCode;
+	}
+	return strRandomPassword;
 }

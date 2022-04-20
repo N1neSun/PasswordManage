@@ -25,10 +25,12 @@ bool ReadFileToString(const char* pFilePath, std::string& strData);
 
 bool WriteStringToFile(const char* pFilePath, const std::string& strData);
 
-bool GetRandomNum(std::string& strNum, int nCount);
+void GetRandomNum(std::string& strNum, int nCount);
 
-bool GetRandomLowerChar(std::string& strChar, int nCount);
+void GetRandomLowerChar(std::string& strChar, int nCount);
 
-bool GetRandomUpperChar(std::string& strChar, int nCount);
+void GetRandomUpperChar(std::string& strChar, int nCount);
 
-bool GetRandomSymbol(std::string& strSymbol, int nCount);
+void GetRandomSymbol(std::string& strSymbol, int nCount);
+
+std::string GetRandomPassword(const std::string& strPassword, int nCount);
