@@ -5,6 +5,7 @@
 #include<openssl/pem.h>
 #include<openssl/err.h>
 #include<atlstr.h>
+#include<random>
 
 #pragma comment(lib,"libcrypto.lib")
 #pragma comment(lib,"libssl.lib")
@@ -303,10 +304,13 @@ std::string GetRandomPassword(const std::string& strPassword, int nCount)
 	std::string strRandomPassword;
 	char  singleCode[2];
 	memset(singleCode, 0, 2);
-	srand((unsigned int)time((time_t*)NULL));
+	//srand(time(0));
+	static std::default_random_engine generator;
+	static std::normal_distribution<double> distribution(0, strPassword.length());
 	for (int nIndex = 0; nIndex < nCount; nIndex++)
 	{
-		sprintf(singleCode, "%c", strPassword[(rand() % strPassword.length())]);
+		int nRand = distribution(generator);
+		sprintf(singleCode, "%c", strPassword[(nRand % strPassword.length())]);
 		strRandomPassword += singleCode;
 	}
 	return strRandomPassword;

@@ -82,9 +82,10 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 		return;
 	for (int i = 0; i < 10; i++)
 	{
-		Sleep(100);
+		//Sleep(100);
+		std::string strtemp = GetRandomPassword(strPassword, m_PasswordCount);
 		m_PasswordList.InsertItem(i, "", 0);
-		m_PasswordList.SetItemText(i, 0, GetRandomPassword(strPassword, m_PasswordCount).c_str());
+		m_PasswordList.SetItemText(i, 0, strtemp.c_str());
 	}
 	//m_strPassword = strRandomPassword.c_str();
 	UpdateData(FALSE);
