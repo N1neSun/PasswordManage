@@ -24,6 +24,9 @@ void CSetRandomPassword::DoDataExchange(CDataExchange* pDX)
 
 	DDX_Control(pDX, IDC_EDIT_RAN_PASSWORD, m_SetPasswordEdit);
 	DDX_Control(pDX, IDC_LIST_PASSWORD, m_PasswordList);
+	DDX_Control(pDX, IDC_CHECK_CHAR, m_SetCharCheckBox);
+	DDX_Control(pDX, IDC_CHECK_LOWER, m_SetLowerCharCheckBox);
+	DDX_Control(pDX, IDC_CHECK_UPPER, m_SetUpperCharCheckBox);
 
 	DDX_Text(pDX, IDC_EDIT_RAN_PASSWORD, m_strPassword);
 	DDX_Check(pDX, IDC_CHECK_NUM, m_IsNum);
@@ -45,6 +48,9 @@ BOOL CSetRandomPassword::OnInitDialog()
 	CDialogEx::OnInitDialog();
 	m_PasswordList.SetExtendedStyle(LVS_EX_FULLROWSELECT /*| LVS_EX_FLATSB*/ |
 		LVS_EX_ONECLICKACTIVATE | LVS_EX_UNDERLINEHOT | LVS_EX_SUBITEMIMAGES | LVS_EX_GRIDLINES);
+	m_PasswordList.InsertColumn(0, _T("√‹¬Î"), LVCFMT_LEFT, 200);
+	//m_SetLowerCharCheckBox.EnableWindow(0);
+	//m_SetUpperCharCheckBox.EnableWindow(0);
 	return TRUE;
 }
 
@@ -60,9 +66,6 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 	m_PasswordList.DeleteAllItems();
 	std::vector<std::string> vecPasswordList;
 	std::string strMark;
-	int nType = 0;
-	int nPassword;
-	int nIndex = 0;
 	m_IsNum ? strMark += "1" : strMark += "0";
 	m_IsLower ? strMark += "1" : strMark += "0";
 	m_IsUpper ? strMark += "1" : strMark += "0";
@@ -80,13 +83,13 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 	}
 	if (strPassword.empty())
 		return;
-	for (int i = 0; i < 10; i++)
+	for (int nIndex = 0; nIndex < 10; nIndex++)
 	{
 		//Sleep(100);
 		std::string strtemp = GetRandomPassword(strPassword, m_PasswordCount);
-		m_PasswordList.InsertItem(i, "", 0);
-		m_PasswordList.SetItemText(i, 0, strtemp.c_str());
+		m_PasswordList.InsertItem(nIndex, "", 0);
+		m_PasswordList.SetItemText(nIndex, 0, strtemp.c_str());
 	}
-	//m_strPassword = strRandomPassword.c_str();
+	m_strPassword = m_PasswordList.GetItemText(0, 0);
 	UpdateData(FALSE);
 }

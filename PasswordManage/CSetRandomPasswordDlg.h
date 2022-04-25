@@ -26,6 +26,9 @@ public:
 
 private:
 	CEdit m_SetPasswordEdit;
+	CButton m_SetCharCheckBox;
+	CButton m_SetLowerCharCheckBox;
+	CButton m_SetUpperCharCheckBox;
 	BOOL m_IsNum;
 	BOOL m_IsChar;
 	BOOL m_IsSymbol;
