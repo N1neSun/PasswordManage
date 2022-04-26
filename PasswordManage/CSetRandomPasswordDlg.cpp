@@ -41,6 +41,7 @@ void CSetRandomPassword::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CSetRandomPassword, CDialogEx)
 	ON_COMMAND(IDOK, OnOK)
 	ON_BN_CLICKED(IDC_BUTTON_RANDOM, &CSetRandomPassword::OnBnClickedButtonRandom)
+	ON_BN_CLICKED(IDC_CHECK_CHAR, &CSetRandomPassword::OnBnClickedCheckChar)
 END_MESSAGE_MAP()
 
 BOOL CSetRandomPassword::OnInitDialog()
@@ -49,8 +50,8 @@ BOOL CSetRandomPassword::OnInitDialog()
 	m_PasswordList.SetExtendedStyle(LVS_EX_FULLROWSELECT /*| LVS_EX_FLATSB*/ |
 		LVS_EX_ONECLICKACTIVATE | LVS_EX_UNDERLINEHOT | LVS_EX_SUBITEMIMAGES | LVS_EX_GRIDLINES);
 	m_PasswordList.InsertColumn(0, _T("密码"), LVCFMT_LEFT, 200);
-	//m_SetLowerCharCheckBox.EnableWindow(0);
-	//m_SetUpperCharCheckBox.EnableWindow(0);
+	m_SetLowerCharCheckBox.EnableWindow(FALSE);
+	m_SetUpperCharCheckBox.EnableWindow(FALSE);
 	return TRUE;
 }
 
@@ -92,4 +93,23 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 	}
 	m_strPassword = m_PasswordList.GetItemText(0, 0);
 	UpdateData(FALSE);
+}
+
+
+void CSetRandomPassword::OnBnClickedCheckChar()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if (m_SetCharCheckBox.GetCheck())
+	{
+		m_SetLowerCharCheckBox.EnableWindow(TRUE);
+		m_SetUpperCharCheckBox.EnableWindow(TRUE);
+		m_SetLowerCharCheckBox.SetCheck(TRUE);
+	}
+	else
+	{
+		m_SetLowerCharCheckBox.EnableWindow(FALSE);
+		m_SetUpperCharCheckBox.EnableWindow(FALSE);
+		m_SetLowerCharCheckBox.SetCheck(FALSE);
+	}
+	
 }
