@@ -40,6 +40,7 @@ void CSetRandomPassword::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CSetRandomPassword, CDialogEx)
 	ON_COMMAND(IDOK, OnOK)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_PASSWORD, OnSelchanged)
 	ON_BN_CLICKED(IDC_BUTTON_RANDOM, &CSetRandomPassword::OnBnClickedButtonRandom)
 	ON_BN_CLICKED(IDC_CHECK_CHAR, &CSetRandomPassword::OnBnClickedCheckChar)
 END_MESSAGE_MAP()
@@ -112,4 +113,13 @@ void CSetRandomPassword::OnBnClickedCheckChar()
 		m_SetLowerCharCheckBox.SetCheck(FALSE);
 	}
 	
+}
+
+void CSetRandomPassword::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	UpdateData(TRUE);
+	POSITION pos = m_PasswordList.GetFirstSelectedItemPosition();
+	int nIndex = m_PasswordList.GetNextSelectedItem(pos);
+	m_strPassword = m_PasswordList.GetItemText(nIndex, 0);
+	UpdateData(FALSE);
 }
