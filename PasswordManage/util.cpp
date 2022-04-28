@@ -249,10 +249,12 @@ void GetRandomNum(std::string& strNum, int nCount)
 	char  singleCode[2];
 	char  verificationValue[11] = "0123456789";
 	memset(singleCode, 0, 2);
-	srand((unsigned int)time((time_t*)NULL));
+	static std::default_random_engine generator;
+	static std::uniform_int_distribution<unsigned>  distribution(0, 10);
 	for (unsigned int i = 1; i <= nCount; ++i)
 	{
-		sprintf(singleCode, "%c", verificationValue[(rand() % 10)]);
+		int nRand = distribution(generator);
+		sprintf(singleCode, "%c", verificationValue[(nRand % 10)]);
 		strNum += singleCode;
 	}
 }
@@ -263,10 +265,12 @@ void GetRandomLowerChar(std::string& strChar, int nCount)
 	char  singleCode[2];
 	char  verificationValue[27] = "abcdefghijklmnopqrstuvwxyz";
 	memset(singleCode, 0, 2);
-	srand((unsigned int)time((time_t*)NULL));
+	static std::default_random_engine generator;
+	static std::uniform_int_distribution<unsigned>  distribution(0, 26);
 	for (unsigned int i = 1; i <= nCount; ++i)
 	{
-		sprintf(singleCode, "%c", verificationValue[(rand() % 26)]);
+		int nRand = distribution(generator);
+		sprintf(singleCode, "%c", verificationValue[(nRand % 26)]);
 		strChar += singleCode;
 	}
 }
@@ -277,10 +281,12 @@ void GetRandomUpperChar(std::string& strChar, int nCount)
 	char  singleCode[2];
 	char  verificationValue[27] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	memset(singleCode, 0, 2);
-	srand((unsigned int)time((time_t*)NULL));
+	static std::default_random_engine generator;
+	static std::uniform_int_distribution<unsigned>  distribution(0, 26);
 	for (unsigned int i = 1; i <= nCount; ++i)
 	{
-		sprintf(singleCode, "%c", verificationValue[(rand() % 26)]);
+		int nRand = distribution(generator);
+		sprintf(singleCode, "%c", verificationValue[(nRand % 26)]);
 		strChar += singleCode;
 	}
 }
@@ -291,10 +297,12 @@ void GetRandomSymbol(std::string& strSymbol, int nCount)
 	char  singleCode[2];
 	char  verificationValue[29] = "`~!@#$%^&*()_-+={}|[]:;,.<>?";
 	memset(singleCode, 0, 2);
-	srand((unsigned int)time((time_t*)NULL));
+	static std::default_random_engine generator;
+	static std::uniform_int_distribution<unsigned>  distribution(0, 28);
 	for (unsigned int i = 1; i <= nCount; ++i)
 	{
-		sprintf(singleCode, "%c", verificationValue[(rand() % 28)]);
+		int nRand = distribution(generator);
+		sprintf(singleCode, "%c", verificationValue[(nRand % 28)]);
 		strSymbol += singleCode;
 	}
 }
@@ -306,7 +314,8 @@ std::string GetRandomPassword(const std::string& strPassword, int nCount)
 	memset(singleCode, 0, 2);
 	//srand(time(0));
 	static std::default_random_engine generator;
-	static std::normal_distribution<double> distribution(0, strPassword.length());
+	static std::uniform_int_distribution<unsigned>  distribution(0, strPassword.length());
+	//static std::normal_distribution<double> distribution(0, strPassword.length());
 	for (int nIndex = 0; nIndex < nCount; nIndex++)
 	{
 		int nRand = distribution(generator);
