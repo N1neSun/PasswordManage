@@ -5,7 +5,7 @@
 #include<openssl/pem.h>
 #include<openssl/err.h>
 #include<atlstr.h>
-#include<random>
+
 
 #pragma comment(lib,"libcrypto.lib")
 #pragma comment(lib,"libssl.lib")
@@ -307,18 +307,30 @@ void GetRandomSymbol(std::string& strSymbol, int nCount)
 	}
 }
 
-std::string GetRandomPassword(const std::string& strPassword, int nCount)
+std::string GetRandomPassword(const std::string& strPassword, int nCount, int nTypeCount)
 {
 	std::string strRandomPassword;
 	char  singleCode[2];
 	memset(singleCode, 0, 2);
 	//srand(time(0));
 	static std::default_random_engine generator;
-	static std::uniform_int_distribution<unsigned>  distribution(0, strPassword.length());
-	//static std::normal_distribution<double> distribution(0, strPassword.length());
+	RandomTypeFuc distribution;
+	int nMin = 0;
+	int nMax = strPassword.length() / nTypeCount;
+	int nLen = strPassword.length() / nTypeCount;
+	for (int nIndex = 0; nIndex < nTypeCount; nIndex++)
+	{
+		static std::uniform_int_distribution<unsigned>  distributionType(nMin, nMax-1);
+		distribution[nIndex] = distributionType;
+		nMin += nLen;
+		nMax += nLen;
+	}
+	
+	static std::normal_distribution<double> distributionType(0, nTypeCount);
 	for (int nIndex = 0; nIndex < nCount; nIndex++)
 	{
-		int nRand = distribution(generator);
+		int nType = distributionType(generator);
+		int nRand = distribution[nType](generator);
 		sprintf(singleCode, "%c", strPassword[(nRand % strPassword.length())]);
 		strRandomPassword += singleCode;
 	}

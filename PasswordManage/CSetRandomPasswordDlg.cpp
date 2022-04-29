@@ -68,6 +68,7 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 	m_PasswordList.DeleteAllItems();
 	std::vector<std::string> vecPasswordList;
 	std::string strMark;
+	int nTypeCount = 0;
 	m_IsNum ? strMark += "1" : strMark += "0";
 	m_IsLower ? strMark += "1" : strMark += "0";
 	m_IsUpper ? strMark += "1" : strMark += "0";
@@ -79,6 +80,7 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 	{
 		if (strMark[i] == '1')
 		{
+			nTypeCount++;
 			m_FunctionMap[i](strTmp, m_PasswordCount);
 			strPassword += strTmp;
 		}
@@ -88,7 +90,7 @@ void CSetRandomPassword::OnBnClickedButtonRandom()
 	for (int nIndex = 0; nIndex < 10; nIndex++)
 	{
 		//Sleep(100);
-		std::string strtemp = GetRandomPassword(strPassword, m_PasswordCount);
+		std::string strtemp = GetRandomPassword(strPassword, m_PasswordCount, nTypeCount);
 		m_PasswordList.InsertItem(nIndex, "", 0);
 		m_PasswordList.SetItemText(nIndex, 0, strtemp.c_str());
 	}
