@@ -58,7 +58,7 @@ BOOL CSetRandomPassword::OnInitDialog()
 
 void CSetRandomPassword::OnOK()
 {
-
+	this->EndDialog(0);
 }
 
 void CSetRandomPassword::OnBnClickedButtonRandom()

@@ -15,6 +15,12 @@ public:
 	CSetRandomPassword();
 	virtual ~CSetRandomPassword();
 
+	void setPassword(CString strPassword) { m_strPassword = strPassword; }
+
+	CString getPassword() { return m_strPassword; }
+
+
+
 	enum {
 		IDD = IDD_RAN_PASSWORD
 	};
