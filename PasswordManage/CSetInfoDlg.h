@@ -46,6 +46,7 @@ private:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnOK();
 
 	DECLARE_MESSAGE_MAP()

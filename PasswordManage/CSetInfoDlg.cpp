@@ -72,6 +72,21 @@ BOOL CSetInfo::OnInitDialog()
 	return TRUE;
 }
 
+BOOL CSetInfo::PreTranslateMessage(MSG* pMsg)
+{
+	//ȫѡ ctrl+A
+	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == 'A' && GetAsyncKeyState(VK_CONTROL))
+	{
+		m_NameEdit.SetSel(0, -1);
+		m_UsernameEdit.SetSel(0, -1);
+		m_PasswordEdit.SetSel(0, -1);
+		m_URLEdit.SetSel(0, -1);
+		m_NotesEdit.SetSel(0, -1);
+	}
+
+	return CDialog::PreTranslateMessage(pMsg);
+}
+
 void CSetInfo::OnOK()
 {
 	UpdateData(TRUE);

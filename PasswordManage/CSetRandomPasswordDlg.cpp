@@ -56,6 +56,17 @@ BOOL CSetRandomPassword::OnInitDialog()
 	return TRUE;
 }
 
+BOOL CSetRandomPassword::PreTranslateMessage(MSG* pMsg)
+{
+	//ȫѡ ctrl+A
+	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == 'A' && GetAsyncKeyState(VK_CONTROL))
+	{
+		m_SetPasswordEdit.SetSel(0, -1);
+	}
+
+	return CDialog::PreTranslateMessage(pMsg);
+}
+
 void CSetRandomPassword::OnOK()
 {
 	this->EndDialog(0);
