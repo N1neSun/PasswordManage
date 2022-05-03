@@ -11,6 +11,10 @@
 
 typedef std::map<int, std::uniform_int_distribution<unsigned>> RandomTypeFuc;
 
+std::string base64_encode(char const* bytes_to_encode, int in_len);
+
+std::string base64_decode(std::string& encoded_string);
+
 std::string aes_256_cbc_encode(const std::string& password, const std::string& data);
 
 std::string aes_256_cbc_decode(const std::string& password, const std::string& strData);
