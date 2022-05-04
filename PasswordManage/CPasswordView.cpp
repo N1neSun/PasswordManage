@@ -60,7 +60,7 @@ BOOL CPasswordView::PreTranslateMessage(MSG* pMsg)
 	//¸´ÖÆÃÜÂë
 	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == 'C' && GetAsyncKeyState(VK_CONTROL))
 	{
-		CopyStringToClipboard(aes_256_cbc_decode(pApp->m_strKey.substr(7), ptmpInfo->Password));
+		CopyStringToClipboard(aes_256_cbc_decode(pApp->m_strKey.substr(7), base64_decode(ptmpInfo->Password)));
 	}
 	
 	return CListView::PreTranslateMessage(pMsg);
