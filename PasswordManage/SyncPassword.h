@@ -1,6 +1,6 @@
 #pragma once
 class SyncPassword {
-protected:
+public:
 	SyncPassword();
 	~SyncPassword();
 public:

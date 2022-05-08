@@ -14,6 +14,7 @@
 #include "PasswordManageView.h"
 #include "CPasswordView.h"
 #include "CLoginDlg.h"
+#include "SyncPassword.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -150,6 +151,8 @@ BOOL CPasswordManageApp::InitInstance()
 
 	CPasswordView* pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(0));
 	pView->LoadPasswordInfo();
+	SyncPassword nn;
+	nn.SqliteToJsonFile();
 	return TRUE;
 }
 

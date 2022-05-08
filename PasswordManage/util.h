@@ -8,6 +8,7 @@
 #define KEY_MAX_LEN 256
 #define KEY_FILE "DecryptKey.key"
 #define SIGN "N1NESUN"
+#define SYNCDATAFILE "SyncData"
 
 typedef std::map<int, std::uniform_int_distribution<unsigned>> RandomTypeFuc;
 
