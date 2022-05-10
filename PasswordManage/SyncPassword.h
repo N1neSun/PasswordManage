@@ -4,5 +4,6 @@ public:
 	SyncPassword();
 	~SyncPassword();
 public:
-	void SqliteToJsonFile();
+	bool SqliteToJsonFile();
+	bool JsonFileToSqlite();
 };
