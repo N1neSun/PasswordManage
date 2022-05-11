@@ -92,8 +92,11 @@ bool SqliteDatabase::InsertPasswordInfo(PasswordColumnInfo& info)
 	bool bRet = true;
 
 	char szUUID[KEY_MAX_LEN] = { 0 };
-	CreateUUID(szUUID);
-	info.PasswordId = szUUID;
+	if (info.PasswordId == "")
+	{
+		CreateUUID(szUUID);
+		info.PasswordId = szUUID;
+	}
 	CStringA insertControl;
 	insertControl.Format("INSERT INTO %s(PasswordId,Name,Username,Password,Url,Notes,GroupName,Isdelete)VALUES(\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\", %d)",
 		MASTER_TABLE, info.PasswordId.c_str(), info.Name.c_str(), info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str(), info.GroupName.c_str(), info.Isdelete);
