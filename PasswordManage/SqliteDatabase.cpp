@@ -4,6 +4,7 @@
 
 #define DATABASE "PasswordDB.db"
 #define MASTER_TABLE "PasswordInfo"
+#define VERSION_TABLE "VerisonInfo"
 
 static struct TableColumnInfo PASSWORD_TABLE_COLUMNS[] = {
 	{"id", "INTEGER", "NOT NULL PRIMARY KEY autoincrement"},
@@ -17,6 +18,11 @@ static struct TableColumnInfo PASSWORD_TABLE_COLUMNS[] = {
 	{"GroupName", "varchar(512)", ""}
 };
 static int PASSWORD_TABLE_COLUMNS_NUM = sizeof(PASSWORD_TABLE_COLUMNS) / sizeof(PASSWORD_TABLE_COLUMNS[0]);
+
+static struct TableColumnInfo VERSION_TABLE_COLUMNS[] ={
+	{"version", "varchar(512)", "NOT NULL"}
+};
+static int VERSION_TABLE_COLUMNS_NUM = sizeof(VERSION_TABLE_COLUMNS) / sizeof(VERSION_TABLE_COLUMNS[0]);
 
 SqliteDatabase::SqliteDatabase()
 {
@@ -71,6 +77,19 @@ bool SqliteDatabase::InitDatabase()
 	try
 	{
 		doCreateTable.exec();
+	}
+	catch (const SQLite::Exception&)
+	{
+		assert(false);
+		exit(0);
+	}
+
+	CStringA createVersionTableSQL;
+	MakeCreateTableSQL(createVersionTableSQL, VERSION_TABLE, VERSION_TABLE_COLUMNS, VERSION_TABLE_COLUMNS_NUM);
+	SQLite::Statement doCreateVersionTable(*db, createVersionTableSQL.GetBuffer());
+	try
+	{
+		doCreateVersionTable.exec();
 	}
 	catch (const SQLite::Exception&)
 	{
@@ -324,6 +343,51 @@ bool SqliteDatabase::RemovePasswordInfo(const PasswordColumnInfo& info)
 	try
 	{
 		doDeleteSQL.exec();
+	}
+	catch (const SQLite::Exception&)
+	{
+		assert(false);
+		exit(0);
+	}
+
+	return true;
+}
+
+bool SqliteDatabase::GetVersionInfo(std::string& strVersion)
+{
+	CStringA getControlSQL;
+	getControlSQL.Format("SELECT * FROM %s", VERSION_TABLE);
+
+	SQLite::Statement doGetSQL(*db, getControlSQL.GetBuffer());
+
+	while (true)
+	{
+		if (doGetSQL.executeStep())
+		{
+			if (doGetSQL.isDone())
+				break;
+
+			strVersion = doGetSQL.getColumn("version").getString();
+		}
+		else
+		{
+			break;
+		}
+
+	}
+
+	return true;
+}
+
+bool SqliteDatabase::SetVersionInfo(const std::string& strVersion)
+{
+	CStringA setControlSQL;
+	setControlSQL.Format("UPDATE %s SET version=%s", VERSION_TABLE, strVersion.c_str());
+
+	SQLite::Statement doSetSQL(*db, setControlSQL.GetBuffer());
+	try
+	{
+		doSetSQL.exec();
 	}
 	catch (const SQLite::Exception&)
 	{

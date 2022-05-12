@@ -49,7 +49,7 @@ bool SyncPassword::SqliteToJsonFile()
 		md5_buffer_string((const unsigned char*)jsFirmware.FastWrite().c_str(), jsFirmware.FastWrite().size(), strSyncDataMd5);
 		if (strSyncDataMd5.empty())
 			return bRet;
-		jsFirmware.AddValue("key", strSyncDataMd5);
+		jsFirmware.AddValue("version", strSyncDataMd5);
 
 		if (!WriteStringToFile(szKeyFile, jsFirmware.FastWrite()))
 			return bRet;

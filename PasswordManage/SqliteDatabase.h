@@ -61,6 +61,10 @@ public:
 
 	bool RemovePasswordInfo(const PasswordColumnInfo& info);
 
+	bool GetVersionInfo(std::string& strVersion);
+
+	bool SetVersionInfo(const std::string& strVersion);
+
 	static SqliteDatabase& GetDBController();
 
 private:
