@@ -53,6 +53,7 @@ bool SyncPassword::SqliteToJsonFile()
 
 		if (!WriteStringToFile(szKeyFile, jsFirmware.FastWrite()))
 			return bRet;
+		SqliteDatabase::GetDBController().SetVersionInfo(strSyncDataMd5);
 	} while (FALSE);
 	return true;
 }
@@ -60,6 +61,8 @@ bool SyncPassword::SqliteToJsonFile()
 bool SyncPassword::JsonFileToSqlite()
 {
 	bool bRet = false;
+	std::string strJsonVersionIndb;
+	SqliteDatabase::GetDBController().GetVersionInfo(strJsonVersionIndb);
 	do
 	{
 		TCHAR szKeyFile[MAX_PATH] = { 0 };
@@ -72,6 +75,9 @@ bool SyncPassword::JsonFileToSqlite()
 		if (!ReadFileToString(szKeyFile, strJsonData))
 			return bRet;
 		jsFirmware.Parse(strJsonData.c_str());
+		std::string strJsonVersion = jsFirmware.GetStringValue("version");
+		if (strJsonVersionIndb == strJsonVersion)
+			return true;
 		jsFirmware.GetArrayValue("data", vecTmpJsonData);
 		for each (auto jsinfo in vecTmpJsonData)
 		{
