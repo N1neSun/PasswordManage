@@ -12,6 +12,7 @@
 #define IDD_LOGIN                       133
 #define IDD_DIALOG_SETPASSWORD          135
 #define IDD_RAN_PASSWORD                137
+#define IDD_DIALOG_SYSNC                139
 #define IDC_EDIT_NAME                   1006
 #define IDC_EDIT_USERNAME               1007
 #define IDC_EDIT_PASSWORD               1008
@@ -23,10 +24,12 @@
 #define IDC_BUTTON1                     1018
 #define IDC_BUTTON_RANDOM               1018
 #define IDC_BUTTON_RAND_PASS            1018
+#define IDC_BUTTON_TESTURL              1018
 #define IDC_EDIT1                       1019
 #define IDC_EDIT_LOGIN                  1019
 #define IDC_EDIT_SETPASSWORD            1019
 #define IDC_EDIT_RAN_PASSWORD           1019
+#define IDC_EDIT_WEBDAVURL              1019
 #define IDC_EDIT_CONFIRMPASSWORD        1020
 #define IDC_CHECK_NUM                   1021
 #define IDC_CHECK_CHAR                  1022
@@ -35,6 +38,9 @@
 #define IDC_CHECK_UPPER                 1025
 #define IDC_EDIT_PASS_NUM               1026
 #define IDC_LIST_PASSWORD               1027
+#define IDC_CHECK1                      1032
+#define IDC_BUTTON2                     1033
+#define IDC_BUTTON_APPLY                1033
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_MENU_ADD                     32773
@@ -50,9 +56,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        139
+#define _APS_NEXT_RESOURCE_VALUE        141
 #define _APS_NEXT_COMMAND_VALUE         32781
-#define _APS_NEXT_CONTROL_VALUE         1032
+#define _APS_NEXT_CONTROL_VALUE         1034
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
