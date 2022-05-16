@@ -39,7 +39,7 @@
 #define IDC_EDIT_PASS_NUM               1026
 #define IDC_LIST_PASSWORD               1027
 #define IDC_CHECK1                      1032
-#define IDC_BUTTON2                     1033
+#define IDC_CHECK_AUTOSYSNC             1032
 #define IDC_BUTTON_APPLY                1033
 #define ID_32771                        32771
 #define ID_32772                        32772
