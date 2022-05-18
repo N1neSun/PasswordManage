@@ -23,6 +23,12 @@ public:
 #endif
 
 private:
+	CEdit m_WebDavUrlEdit;
+	CButton m_CheckTestButton;
+	CButton m_CheckAutoButton;
+	CButton m_ApplyButton;
+
+	CString m_strWebDavUrl;
 
 
 protected:
