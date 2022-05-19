@@ -28,9 +28,22 @@ void CSetSysnc::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CSetSysnc, CDialogEx)
 	ON_COMMAND(IDOK, OnOK)
+	ON_BN_CLICKED(IDC_BUTTON_TESTURL, &CSetSysnc::OnBnClickedButtonTesturl)
+	ON_BN_CLICKED(IDC_BUTTON_APPLY, &CSetSysnc::OnBnClickedButtonApply)
 END_MESSAGE_MAP()
 
 BOOL CSetSysnc::OnInitDialog()
+{
+
+}
+
+void CSetSysnc::OnBnClickedButtonTesturl()
+{
+
+}
+
+
+void CSetSysnc::OnBnClickedButtonApply()
 {
 
 }
