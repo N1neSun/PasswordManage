@@ -7,8 +7,12 @@
 
 #define KEY_MAX_LEN 256
 #define KEY_FILE "DecryptKey.key"
+#define SYNNCONFIG_FILE "SysncConfig"
 #define SIGN "N1NESUN"
 #define SYNCDATAFILE "SyncData"
+#define SYSNCVERSION "version"
+#define WEBDAVURL "WebDavUrl"
+#define AUTOSYSNC "AutoSysnc"
 
 typedef std::map<int, std::uniform_int_distribution<unsigned>> RandomTypeFuc;
 

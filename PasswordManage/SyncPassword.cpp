@@ -49,7 +49,7 @@ bool SyncPassword::SqliteToJsonFile()
 		md5_buffer_string((const unsigned char*)jsFirmware.FastWrite().c_str(), jsFirmware.FastWrite().size(), strSyncDataMd5);
 		if (strSyncDataMd5.empty())
 			return bRet;
-		jsFirmware.AddValue("version", strSyncDataMd5);
+		jsFirmware.AddValue(SYSNCVERSION, strSyncDataMd5);
 
 		if (!WriteStringToFile(szKeyFile, jsFirmware.FastWrite()))
 			return bRet;
@@ -75,7 +75,7 @@ bool SyncPassword::JsonFileToSqlite()
 		if (!ReadFileToString(szKeyFile, strJsonData))
 			return bRet;
 		jsFirmware.Parse(strJsonData.c_str());
-		std::string strJsonVersion = jsFirmware.GetStringValue("version");
+		std::string strJsonVersion = jsFirmware.GetStringValue(SYSNCVERSION);
 		if (strJsonVersionIndb == strJsonVersion)
 			return true;
 		jsFirmware.GetArrayValue("data", vecTmpJsonData);

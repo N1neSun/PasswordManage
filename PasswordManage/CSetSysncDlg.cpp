@@ -1,5 +1,7 @@
 #include "CSetSysncDlg.h"
 
+#include "JsonObject.h"
+#include "util.h"
 
 IMPLEMENT_DYNAMIC(CSetSysnc, CDialogEx)
 
@@ -34,16 +36,47 @@ END_MESSAGE_MAP()
 
 BOOL CSetSysnc::OnInitDialog()
 {
-
+	TCHAR szConfigFile[MAX_PATH] = { 0 };
+	GetModuleFileName(NULL, szConfigFile, MAX_PATH);
+	PathRemoveFileSpec(szConfigFile);
+	PathAppend(szConfigFile, SYNNCONFIG_FILE);
+	if (!PathFileExists(szConfigFile))
+		return TRUE;
+	std::string strTmpConfig;
+	if (!ReadFileToString(szConfigFile, strTmpConfig))
+		return FALSE;
+	CJson jsFirmware;
+	jsFirmware.Parse(strTmpConfig.c_str());
+	m_strWebDavUrl = jsFirmware.GetStringValue(WEBDAVURL).c_str();
+	if (jsFirmware.GetIntValue(AUTOSYSNC))
+	{
+		m_CheckAutoButton.SetCheck(TRUE);
+	}
 }
 
 void CSetSysnc::OnBnClickedButtonTesturl()
 {
-
+	
 }
 
 
 void CSetSysnc::OnBnClickedButtonApply()
 {
-
+	UpdateData(TRUE);
+	TCHAR szConfigFile[MAX_PATH] = { 0 };
+	GetModuleFileName(NULL, szConfigFile, MAX_PATH);
+	PathRemoveFileSpec(szConfigFile);
+	PathAppend(szConfigFile, SYNNCONFIG_FILE);
+	CJson jsFirmware;
+	jsFirmware.AddValue(WEBDAVURL, m_strWebDavUrl);
+	if (m_CheckAutoButton.GetCheck())
+	{
+		jsFirmware.AddValue(AUTOSYSNC, TRUE);
+	}
+	else
+	{
+		jsFirmware.AddValue(AUTOSYSNC, FALSE);
+	}
+	if (!WriteStringToFile(szConfigFile, jsFirmware.FastWrite()))
+		return;
 }
