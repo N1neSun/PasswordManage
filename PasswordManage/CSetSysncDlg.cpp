@@ -24,7 +24,7 @@ void CSetSysnc::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK_AUTOSYSNC, m_CheckAutoButton);
 	DDX_Control(pDX, IDC_BUTTON_APPLY, m_ApplyButton);
 
-	DDX_Text(pDX, IDC_EDIT_SETPASSWORD, m_strWebDavUrl);
+	DDX_Text(pDX, IDC_EDIT_WEBDAVURL, m_strWebDavUrl);
 }
 
 
@@ -36,6 +36,8 @@ END_MESSAGE_MAP()
 
 BOOL CSetSysnc::OnInitDialog()
 {
+	CDialogEx::OnInitDialog();
+	UpdateData(TRUE);
 	TCHAR szConfigFile[MAX_PATH] = { 0 };
 	GetModuleFileName(NULL, szConfigFile, MAX_PATH);
 	PathRemoveFileSpec(szConfigFile);
@@ -52,6 +54,7 @@ BOOL CSetSysnc::OnInitDialog()
 	{
 		m_CheckAutoButton.SetCheck(TRUE);
 	}
+	UpdateData(FALSE);
 }
 
 void CSetSysnc::OnBnClickedButtonTesturl()
@@ -78,5 +81,10 @@ void CSetSysnc::OnBnClickedButtonApply()
 		jsFirmware.AddValue(AUTOSYSNC, FALSE);
 	}
 	if (!WriteStringToFile(szConfigFile, jsFirmware.FastWrite()))
+	{
+		AfxMessageBox(_T("保存失败!"));
 		return;
+	}
+	AfxMessageBox(_T("保存成功!"));
+	this->EndDialog(0);
 }

@@ -5,6 +5,7 @@
 #include "pch.h"
 #include "framework.h"
 #include "PasswordManage.h"
+#include "CSetSysncDlg.h"
 
 #include "MainFrm.h"
 
@@ -18,6 +19,7 @@ IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWnd)
 
 BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_WM_CREATE()
+	ON_COMMAND(ID_Menu_SYSNC, OnSyncSettings)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -99,3 +101,8 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 // CMainFrame 消息处理程序
 
+void CMainFrame::OnSyncSettings()
+{
+	CSetSysnc syncSetting;
+	syncSetting.DoModal();
+}
