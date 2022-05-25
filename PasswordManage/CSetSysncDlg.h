@@ -24,12 +24,16 @@ public:
 
 private:
 	CEdit m_WebDavUrlEdit;
+	CEdit m_WebDavUserEdit;
+	CEdit m_WebDavPasswordEdit;
 	CButton m_CheckTestButton;
 	CButton m_CheckAutoButton;
+	CButton m_SysncButton;
 	CButton m_ApplyButton;
 
 	CString m_strWebDavUrl;
-
+	CString m_strWebDavUser;
+	CString m_strWebDavPassword;
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
@@ -40,4 +44,5 @@ public:
 
 	afx_msg void OnBnClickedButtonTesturl();
 	afx_msg void OnBnClickedButtonApply();
+	afx_msg void OnBnClickedButtonSysnc();
 };
