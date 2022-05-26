@@ -1,8 +1,9 @@
 #pragma once
-#pragma once
 
 #include "resource.h"
 #include "afxdialogex.h"
+#include <string>
+
 
 
 class CSetSysnc : public CDialogEx
@@ -12,6 +13,8 @@ class CSetSysnc : public CDialogEx
 public:
 	CSetSysnc();
 	virtual ~CSetSysnc();
+
+	std::string m_strAppKey;
 
 	enum {
 		IDD = IDD_DIALOG_SYSNC

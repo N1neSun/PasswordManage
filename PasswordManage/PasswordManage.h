@@ -15,7 +15,7 @@
 // 有关此类的实现，请参阅 PasswordManage.cpp
 //
 
-class CPasswordManageApp : public CWinAppEx
+class CPasswordManageApp : public CWinApp
 {
 public:
 	CPasswordManageApp() noexcept;

@@ -109,10 +109,10 @@ BOOL CPasswordManageApp::InitInstance()
 	LoadStdProfileSettings();  // 加载标准 INI 文件选项(包括 MRU)
 
 
-	SetRegistryBase(_T("Settings"));
+	//SetRegistryBase(_T("Settings"));
 
-	InitContextMenuManager();
-	InitKeyboardManager();
+	//InitContextMenuManager();
+	//InitKeyboardManager();
 
 	// 注册应用程序的文档模板。  文档模板
 	// 将用作文档、框架窗口和视图之间的连接

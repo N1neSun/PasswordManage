@@ -1,14 +1,18 @@
 #include "CSetSysncDlg.h"
-
+#include "PasswordManage.h"
 #include "JsonObject.h"
 #include "util.h"
+
 #include <webdav/client.hpp>
+
+
 
 IMPLEMENT_DYNAMIC(CSetSysnc, CDialogEx)
 
 CSetSysnc::CSetSysnc() : CDialogEx(CSetSysnc::IDD)
 {
-
+	CPasswordManageApp* pApp = (CPasswordManageApp*)AfxGetApp();
+	m_strAppKey = pApp->m_strKey.substr(7);
 }
 
 CSetSysnc::~CSetSysnc()
@@ -57,6 +61,8 @@ BOOL CSetSysnc::OnInitDialog()
 	CJson jsFirmware;
 	jsFirmware.Parse(strTmpConfig.c_str());
 	m_strWebDavUrl = jsFirmware.GetStringValue(WEBDAVURL).c_str();
+	m_strWebDavUser = jsFirmware.GetStringValue("User").c_str();
+	m_strWebDavPassword = aes_256_cbc_decode(m_strAppKey, base64_decode(jsFirmware.GetStringValue("Password"))).c_str();
 	if (jsFirmware.GetIntValue(AUTOSYSNC))
 	{
 		m_CheckAutoButton.SetCheck(TRUE);
@@ -66,7 +72,9 @@ BOOL CSetSysnc::OnInitDialog()
 
 void CSetSysnc::OnBnClickedButtonTesturl()
 {
-	
+	UpdateData(TRUE);
+
+	UpdateData(FALSE);
 }
 
 
@@ -79,6 +87,10 @@ void CSetSysnc::OnBnClickedButtonApply()
 	PathAppend(szConfigFile, SYNNCONFIG_FILE);
 	CJson jsFirmware;
 	jsFirmware.AddValue(WEBDAVURL, m_strWebDavUrl);
+	jsFirmware.AddValue("User", m_strWebDavUser);
+	std::string strTmpPassword = aes_256_cbc_encode(m_strAppKey, m_strWebDavPassword.GetBuffer()).c_str();
+	jsFirmware.AddValue("Password", base64_encode(strTmpPassword.c_str(), strTmpPassword.length()).c_str());
+	
 	if (m_CheckAutoButton.GetCheck())
 	{
 		jsFirmware.AddValue(AUTOSYSNC, TRUE);
