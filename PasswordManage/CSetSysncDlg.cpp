@@ -73,7 +73,22 @@ BOOL CSetSysnc::OnInitDialog()
 void CSetSysnc::OnBnClickedButtonTesturl()
 {
 	UpdateData(TRUE);
+	std::map<std::string, std::string> options =
+	{
+	  {"webdav_hostname", m_strWebDavUrl.GetBuffer()},
+	  {"webdav_username", m_strWebDavUser.GetBuffer()},
+	  {"webdav_password", m_strWebDavPassword.GetBuffer()}
+	};
+	std::unique_ptr<WebDAV::Client> client{ new WebDAV::Client{ options } };
 
+	bool check_connection = client->check();
+	if (check_connection)
+	{
+		AfxMessageBox("≈‰÷√≤‚ ‘≥…π¶!");
+	}
+	else {
+		AfxMessageBox("≈‰÷√≤‚ ‘ ß∞‹!");
+	}
 	UpdateData(FALSE);
 }
 
