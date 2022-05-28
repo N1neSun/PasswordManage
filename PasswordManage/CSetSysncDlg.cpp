@@ -73,13 +73,13 @@ BOOL CSetSysnc::OnInitDialog()
 void CSetSysnc::OnBnClickedButtonTesturl()
 {
 	UpdateData(TRUE);
-	std::map<std::string, std::string> options =
+	m_WebDavOptions =
 	{
 	  {"webdav_hostname", m_strWebDavUrl.GetBuffer()},
 	  {"webdav_username", m_strWebDavUser.GetBuffer()},
 	  {"webdav_password", m_strWebDavPassword.GetBuffer()}
 	};
-	std::unique_ptr<WebDAV::Client> client{ new WebDAV::Client{ options } };
+	std::unique_ptr<WebDAV::Client> client{ new WebDAV::Client{ m_WebDavOptions } };
 
 	bool check_connection = client->check();
 	if (check_connection)
@@ -120,11 +120,34 @@ void CSetSysnc::OnBnClickedButtonApply()
 		return;
 	}
 	AfxMessageBox(_T("保存成功!"));
-	this->EndDialog(0);
+	//this->EndDialog(0);
 }
 
 
 void CSetSysnc::OnBnClickedButtonSysnc()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	if (m_WebDavOptions.empty())
+	{
+		m_WebDavOptions =
+		{
+		  {"webdav_hostname", m_strWebDavUrl.GetBuffer()},
+		  {"webdav_username", m_strWebDavUser.GetBuffer()},
+		  {"webdav_password", m_strWebDavPassword.GetBuffer()}
+		};
+	}
+	TCHAR szSyncDataFile[MAX_PATH] = { 0 };
+	GetModuleFileName(NULL, szSyncDataFile, MAX_PATH);
+	PathRemoveFileSpec(szSyncDataFile);
+	PathAppend(szSyncDataFile, SYNCDATAFILE);
+	std::unique_ptr<WebDAV::Client> client{ new WebDAV::Client{ m_WebDavOptions } };
+
+	if (client->upload("Password/SyncData", szSyncDataFile))
+	{
+		AfxMessageBox("同步成功!");
+	}
+	else
+	{
+		AfxMessageBox("同步失败!");
+	}
 }

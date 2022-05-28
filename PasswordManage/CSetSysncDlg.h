@@ -3,6 +3,7 @@
 #include "resource.h"
 #include "afxdialogex.h"
 #include <string>
+#include<map>
 
 
 
@@ -15,6 +16,8 @@ public:
 	virtual ~CSetSysnc();
 
 	std::string m_strAppKey;
+
+	std::map<std::string, std::string> m_WebDavOptions;
 
 	enum {
 		IDD = IDD_DIALOG_SYSNC
