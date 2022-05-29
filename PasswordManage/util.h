@@ -10,9 +10,11 @@
 #define SYNNCONFIG_FILE "SysncConfig"
 #define SIGN "N1NESUN"
 #define SYNCDATAFILE "SyncData"
-#define SYSNCVERSION "version"
+#define SYNCVERSION "version"
+#define SYNCTIME "time"
 #define WEBDAVURL "WebDavUrl"
 #define AUTOSYSNC "AutoSysnc"
+#define REMOTEFILE "Password/SyncData"
 
 typedef std::map<int, std::uniform_int_distribution<unsigned>> RandomTypeFuc;
 

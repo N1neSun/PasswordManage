@@ -142,7 +142,7 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 	PathAppend(szSyncDataFile, SYNCDATAFILE);
 	std::unique_ptr<WebDAV::Client> client{ new WebDAV::Client{ m_WebDavOptions } };
 
-	if (client->upload("Password/SyncData", szSyncDataFile))
+	if (client->upload(REMOTEFILE, szSyncDataFile))
 	{
 		AfxMessageBox("同步成功!");
 	}
