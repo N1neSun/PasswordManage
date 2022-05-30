@@ -400,7 +400,7 @@ bool SqliteDatabase::SetVersionInfo(const std::string& strVersion)
 }
 
 
-bool SqliteDatabase::GetSyncTimeInfo(unsigned int& strSyncTime)
+bool SqliteDatabase::GetSyncTimeInfo(unsigned int& uSyncTime)
 {
 	CStringA getControlSQL;
 	getControlSQL.Format("SELECT * FROM %s", VERSION_TABLE);
@@ -414,7 +414,7 @@ bool SqliteDatabase::GetSyncTimeInfo(unsigned int& strSyncTime)
 			if (doGetSQL.isDone())
 				break;
 
-			strSyncTime = doGetSQL.getColumn("sysnctime").getUInt();
+			uSyncTime = doGetSQL.getColumn("sysnctime").getUInt();
 		}
 		else
 		{
@@ -426,10 +426,10 @@ bool SqliteDatabase::GetSyncTimeInfo(unsigned int& strSyncTime)
 	return true;
 }
 
-bool SqliteDatabase::SetSyncTimeInfo(const unsigned int& strSyncTime)
+bool SqliteDatabase::SetSyncTimeInfo(const unsigned int& uSyncTime)
 {
 	CStringA setControlSQL;
-	setControlSQL.Format("UPDATE %s SET sysnctime=%d", VERSION_TABLE, strSyncTime);
+	setControlSQL.Format("UPDATE %s SET sysnctime=%d", VERSION_TABLE, uSyncTime);
 
 	SQLite::Statement doSetSQL(*db, setControlSQL.GetBuffer());
 	try
