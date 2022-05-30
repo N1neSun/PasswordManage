@@ -65,6 +65,10 @@ public:
 
 	bool SetVersionInfo(const std::string& strVersion);
 
+	bool GetSyncTimeInfo(unsigned int& strSyncTime);
+
+	bool SetSyncTimeInfo(const unsigned int& strSyncTime);
+
 	static SqliteDatabase& GetDBController();
 
 private:

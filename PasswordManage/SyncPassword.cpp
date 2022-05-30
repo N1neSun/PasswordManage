@@ -50,12 +50,14 @@ bool SyncPassword::SqliteToJsonFile()
 		if (strSyncDataMd5.empty())
 			return bRet;
 		jsFirmware.AddValue(SYNCVERSION, strSyncDataMd5);
-		time_t time1 = time(0);
-		jsFirmware.AddValue(SYNCTIME, (long)time1);
+		time_t timeSync = time(0);
+		unsigned int uTmpTime = (unsigned int)timeSync;
+		jsFirmware.AddValue(SYNCTIME, uTmpTime);
 
 		if (!WriteStringToFile(szKeyFile, jsFirmware.FastWrite()))
 			return bRet;
 		SqliteDatabase::GetDBController().SetVersionInfo(strSyncDataMd5);
+		SqliteDatabase::GetDBController().SetSyncTimeInfo(uTmpTime);
 	} while (FALSE);
 	return true;
 }
@@ -64,7 +66,9 @@ bool SyncPassword::JsonFileToSqlite()
 {
 	bool bRet = false;
 	std::string strJsonVersionIndb;
+	unsigned int uTime;
 	SqliteDatabase::GetDBController().GetVersionInfo(strJsonVersionIndb);
+	SqliteDatabase::GetDBController().GetSyncTimeInfo(uTime);
 	do
 	{
 		TCHAR szKeyFile[MAX_PATH] = { 0 };
@@ -79,7 +83,9 @@ bool SyncPassword::JsonFileToSqlite()
 		jsFirmware.Parse(strJsonData.c_str());
 		std::string strJsonVersion = jsFirmware.GetStringValue(SYNCVERSION);
 		if (strJsonVersionIndb == strJsonVersion)
+		{
 			return true;
+		}
 		jsFirmware.GetArrayValue("data", vecTmpJsonData);
 		for each (auto jsinfo in vecTmpJsonData)
 		{

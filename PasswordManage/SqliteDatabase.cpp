@@ -20,7 +20,8 @@ static struct TableColumnInfo PASSWORD_TABLE_COLUMNS[] = {
 static int PASSWORD_TABLE_COLUMNS_NUM = sizeof(PASSWORD_TABLE_COLUMNS) / sizeof(PASSWORD_TABLE_COLUMNS[0]);
 
 static struct TableColumnInfo VERSION_TABLE_COLUMNS[] ={
-	{"version", "varchar(512)", "NOT NULL"}
+	{"version", "varchar(512)", "NOT NULL"},
+	{"synctime", "integer", ""}
 };
 static int VERSION_TABLE_COLUMNS_NUM = sizeof(VERSION_TABLE_COLUMNS) / sizeof(VERSION_TABLE_COLUMNS[0]);
 
@@ -383,6 +384,52 @@ bool SqliteDatabase::SetVersionInfo(const std::string& strVersion)
 {
 	CStringA setControlSQL;
 	setControlSQL.Format("UPDATE %s SET version=%s", VERSION_TABLE, strVersion.c_str());
+
+	SQLite::Statement doSetSQL(*db, setControlSQL.GetBuffer());
+	try
+	{
+		doSetSQL.exec();
+	}
+	catch (const SQLite::Exception&)
+	{
+		assert(false);
+		exit(0);
+	}
+
+	return true;
+}
+
+
+bool SqliteDatabase::GetSyncTimeInfo(unsigned int& strSyncTime)
+{
+	CStringA getControlSQL;
+	getControlSQL.Format("SELECT * FROM %s", VERSION_TABLE);
+
+	SQLite::Statement doGetSQL(*db, getControlSQL.GetBuffer());
+
+	while (true)
+	{
+		if (doGetSQL.executeStep())
+		{
+			if (doGetSQL.isDone())
+				break;
+
+			strSyncTime = doGetSQL.getColumn("sysnctime").getUInt();
+		}
+		else
+		{
+			break;
+		}
+
+	}
+
+	return true;
+}
+
+bool SqliteDatabase::SetSyncTimeInfo(const unsigned int& strSyncTime)
+{
+	CStringA setControlSQL;
+	setControlSQL.Format("UPDATE %s SET sysnctime=%d", VERSION_TABLE, strSyncTime);
 
 	SQLite::Statement doSetSQL(*db, setControlSQL.GetBuffer());
 	try
