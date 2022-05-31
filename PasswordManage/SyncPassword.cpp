@@ -71,20 +71,25 @@ bool SyncPassword::JsonFileToSqlite()
 	SqliteDatabase::GetDBController().GetSyncTimeInfo(uTime);
 	do
 	{
-		TCHAR szKeyFile[MAX_PATH] = { 0 };
-		GetModuleFileName(NULL, szKeyFile, MAX_PATH);
-		PathRemoveFileSpec(szKeyFile);
-		PathAppend(szKeyFile, SYNCDATAFILE);
+		TCHAR szSysncFile[MAX_PATH] = { 0 };
+		GetModuleFileName(NULL, szSysncFile, MAX_PATH);
+		PathRemoveFileSpec(szSysncFile);
+		PathAppend(szSysncFile, SYNCDATAFILE);
 		CJson jsFirmware;
 		std::string strJsonData;
 		std::vector<std::string> vecTmpJsonData;
-		if (!ReadFileToString(szKeyFile, strJsonData))
+		if (!ReadFileToString(szSysncFile, strJsonData))
 			return bRet;
 		jsFirmware.Parse(strJsonData.c_str());
 		std::string strJsonVersion = jsFirmware.GetStringValue(SYNCVERSION);
+		unsigned int uJsonTime = jsFirmware.GetUintValue(SYNCTIME);
 		if (strJsonVersionIndb == strJsonVersion)
 		{
 			return true;
+		}
+		if (uJsonTime < uTime)
+		{
+			return false;
 		}
 		jsFirmware.GetArrayValue("data", vecTmpJsonData);
 		for each (auto jsinfo in vecTmpJsonData)
