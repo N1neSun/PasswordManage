@@ -4,6 +4,7 @@
 #include "hash.h"
 #include "util.h"
 #include<atlstr.h>
+#include <webdav/client.hpp>
 
 SyncPassword::SyncPassword()
 {
@@ -114,4 +115,9 @@ bool SyncPassword::JsonFileToSqlite()
 		}
 	} while (FALSE);
 	return true;
+}
+
+bool SyncPassword::DownloadJsonFile()
+{
+
 }
