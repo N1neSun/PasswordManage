@@ -121,3 +121,8 @@ bool SyncPassword::DownloadJsonFile()
 {
 
 }
+
+void SyncPassword::ReadSysncConfig()
+{
+
+}

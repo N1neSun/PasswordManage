@@ -7,4 +7,5 @@ public:
 	bool SqliteToJsonFile();
 	bool JsonFileToSqlite();
 	bool DownloadJsonFile();
+	void ReadSysncConfig();
 };
