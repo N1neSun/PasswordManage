@@ -8,12 +8,14 @@
 #define KEY_MAX_LEN 256
 #define KEY_FILE "DecryptKey.key"
 #define SYNCONFIG_FILE "SysncConfig"
-#define SYNTMPCONFIG_FILE "SysncConfig.tmp"
 #define SIGN "N1NESUN"
 #define SYNCDATAFILE "SyncData"
+#define SYNTMPDARTAFILE "SyncData.tmp"
 #define SYNCVERSION "version"
 #define SYNCTIME "time"
 #define WEBDAVURL "WebDavUrl"
+#define WEBDAVUSER "User"
+#define WEBDAVPASSWORD "Password"
 #define AUTOSYSNC "AutoSysnc"
 #define REMOTEFILE "Password/SyncData"
 

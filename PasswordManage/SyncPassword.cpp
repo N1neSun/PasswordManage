@@ -122,7 +122,27 @@ bool SyncPassword::DownloadJsonFile()
 
 }
 
-void SyncPassword::ReadSysncConfig()
+bool SyncPassword::ReadSysncConfig()
 {
+	bool bRet = false;
+	do 
+	{
+		TCHAR szConfigFile[MAX_PATH] = { 0 };
+		GetModuleFileName(NULL, szConfigFile, MAX_PATH);
+		PathRemoveFileSpec(szConfigFile);
+		PathAppend(szConfigFile, SYNCONFIG_FILE);
+		CJson jsFirmware;
+		std::string strSyncConfigData;
+		if (!ReadFileToString(szConfigFile, strSyncConfigData))
+			return bRet;
+		jsFirmware.Parse(strSyncConfigData.c_str());
+		m_WebDavOptions =
+		{
+		  {"webdav_hostname", jsFirmware.GetStringValue(WEBDAVURL)},
+		  {"webdav_username", jsFirmware.GetStringValue(WEBDAVUSER)},
+		  {"webdav_password", jsFirmware.GetStringValue(WEBDAVPASSWORD)}
+		};
+		m_bAutoSync = jsFirmware.GetIntValue(AUTOSYSNC);
+	} while (FALSE);
 
 }

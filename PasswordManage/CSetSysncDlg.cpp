@@ -52,7 +52,7 @@ BOOL CSetSysnc::OnInitDialog()
 	TCHAR szConfigFile[MAX_PATH] = { 0 };
 	GetModuleFileName(NULL, szConfigFile, MAX_PATH);
 	PathRemoveFileSpec(szConfigFile);
-	PathAppend(szConfigFile, SYNNCONFIG_FILE);
+	PathAppend(szConfigFile, SYNCONFIG_FILE);
 	if (!PathFileExists(szConfigFile))
 		return TRUE;
 	std::string strTmpConfig;
@@ -61,8 +61,8 @@ BOOL CSetSysnc::OnInitDialog()
 	CJson jsFirmware;
 	jsFirmware.Parse(strTmpConfig.c_str());
 	m_strWebDavUrl = jsFirmware.GetStringValue(WEBDAVURL).c_str();
-	m_strWebDavUser = jsFirmware.GetStringValue("User").c_str();
-	m_strWebDavPassword = aes_256_cbc_decode(m_strAppKey, base64_decode(jsFirmware.GetStringValue("Password"))).c_str();
+	m_strWebDavUser = jsFirmware.GetStringValue(WEBDAVUSER).c_str();
+	m_strWebDavPassword = aes_256_cbc_decode(m_strAppKey, base64_decode(jsFirmware.GetStringValue(WEBDAVPASSWORD))).c_str();
 	if (jsFirmware.GetIntValue(AUTOSYSNC))
 	{
 		m_CheckAutoButton.SetCheck(TRUE);
@@ -99,12 +99,12 @@ void CSetSysnc::OnBnClickedButtonApply()
 	TCHAR szConfigFile[MAX_PATH] = { 0 };
 	GetModuleFileName(NULL, szConfigFile, MAX_PATH);
 	PathRemoveFileSpec(szConfigFile);
-	PathAppend(szConfigFile, SYNNCONFIG_FILE);
+	PathAppend(szConfigFile, SYNCONFIG_FILE);
 	CJson jsFirmware;
 	jsFirmware.AddValue(WEBDAVURL, m_strWebDavUrl);
-	jsFirmware.AddValue("User", m_strWebDavUser);
+	jsFirmware.AddValue(WEBDAVUSER, m_strWebDavUser);
 	std::string strTmpPassword = aes_256_cbc_encode(m_strAppKey, m_strWebDavPassword.GetBuffer()).c_str();
-	jsFirmware.AddValue("Password", base64_encode(strTmpPassword.c_str(), strTmpPassword.length()).c_str());
+	jsFirmware.AddValue(WEBDAVPASSWORD, base64_encode(strTmpPassword.c_str(), strTmpPassword.length()).c_str());
 	
 	if (m_CheckAutoButton.GetCheck())
 	{
