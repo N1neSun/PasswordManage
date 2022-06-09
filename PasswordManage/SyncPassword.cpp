@@ -8,7 +8,10 @@
 
 SyncPassword::SyncPassword()
 {
-
+	if (!ReadSysncConfig())
+	{
+		return;
+	}
 }
 
 SyncPassword::~SyncPassword()
@@ -119,7 +122,24 @@ bool SyncPassword::JsonFileToSqlite()
 
 bool SyncPassword::DownloadJsonFile()
 {
+	bool bRet = false;
+	do 
+	{
+		TCHAR szTmpDataFile[MAX_PATH] = { 0 };
+		GetModuleFileName(NULL, szTmpDataFile, MAX_PATH);
+		PathRemoveFileSpec(szTmpDataFile);
+		PathAppend(szTmpDataFile, SYNCTMPDATAFILE);
+		if (m_WebDavOptions.empty())
+			return bRet;
+		std::unique_ptr<WebDAV::Client> client{ new WebDAV::Client{ m_WebDavOptions } };
+		
+		char* szTmpDownloadData;
+		unsigned long long buffer_size;
+		if (client->download_to(REMOTEFILE, szTmpDownloadData, buffer_size))
+		{
 
+		}
+	} while (FALSE);
 }
 
 bool SyncPassword::ReadSysncConfig()
@@ -144,5 +164,5 @@ bool SyncPassword::ReadSysncConfig()
 		};
 		m_bAutoSync = jsFirmware.GetIntValue(AUTOSYSNC);
 	} while (FALSE);
-
+	return true;
 }
