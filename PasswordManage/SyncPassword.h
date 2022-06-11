@@ -12,6 +12,6 @@ public:
 public:
 	bool SqliteToJsonFile();
 	bool JsonFileToSqlite();
-	bool DownloadJsonFile();
+	bool DownloadRemoteJsonData();
 	bool ReadSysncConfig();
 };
