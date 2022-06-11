@@ -120,7 +120,7 @@ bool SyncPassword::JsonFileToSqlite()
 	return true;
 }
 
-bool SyncPassword::DownloadJsonFile()
+bool SyncPassword::DownloadRemoteJsonData()
 {
 	bool bRet = false;
 	do 
@@ -133,11 +133,14 @@ bool SyncPassword::DownloadJsonFile()
 			return bRet;
 		std::unique_ptr<WebDAV::Client> client{ new WebDAV::Client{ m_WebDavOptions } };
 		
+		CJson jsFirmware;
 		char* szTmpDownloadData;
 		unsigned long long buffer_size;
 		if (client->download_to(REMOTEFILE, szTmpDownloadData, buffer_size))
 		{
-
+			jsFirmware.Parse(szTmpDownloadData);
+			if (!WriteStringToFile(szTmpDataFile, jsFirmware.FastWrite()))
+				return bRet;
 		}
 	} while (FALSE);
 }
