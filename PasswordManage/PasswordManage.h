@@ -20,7 +20,6 @@ class CPasswordManageApp : public CWinApp
 public:
 	CPasswordManageApp() noexcept;
 	std::string m_strKey;
-	std::map<std::string, std::string> m_WebDavOptions;
 
 	// 重写
 public:

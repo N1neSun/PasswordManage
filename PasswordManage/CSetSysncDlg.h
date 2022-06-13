@@ -18,6 +18,7 @@ public:
 	std::string m_strAppKey;
 
 	std::map<std::string, std::string> m_WebDavOptions;
+	BOOL m_bAutoSync;
 
 	enum {
 		IDD = IDD_DIALOG_SYSNC

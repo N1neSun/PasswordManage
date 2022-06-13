@@ -4,6 +4,7 @@
 #include "util.h"
 
 #include <webdav/client.hpp>
+#include "SyncPassword.h"
 
 
 
@@ -65,6 +66,7 @@ BOOL CSetSysnc::OnInitDialog()
 	m_strWebDavPassword = aes_256_cbc_decode(m_strAppKey, base64_decode(jsFirmware.GetStringValue(WEBDAVPASSWORD))).c_str();
 	if (jsFirmware.GetIntValue(AUTOSYSNC))
 	{
+		m_bAutoSync = TRUE;
 		m_CheckAutoButton.SetCheck(TRUE);
 	}
 	UpdateData(FALSE);
@@ -108,10 +110,12 @@ void CSetSysnc::OnBnClickedButtonApply()
 	
 	if (m_CheckAutoButton.GetCheck())
 	{
+		m_bAutoSync = TRUE;
 		jsFirmware.AddValue(AUTOSYSNC, TRUE);
 	}
 	else
 	{
+		m_bAutoSync = FALSE;
 		jsFirmware.AddValue(AUTOSYSNC, FALSE);
 	}
 	if (!WriteStringToFile(szConfigFile, jsFirmware.FastWrite()))
@@ -127,6 +131,11 @@ void CSetSysnc::OnBnClickedButtonApply()
 void CSetSysnc::OnBnClickedButtonSysnc()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(TRUE);
+	if (!(m_strWebDavUrl && m_strWebDavUser && m_strWebDavPassword))
+	{
+		AfxMessageBox("未进行配置，请配置同步！");
+	}
 	if (m_WebDavOptions.empty())
 	{
 		m_WebDavOptions =
@@ -136,18 +145,33 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 		  {"webdav_password", m_strWebDavPassword.GetBuffer()}
 		};
 	}
-	TCHAR szSyncDataFile[MAX_PATH] = { 0 };
-	GetModuleFileName(NULL, szSyncDataFile, MAX_PATH);
-	PathRemoveFileSpec(szSyncDataFile);
-	PathAppend(szSyncDataFile, SYNCDATAFILE);
-	std::unique_ptr<WebDAV::Client> client{ new WebDAV::Client{ m_WebDavOptions } };
-
-	if (client->upload(REMOTEFILE, szSyncDataFile))
+	if (m_CheckAutoButton.GetCheck())
 	{
-		AfxMessageBox("同步成功!");
+		m_bAutoSync = TRUE;
 	}
 	else
 	{
-		AfxMessageBox("同步失败!");
+		m_bAutoSync = FALSE;
 	}
+	SyncPassword sync(m_WebDavOptions, m_bAutoSync);
+	do 
+	{
+		if (!sync.SqliteToJsonFile())
+		{
+			AfxMessageBox("本地文件同步出错！");
+			return;
+		}
+		if (!sync.DownloadRemoteJsonData())
+		{
+			AfxMessageBox("远端文件同步出错！");
+			return;
+		}
+		if (!sync.SyncJsonFile())
+		{
+			AfxMessageBox("对比文件同步出错！");
+			return;
+		}
+		
+	} while (FALSE);
+
 }

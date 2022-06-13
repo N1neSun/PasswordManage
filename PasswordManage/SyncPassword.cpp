@@ -4,7 +4,7 @@
 #include "hash.h"
 #include "util.h"
 #include<atlstr.h>
-#include <webdav/client.hpp>
+
 
 SyncPassword::SyncPassword()
 {
@@ -12,6 +12,12 @@ SyncPassword::SyncPassword()
 	{
 		return;
 	}
+}
+
+SyncPassword::SyncPassword(std::map<std::string, std::string> WebDavOptions, int bAutoSync)
+{
+	m_WebDavOptions = WebDavOptions;
+	m_bAutoSync = bAutoSync;
 }
 
 SyncPassword::~SyncPassword()
