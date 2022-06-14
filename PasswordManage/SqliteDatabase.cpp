@@ -383,7 +383,7 @@ bool SqliteDatabase::GetVersionInfo(std::string& strVersion)
 bool SqliteDatabase::SetVersionInfo(const std::string& strVersion)
 {
 	CStringA setControlSQL;
-	setControlSQL.Format("UPDATE %s SET version=%s", VERSION_TABLE, strVersion.c_str());
+	setControlSQL.Format("UPDATE %s SET version=\"%s\"", VERSION_TABLE, strVersion.c_str());
 
 	SQLite::Statement doSetSQL(*db, setControlSQL.GetBuffer());
 	try
@@ -414,7 +414,7 @@ bool SqliteDatabase::GetSyncTimeInfo(unsigned int& uSyncTime)
 			if (doGetSQL.isDone())
 				break;
 
-			uSyncTime = doGetSQL.getColumn("sysnctime").getUInt();
+			uSyncTime = doGetSQL.getColumn("synctime").getUInt();
 		}
 		else
 		{
@@ -429,7 +429,7 @@ bool SqliteDatabase::GetSyncTimeInfo(unsigned int& uSyncTime)
 bool SqliteDatabase::SetSyncTimeInfo(const unsigned int& uSyncTime)
 {
 	CStringA setControlSQL;
-	setControlSQL.Format("UPDATE %s SET sysnctime=%d", VERSION_TABLE, uSyncTime);
+	setControlSQL.Format("UPDATE %s SET synctime=%d", VERSION_TABLE, uSyncTime);
 
 	SQLite::Statement doSetSQL(*db, setControlSQL.GetBuffer());
 	try
@@ -443,4 +443,60 @@ bool SqliteDatabase::SetSyncTimeInfo(const unsigned int& uSyncTime)
 	}
 
 	return true;
+}
+
+bool SqliteDatabase::InitSyncInfo()
+{
+	CStringA setControlSQL;
+	setControlSQL.Format("INSERT INTO %s(version, synctime)VALUES(\"%s\", %d)", VERSION_TABLE, "", 0);
+
+	SQLite::Statement doSetSQL(*db, setControlSQL.GetBuffer());
+	try
+	{
+		doSetSQL.exec();
+	}
+	catch (const SQLite::Exception&)
+	{
+		assert(false);
+		exit(0);
+	}
+
+	return true;
+}
+
+bool SqliteDatabase::SyncInfoIsExist()
+{
+	bool bRet = true;
+
+	CStringA getControlSQL;
+	getControlSQL.Format("SELECT * FROM %s", VERSION_TABLE);
+
+	SQLite::Statement doGetSQL(*db, getControlSQL.GetBuffer());
+	try
+	{
+		doGetSQL.executeStep();
+		if (!doGetSQL.isDone())
+		{
+			if (doGetSQL.hasRow())
+			{
+				bRet = true;
+			}
+			else
+			{
+				bRet = false;
+			}
+		}
+		else
+		{
+			bRet = false;
+		}
+	}
+	catch (const SQLite::Exception&)
+	{
+		assert(false);
+		bRet = false;
+		exit(0);
+	}
+
+	return bRet;
 }

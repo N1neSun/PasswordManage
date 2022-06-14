@@ -1,6 +1,7 @@
 #include "CSetSysncDlg.h"
 #include "PasswordManage.h"
 #include "JsonObject.h"
+#include "SqliteDatabase.h"
 #include "util.h"
 
 #include <webdav/client.hpp>
@@ -14,6 +15,10 @@ CSetSysnc::CSetSysnc() : CDialogEx(CSetSysnc::IDD)
 {
 	CPasswordManageApp* pApp = (CPasswordManageApp*)AfxGetApp();
 	m_strAppKey = pApp->m_strKey.substr(7);
+	if (!SqliteDatabase::GetDBController().SyncInfoIsExist())
+	{
+		SqliteDatabase::GetDBController().InitSyncInfo();
+	}
 }
 
 CSetSysnc::~CSetSysnc()
@@ -132,6 +137,10 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	UpdateData(TRUE);
+	TCHAR szSyncLocalFile[MAX_PATH] = { 0 };
+	GetModuleFileName(NULL, szSyncLocalFile, MAX_PATH);
+	PathRemoveFileSpec(szSyncLocalFile);
+	PathAppend(szSyncLocalFile, SYNCDATAFILE);
 	if (!(m_strWebDavUrl && m_strWebDavUser && m_strWebDavPassword))
 	{
 		AfxMessageBox("未进行配置，请配置同步！");
@@ -161,9 +170,21 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 			AfxMessageBox("本地文件同步出错！");
 			return;
 		}
-		if (!sync.DownloadRemoteJsonData())
+		int bRet = sync.DownloadRemoteJsonData();
+		if (bRet == -1)
 		{
 			AfxMessageBox("远端文件同步出错！");
+			return;
+		}
+		if (bRet == 2)
+		{
+			std::unique_ptr<WebDAV::Client> client{ new WebDAV::Client{ m_WebDavOptions } };
+			if (!client->upload(REMOTEFILE, szSyncLocalFile))
+			{
+				AfxMessageBox("向远端文件同步出错！");
+				return;
+			}
+			AfxMessageBox("同步成功！");
 			return;
 		}
 		if (!sync.SyncJsonFile())
@@ -173,5 +194,5 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 		}
 		
 	} while (FALSE);
-
+	AfxMessageBox("同步成功！");
 }

@@ -151,8 +151,8 @@ BOOL CPasswordManageApp::InitInstance()
 
 	CPasswordView* pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(0));
 	pView->LoadPasswordInfo();
-	SyncPassword nn;
-	nn.JsonFileToSqlite();
+	//SyncPassword nn;
+	//nn.JsonFileToSqlite();
 	return TRUE;
 }
 

@@ -69,6 +69,10 @@ public:
 
 	bool SetSyncTimeInfo(const unsigned int& uSyncTime);
 
+	bool InitSyncInfo();
+
+	bool SyncInfoIsExist();
+
 	static SqliteDatabase& GetDBController();
 
 private:

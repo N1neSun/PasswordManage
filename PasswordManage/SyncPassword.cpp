@@ -18,6 +18,7 @@ SyncPassword::SyncPassword(std::map<std::string, std::string> WebDavOptions, int
 {
 	m_WebDavOptions = WebDavOptions;
 	m_bAutoSync = bAutoSync;
+	m_uSyncJsonTime = 0;
 }
 
 SyncPassword::~SyncPassword()
@@ -66,8 +67,8 @@ bool SyncPassword::SqliteToJsonFile()
 
 		if (!WriteStringToFile(szKeyFile, jsFirmware.FastWrite()))
 			return bRet;
-		SqliteDatabase::GetDBController().SetVersionInfo(strSyncDataMd5);
-		SqliteDatabase::GetDBController().SetSyncTimeInfo(uTmpTime);
+		//SqliteDatabase::GetDBController().SetVersionInfo(strSyncDataMd5);
+		//SqliteDatabase::GetDBController().SetSyncTimeInfo(uTmpTime);
 	} while (FALSE);
 	return true;
 }
@@ -126,13 +127,15 @@ bool SyncPassword::JsonFileToSqlite()
 				SqliteDatabase::GetDBController().InsertPasswordInfo(info);
 			}
 		}
+		SqliteDatabase::GetDBController().SetVersionInfo(strJsonVersion);
+		SqliteDatabase::GetDBController().SetSyncTimeInfo(uJsonTime);
 	} while (FALSE);
 	return true;
 }
 
-bool SyncPassword::DownloadRemoteJsonData()
+int SyncPassword::DownloadRemoteJsonData()
 {
-	bool bRet = false;
+	int bRet = -1;
 	do 
 	{
 		TCHAR szTmpDataFile[MAX_PATH] = { 0 };
@@ -156,8 +159,11 @@ bool SyncPassword::DownloadRemoteJsonData()
 			if (!WriteStringToFile(szTmpDataFile, jsFirmware.FastWrite()))
 				return bRet;
 		}
+		else {
+			return 2;
+		}
 	} while (FALSE);
-	return true;
+	return 1;
 }
 
 bool SyncPassword::ReadSysncConfig()
