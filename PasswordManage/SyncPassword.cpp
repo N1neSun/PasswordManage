@@ -241,3 +241,13 @@ bool SyncPassword::SyncJsonFile()
 	} while (FALSE);
 	return true;
 }
+
+bool SyncPassword::PaserSyncFile()
+{
+
+}
+
+bool SyncPassword::CompareSyncFile()
+{
+
+}

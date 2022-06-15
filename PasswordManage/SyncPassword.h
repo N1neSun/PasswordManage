@@ -20,4 +20,6 @@ public:
 	int DownloadRemoteJsonData();
 	bool ReadSysncConfig();
 	bool SyncJsonFile();
+	bool PaserSyncFile();
+	bool CompareSyncFile();
 };
