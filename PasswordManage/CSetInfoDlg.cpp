@@ -163,3 +163,8 @@ void CSetInfo::OnBnClickedButtonRandPass()
 		return;
 	}
 }
+
+void CSetInfo::SetVersion(std::string strVerison, unsigned int time)
+{
+
+}
