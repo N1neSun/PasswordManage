@@ -164,7 +164,9 @@ void CSetInfo::OnBnClickedButtonRandPass()
 	}
 }
 
-void CSetInfo::SetVersion(std::string strVerison, unsigned int time)
+void CSetInfo::SetVersion(const std::string strVerison)
 {
-
+	SqliteDatabase::GetDBController().SetVersionInfo(strVerison);
+	time_t timeSync = time(0);
+	SqliteDatabase::GetDBController().SetSyncTimeInfo((unsigned int)timeSync);
 }
