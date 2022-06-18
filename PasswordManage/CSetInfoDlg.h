@@ -15,7 +15,9 @@ public:
 
 	void SetGroupComboBox();
 
-	void SetVersion(const std::string strVerison);
+	void SetVersion();
+
+	std::string GetVersion();
 
 	std::string m_strKey;
 

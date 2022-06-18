@@ -3,6 +3,8 @@
 #include "PasswordManage.h"
 #include "CSetInfoDlg.h"
 #include "CSetRandomPasswordDlg.h"
+#include "JsonObject.h"
+#include "hash.h"
 
 #include "util.h"
 
@@ -164,9 +166,39 @@ void CSetInfo::OnBnClickedButtonRandPass()
 	}
 }
 
-void CSetInfo::SetVersion(const std::string strVerison)
+void CSetInfo::SetVersion()
 {
-	SqliteDatabase::GetDBController().SetVersionInfo(strVerison);
+	SqliteDatabase::GetDBController().SetVersionInfo(GetVersion());
 	time_t timeSync = time(0);
 	SqliteDatabase::GetDBController().SetSyncTimeInfo((unsigned int)timeSync);
+}
+
+std::string CSetInfo::GetVersion()
+{
+	CJson jsFirmware;
+	std::vector<PasswordColumnInfo*> vecPasswordInfo;
+	SqliteDatabase::GetDBController().GetPasswordInfoList(vecPasswordInfo);
+	if (vecPasswordInfo.empty())
+	{
+		return "";
+	}
+	std::vector<std::string> vecTmpJsonData;
+	std::string strSyncDataMd5 = "";
+	for each (auto info in vecPasswordInfo)
+	{
+		CJson jsTmpData;
+		jsTmpData.AddValue("PasswordId", info->PasswordId);
+		jsTmpData.AddValue("Name", info->Name);
+		jsTmpData.AddValue("Username", info->Username);
+		jsTmpData.AddValue("Password", info->Password);
+		jsTmpData.AddValue("Url", info->Url);
+		jsTmpData.AddValue("GroupName", info->GroupName);
+		vecTmpJsonData.push_back(jsTmpData.FastWrite());
+		//jsFirmware.AddArrayValue("data", jsTmpData.FastWrite());
+	}
+	jsFirmware.AddArrayValue("data", vecTmpJsonData);
+	md5_buffer_string((const unsigned char*)jsFirmware.FastWrite().c_str(), jsFirmware.FastWrite().size(), strSyncDataMd5);
+	if (strSyncDataMd5.empty())
+		return "";
+	return strSyncDataMd5;
 }
