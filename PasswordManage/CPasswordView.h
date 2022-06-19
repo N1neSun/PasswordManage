@@ -24,6 +24,9 @@ public:
 	void LoadPasswordInfo();
 	void  ShowList(std::vector<PasswordColumnInfo*> vectPasswordInfoList);
 	void InsertListInfo(PasswordColumnInfo* info);
+	void SetVersion();
+
+	std::string GetVersion();
 
 protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);

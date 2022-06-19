@@ -244,10 +244,10 @@ bool SyncPassword::SyncJsonFile()
 
 bool SyncPassword::PaserSyncFile()
 {
-
+	return true;
 }
 
 bool SyncPassword::CompareSyncFile()
 {
-
+	return true;
 }

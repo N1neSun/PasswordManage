@@ -15,10 +15,6 @@ public:
 
 	void SetGroupComboBox();
 
-	void SetVersion();
-
-	std::string GetVersion();
-
 	std::string m_strKey;
 
 	enum {

@@ -1,6 +1,8 @@
 #include "CPasswordView.h"
 #include <afxcontrolbars.h>
 #include "PasswordManage.h"
+#include "JsonObject.h"
+#include "hash.h"
 #include "util.h"
 
 
@@ -214,6 +216,7 @@ void CPasswordView::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 	case ID_MENU_ADD:
 
 		setInfoDlg.DoModal();
+		SetVersion();
 		break;
 	case ID_MENU_DELETE:
 		if (ptmpInfo != NULL)
@@ -229,10 +232,12 @@ void CPasswordView::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 			{
 				g_pTabView->RemoveView(nTab);
 			}
+			SetVersion();
 		}
 		break;
 	case ID_MENU_EDIT:
 		setInfoDlg.DoModal();
+		SetVersion();
 		break;
 	case ID_COPYUSERNAME:
 		CopyStringToClipboard(ptmpInfo->Username);
@@ -255,4 +260,41 @@ void CPasswordView::OnDoubleClick(NMHDR* pNMHDR, LRESULT* pResult)
 	ptmpInfo = (PasswordColumnInfo*)m_pListCtrl->GetItemData(nIndex);
 	CSetInfo setInfoDlg(ptmpInfo);
 	setInfoDlg.DoModal();
+}
+
+void CPasswordView::SetVersion()
+{
+	SqliteDatabase::GetDBController().SetVersionInfo(GetVersion());
+	time_t timeSync = time(0);
+	SqliteDatabase::GetDBController().SetSyncTimeInfo((unsigned int)timeSync);
+}
+
+std::string CPasswordView::GetVersion()
+{
+	CJson jsFirmware;
+	std::vector<PasswordColumnInfo*> vecPasswordInfo;
+	SqliteDatabase::GetDBController().GetPasswordInfoList(vecPasswordInfo);
+	if (vecPasswordInfo.empty())
+	{
+		return "";
+	}
+	std::vector<std::string> vecTmpJsonData;
+	std::string strSyncDataMd5 = "";
+	for each (auto info in vecPasswordInfo)
+	{
+		CJson jsTmpData;
+		jsTmpData.AddValue("PasswordId", info->PasswordId);
+		jsTmpData.AddValue("Name", info->Name);
+		jsTmpData.AddValue("Username", info->Username);
+		jsTmpData.AddValue("Password", info->Password);
+		jsTmpData.AddValue("Url", info->Url);
+		jsTmpData.AddValue("GroupName", info->GroupName);
+		vecTmpJsonData.push_back(jsTmpData.FastWrite());
+		//jsFirmware.AddArrayValue("data", jsTmpData.FastWrite());
+	}
+	jsFirmware.AddArrayValue("data", vecTmpJsonData);
+	md5_buffer_string((const unsigned char*)jsFirmware.FastWrite().c_str(), jsFirmware.FastWrite().size(), strSyncDataMd5);
+	if (strSyncDataMd5.empty())
+		return "";
+	return strSyncDataMd5;
 }
