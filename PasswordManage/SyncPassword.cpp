@@ -244,6 +244,7 @@ bool SyncPassword::SyncJsonFile()
 
 bool SyncPassword::PaserSyncFile()
 {
+
 	return true;
 }
 
