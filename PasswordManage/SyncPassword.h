@@ -23,5 +23,5 @@ public:
 	int DownloadRemoteJsonData();
 	bool ReadSysncConfig();
 	bool SyncJsonFile();
-	bool CompareSyncFile();
+	bool CompareSyncFile(std::map<std::string, std::string> vecSrc, std::map<std::string, std::string> vecDes);
 };
