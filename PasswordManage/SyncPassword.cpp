@@ -88,7 +88,6 @@ bool SyncPassword::JsonFileToSqlite()
 		PathAppend(szSysncFile, SYNCDATAFILE);
 		CJson jsFirmware;
 		std::string strJsonData;
-		std::vector<std::string> vecTmpJsonData;
 		if (!ReadFileToString(szSysncFile, strJsonData))
 			return bRet;
 		jsFirmware.Parse(strJsonData.c_str());
@@ -104,8 +103,8 @@ bool SyncPassword::JsonFileToSqlite()
 		{
 			return true;
 		}
-		jsFirmware.GetArrayValue("data", vecTmpJsonData);
-		for each (auto jsinfo in vecTmpJsonData)
+		jsFirmware.GetArrayValue("data", m_vecLocalJsonData);
+		for each (auto jsinfo in m_vecLocalJsonData)
 		{
 			CJson jsTmpData;
 			PasswordColumnInfo info;
@@ -156,6 +155,7 @@ int SyncPassword::DownloadRemoteJsonData()
 				return bRet;
 			m_strSyncJsonVerison = jsFirmware.GetStringValue(SYNCVERSION);
 			m_uSyncJsonTime = jsFirmware.GetUintValue(SYNCTIME);
+			jsFirmware.GetArrayValue("data", m_vecRemoteJsonData);
 			if (!WriteStringToFile(szTmpDataFile, jsFirmware.FastWrite()))
 				return bRet;
 		}
@@ -242,13 +242,7 @@ bool SyncPassword::SyncJsonFile()
 	return true;
 }
 
-bool SyncPassword::PaserSyncFile()
-{
-
-	return true;
-}
-
-bool SyncPassword::CompareSyncFile()
+bool SyncPassword::CompareSyncFile(std::map<std::string, std::string> vecSrc, std::map<std::string, std::string> vecDes)
 {
 	return true;
 }

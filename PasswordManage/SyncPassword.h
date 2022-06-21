@@ -13,9 +13,9 @@ public:
 	int m_bAutoSync;
 	std::string m_strSyncJsonVerison;
 	unsigned int m_uSyncJsonTime;
-	std::vector<std::string> vecLocalJsonData;
-	std::vector<std::string> vecRemoteJsonData;
-	std::vector<std::string> vecSyncJsonData;
+	std::vector<std::string> m_vecLocalJsonData;
+	std::vector<std::string> m_vecRemoteJsonData;
+	std::vector<std::string> m_vecSyncJsonData;
 
 public:
 	bool SqliteToJsonFile();
@@ -23,6 +23,5 @@ public:
 	int DownloadRemoteJsonData();
 	bool ReadSysncConfig();
 	bool SyncJsonFile();
-	bool PaserSyncFile();
 	bool CompareSyncFile();
 };
