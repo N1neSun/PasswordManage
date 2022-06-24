@@ -242,7 +242,8 @@ bool SyncPassword::SyncJsonFile()
 	return true;
 }
 
-bool SyncPassword::CompareSyncFile(std::map<std::string, std::string> vecSrc, std::map<std::string, std::string> vecDes)
+bool SyncPassword::CompareSyncFile(std::vector<std::string> vecSrc, std::vector<std::string>vecDes)
 {
+
 	return true;
 }
