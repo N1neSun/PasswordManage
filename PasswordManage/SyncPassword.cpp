@@ -12,6 +12,9 @@ SyncPassword::SyncPassword()
 	{
 		return;
 	}
+	m_vecLocalJsonData.clear();
+	m_vecRemoteJsonData.clear();
+	m_vecSyncJsonData.clear();
 }
 
 SyncPassword::SyncPassword(std::map<std::string, std::string> WebDavOptions, int bAutoSync)
@@ -19,6 +22,9 @@ SyncPassword::SyncPassword(std::map<std::string, std::string> WebDavOptions, int
 	m_WebDavOptions = WebDavOptions;
 	m_bAutoSync = bAutoSync;
 	m_uSyncJsonTime = 0;
+	m_vecLocalJsonData.clear();
+	m_vecRemoteJsonData.clear();
+	m_vecSyncJsonData.clear();
 }
 
 SyncPassword::~SyncPassword()
@@ -42,21 +48,22 @@ bool SyncPassword::SqliteToJsonFile()
 		{
 			return bRet;
 		}
-		std::vector<std::string> vecTmpJsonData;
+		//std::vector<std::string> vecTmpJsonData;
 		std::string strSyncDataMd5 = "";
 		for each (auto info in vecPasswordInfo)
 		{
 			CJson jsTmpData;
 			jsTmpData.AddValue("PasswordId", info->PasswordId);
+			m_vecLocalJsonIndex.push_back(info->PasswordId);
 			jsTmpData.AddValue("Name", info->Name);
 			jsTmpData.AddValue("Username", info->Username);
 			jsTmpData.AddValue("Password", info->Password);
 			jsTmpData.AddValue("Url", info->Url);
 			jsTmpData.AddValue("GroupName", info->GroupName);
-			vecTmpJsonData.push_back(jsTmpData.FastWrite());
+			m_vecLocalJsonData.push_back(jsTmpData.FastWrite());
 			//jsFirmware.AddArrayValue("data", jsTmpData.FastWrite());
 		}
-		jsFirmware.AddArrayValue("data", vecTmpJsonData);
+		jsFirmware.AddArrayValue("data", m_vecLocalJsonData);
 		md5_buffer_string((const unsigned char*)jsFirmware.FastWrite().c_str(), jsFirmware.FastWrite().size(), strSyncDataMd5);
 		if (strSyncDataMd5.empty())
 			return bRet;
@@ -88,6 +95,7 @@ bool SyncPassword::JsonFileToSqlite()
 		PathAppend(szSysncFile, SYNCDATAFILE);
 		CJson jsFirmware;
 		std::string strJsonData;
+		std::vector<std::string> vecTmpJsonData;
 		if (!ReadFileToString(szSysncFile, strJsonData))
 			return bRet;
 		jsFirmware.Parse(strJsonData.c_str());
@@ -103,8 +111,8 @@ bool SyncPassword::JsonFileToSqlite()
 		{
 			return true;
 		}
-		jsFirmware.GetArrayValue("data", m_vecLocalJsonData);
-		for each (auto jsinfo in m_vecLocalJsonData)
+		jsFirmware.GetArrayValue("data", vecTmpJsonData);
+		for each (auto jsinfo in vecTmpJsonData)
 		{
 			CJson jsTmpData;
 			PasswordColumnInfo info;
@@ -242,7 +250,7 @@ bool SyncPassword::SyncJsonFile()
 	return true;
 }
 
-bool SyncPassword::CompareSyncFile(std::vector<std::string> vecSrc, std::vector<std::string>vecDes)
+bool SyncPassword::CompareSyncFile(const std::vector<std::string> vecSrc, const std::vector<std::string> vecDes)
 {
 
 	return true;

@@ -14,6 +14,8 @@ public:
 	std::string m_strSyncJsonVerison;
 	unsigned int m_uSyncJsonTime;
 	std::vector<std::string> m_vecLocalJsonData;
+	std::vector<std::string> m_vecLocalJsonIndex;
+	std::vector<std::string> m_vecRemoteJsonData;
 	std::vector<std::string> m_vecRemoteJsonData;
 	std::vector<std::string> m_vecSyncJsonData;
 
@@ -23,5 +25,5 @@ public:
 	int DownloadRemoteJsonData();
 	bool ReadSysncConfig();
 	bool SyncJsonFile();
-	bool CompareSyncFile(std::vector<std::string> vecSrc, std::vector<std::string> vecDes);
+	bool CompareSyncFile(const std::vector<std::string> vecSrc, const std::vector<std::string> vecDes);
 };
