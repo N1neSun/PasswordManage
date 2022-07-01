@@ -164,6 +164,15 @@ int SyncPassword::DownloadRemoteJsonData()
 			m_strSyncJsonVerison = jsFirmware.GetStringValue(SYNCVERSION);
 			m_uSyncJsonTime = jsFirmware.GetUintValue(SYNCTIME);
 			jsFirmware.GetArrayValue("data", m_vecRemoteJsonData);
+			for each (auto jsinfo in m_vecRemoteJsonData)
+			{
+				CJson jsTmpData;
+				PasswordColumnInfo info;
+				jsTmpData.Parse(jsinfo.c_str());
+				if (!jsTmpData.IsCorrectValue())
+					return bRet;
+				m_vecRemoteJsonIndex.push_back(jsTmpData.GetStringValue("PasswordId"));
+			}
 			if (!WriteStringToFile(szTmpDataFile, jsFirmware.FastWrite()))
 				return bRet;
 		}

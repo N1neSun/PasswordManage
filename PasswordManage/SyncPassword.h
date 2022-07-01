@@ -16,7 +16,7 @@ public:
 	std::vector<std::string> m_vecLocalJsonData;
 	std::vector<std::string> m_vecLocalJsonIndex;
 	std::vector<std::string> m_vecRemoteJsonData;
-	std::vector<std::string> m_vecRemoteJsonData;
+	std::vector<std::string> m_vecRemoteJsonIndex;
 	std::vector<std::string> m_vecSyncJsonData;
 
 public:
