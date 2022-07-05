@@ -2,7 +2,11 @@
 #include <windows.h>
 #include <string>
 #include <map>
-#include<random>
+#include <random>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <set>
 
 
 #define KEY_MAX_LEN 256
@@ -52,3 +56,9 @@ void GetRandomUpperChar(std::string& strChar, int nCount);
 void GetRandomSymbol(std::string& strSymbol, int nCount);
 
 std::string GetRandomPassword(const std::string& strPassword, int nCount, int nTypeCount);
+
+template<typename T>
+std::vector<T> vector_distinct(std::vector<T> result);
+
+template<typename T>
+std::vector<T> vectorToset_distinct(std::vector<T> vec);

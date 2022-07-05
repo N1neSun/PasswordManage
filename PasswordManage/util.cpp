@@ -421,3 +421,21 @@ std::string GetRandomPassword(const std::string& strPassword, int nCount, int nT
 	}
 	return strRandomPassword;
 }
+
+template<typename T>
+std::vector<T> vector_distinct(std::vector<T> result)
+{
+	sort(result.begin(), result.end());
+	auto ite = unique(result.begin(), result.end());
+
+	result.erase(ite, result.end());
+	return result;
+}
+
+template<typename T>
+std::vector<T> vectorToset_distinct(std::vector<T> vec)
+{
+	set<T> st(vec.begin(), vec.end());
+	vec.assign(st.begin(), st.end());
+	return vec;
+}
