@@ -261,8 +261,10 @@ bool SyncPassword::SyncJsonFile()
 
 bool SyncPassword::CompareSyncFile(const std::vector<std::string> vecSrc, const std::vector<std::string> vecDes)
 {
-	std::vector<std::string> vecCompareIndex;
-	vecCompareIndex.insert(vecCompareIndex.end(), m_vecLocalJsonIndex.begin(), m_vecLocalJsonIndex.end());
-	vecCompareIndex.insert(vecCompareIndex.end(), m_vecRemoteJsonIndex.begin(), m_vecRemoteJsonIndex.end());
+	std::vector<std::string> vecTmpCompareIndex;
+	vecTmpCompareIndex.insert(vecTmpCompareIndex.end(), m_vecLocalJsonIndex.begin(), m_vecLocalJsonIndex.end());
+	vecTmpCompareIndex.insert(vecTmpCompareIndex.end(), m_vecRemoteJsonIndex.begin(), m_vecRemoteJsonIndex.end());
+	std::vector<std::string> vecCompareIndex = vector_distinct(vectorToset_distinct(vecCompareIndex));
+	
 	return true;
 }
