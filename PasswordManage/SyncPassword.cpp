@@ -266,5 +266,19 @@ bool SyncPassword::CompareSyncFile(const std::vector<std::string> vecSrc, const 
 	vecTmpCompareIndex.insert(vecTmpCompareIndex.end(), m_vecRemoteJsonIndex.begin(), m_vecRemoteJsonIndex.end());
 	std::vector<std::string> vecCompareIndex = vector_distinct(vectorToset_distinct(vecCompareIndex));
 	
+	for each (auto jsinfo in vecDes)
+	{
+		CJson jsTmpData;
+		PasswordColumnInfo info;
+		jsTmpData.Parse(jsinfo.c_str());
+		if (!jsTmpData.IsCorrectValue())
+			return false;
+		
+		auto iter = std::find(vecCompareIndex.begin(), vecCompareIndex.end(), jsTmpData.GetStringValue("PasswordId"));
+		if (iter != vecCompareIndex.end())
+		{
+			
+		}
+	}
 	return true;
 }
