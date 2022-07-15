@@ -277,7 +277,8 @@ bool SyncPassword::CompareSyncFile(const std::vector<std::string> vecSrc, const 
 		auto iter = std::find(vecCompareIndex.begin(), vecCompareIndex.end(), jsTmpData.GetStringValue("PasswordId"));
 		if (iter != vecCompareIndex.end())
 		{
-			
+			vecCompareIndex.erase(remove(vecCompareIndex.begin(), vecCompareIndex.end(), jsTmpData.GetStringValue("PasswordId")), vecCompareIndex.end());
+			m_vecSyncJsonData.push_back(jsinfo);
 		}
 	}
 	return true;
