@@ -281,5 +281,27 @@ bool SyncPassword::CompareSyncFile(const std::vector<std::string> vecSrc, const 
 			m_vecSyncJsonData.push_back(jsinfo);
 		}
 	}
+	if (!vecCompareIndex.empty())
+	{
+		for each (auto jsinfo in vecSrc)
+		{
+			CJson jsTmpData;
+			PasswordColumnInfo info;
+			jsTmpData.Parse(jsinfo.c_str());
+			if (!jsTmpData.IsCorrectValue())
+				return false;
+
+			auto iter = std::find(vecCompareIndex.begin(), vecCompareIndex.end(), jsTmpData.GetStringValue("PasswordId"));
+			if (iter != vecCompareIndex.end())
+			{
+				vecCompareIndex.erase(remove(vecCompareIndex.begin(), vecCompareIndex.end(), jsTmpData.GetStringValue("PasswordId")), vecCompareIndex.end());
+				m_vecSyncJsonData.push_back(jsinfo);
+			}
+			if (vecCompareIndex.empty())
+			{
+				break;
+			}
+		}
+	}
 	return true;
 }
