@@ -238,22 +238,11 @@ bool SyncPassword::SyncJsonFile()
 		}
 		if (uJsonTime < m_uSyncJsonTime)
 		{
-			std::string strTmpJsonData;
-			if (!ReadFileToString(szSyncRemoteFile, strTmpJsonData))
-				return bRet;
-			if (!WriteStringToFile(szSyncLocalFile, strTmpJsonData))
-				return bRet;
-			JsonFileToSqlite();
+			CompareSyncFile(m_vecLocalJsonData, m_vecRemoteJsonData);
 		}
 		else
 		{
-			if (m_WebDavOptions.empty())
-				return bRet;
-			std::unique_ptr<WebDAV::Client> client{ new WebDAV::Client{ m_WebDavOptions } };
-			if (!client->upload(REMOTEFILE, szSyncLocalFile))
-			{
-				return bRet;
-			}
+			CompareSyncFile(m_vecRemoteJsonData, m_vecLocalJsonData);
 		}
 	} while (FALSE);
 	return true;
@@ -262,8 +251,8 @@ bool SyncPassword::SyncJsonFile()
 bool SyncPassword::CompareSyncFile(const std::vector<std::string> vecSrc, const std::vector<std::string> vecDes)
 {
 	std::vector<std::string> vecTmpCompareIndex;
-	vecTmpCompareIndex.insert(vecTmpCompareIndex.end(), m_vecLocalJsonIndex.begin(), m_vecLocalJsonIndex.end());
-	vecTmpCompareIndex.insert(vecTmpCompareIndex.end(), m_vecRemoteJsonIndex.begin(), m_vecRemoteJsonIndex.end());
+	vecTmpCompareIndex.insert(vecTmpCompareIndex.end(), vecSrc.begin(), vecSrc.end());
+	vecTmpCompareIndex.insert(vecTmpCompareIndex.end(), vecDes.begin(), vecDes.end());
 	std::vector<std::string> vecCompareIndex = vector_distinct(vectorToset_distinct(vecCompareIndex));
 	
 	for each (auto jsinfo in vecDes)
