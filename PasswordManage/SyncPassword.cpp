@@ -244,7 +244,32 @@ bool SyncPassword::SyncJsonFile()
 		{
 			CompareSyncFile(m_vecRemoteJsonData, m_vecLocalJsonData);
 		}
+		for each (auto jsinfo in m_vecSyncJsonData)
+		{
+			CJson jsTmpData;
+			PasswordColumnInfo info;
+			jsTmpData.Parse(jsinfo.c_str());
+			if (!jsTmpData.IsCorrectValue())
+				return bRet;
+			info.PasswordId = jsTmpData.GetStringValue("PasswordId");
+			info.Name = jsTmpData.GetStringValue("Name");
+			info.Username = jsTmpData.GetStringValue("Username");
+			info.Password = jsTmpData.GetStringValue("Password");
+			info.Url = jsTmpData.GetStringValue("Url");
+			info.GroupName = jsTmpData.GetStringValue("GroupName");
+			if (SqliteDatabase::GetDBController().IsExist(info.PasswordId))
+			{
+				SqliteDatabase::GetDBController().UpdateControlInfo(info);
+			}
+			else
+			{
+				SqliteDatabase::GetDBController().InsertPasswordInfo(info);
+			}
+		}
+		SqliteDatabase::GetDBController().SetVersionInfo(strJsonVersion);
+		SqliteDatabase::GetDBController().SetSyncTimeInfo(uJsonTime);
 	} while (FALSE);
+
 	return true;
 }
 
