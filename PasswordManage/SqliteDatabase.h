@@ -54,6 +54,7 @@ public:
 
 	bool GetGroupInfoList(std::vector<std::string>& vecGroupInfo);
 	bool GetGroupListInfo(std::vector<PasswordColumnInfo*>& vecPasswordInfolList, const std::string& strGroupName);
+	bool GetGroupListInfo(std::vector<PasswordColumnInfo*>& vecPasswordInfolList);
 
 	bool GetPasswordInfoList(std::vector<PasswordColumnInfo*>& vecPasswordInfolList);
 

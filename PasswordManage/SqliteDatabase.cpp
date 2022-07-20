@@ -197,6 +197,45 @@ bool SqliteDatabase::GetPasswordInfo(PasswordColumnInfo& info, const std::string
 	return bRet;
 }
 
+bool SqliteDatabase::GetGroupListInfo(std::vector<PasswordColumnInfo*>& vecPasswordInfolList)
+{
+	bool bRet = true;
+
+	CStringA getControlSQL;
+	getControlSQL.Format("SELECT * FROM %s where Isdelete=0", MASTER_TABLE);
+
+	SQLite::Statement doGetSQL(*db, getControlSQL.GetBuffer());
+	while (true)
+	{
+		if (doGetSQL.executeStep())
+		{
+			if (doGetSQL.isDone())
+				break;
+
+			PasswordColumnInfo* info = new PasswordColumnInfo();
+
+			info->id = doGetSQL.getColumn("id").getInt();
+			info->PasswordId = doGetSQL.getColumn("PasswordId").getString();
+			info->Name = doGetSQL.getColumn("Name").getString();
+			info->Username = doGetSQL.getColumn("Username").getString();
+			info->Password = doGetSQL.getColumn("Password").getString();
+			info->Url = doGetSQL.getColumn("Url").getString();
+			info->Notes = doGetSQL.getColumn("Notes").getString();
+			info->GroupName = doGetSQL.getColumn("GroupName").getString();
+
+			vecPasswordInfolList.push_back(info);
+		}
+		else
+		{
+			break;
+		}
+
+	}
+
+
+	return true;
+}
+
 bool SqliteDatabase::GetGroupListInfo(std::vector<PasswordColumnInfo*>& vecPasswordInfolList, const std::string& strGroupName)
 {
 	bool bRet = true;

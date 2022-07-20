@@ -1,4 +1,6 @@
 #include "CSetSysncDlg.h"
+#include "CPasswordView.h"
+#include <afxcontrolbars.h>
 #include "PasswordManage.h"
 #include "JsonObject.h"
 #include "SqliteDatabase.h"
@@ -7,7 +9,7 @@
 #include <webdav/client.hpp>
 #include "SyncPassword.h"
 
-
+extern CTabView* g_pTabView;
 
 IMPLEMENT_DYNAMIC(CSetSysnc, CDialogEx)
 
@@ -194,5 +196,13 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 		}
 		
 	} while (FALSE);
+	std::vector<PasswordColumnInfo*> vecPasswordInfolList;
+	int nTab = g_pTabView->GetTabControl().GetActiveTab();
+	CPasswordView* pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(nTab));
+	SqliteDatabase::GetDBController().GetGroupListInfo(vecPasswordInfolList);
+	if (vecPasswordInfolList.size())
+	{
+		pView->ShowList(vecPasswordInfolList);
+	}
 	AfxMessageBox("同步成功！");
 }
