@@ -77,6 +77,7 @@ BOOL CSetSysnc::OnInitDialog()
 		m_CheckAutoButton.SetCheck(TRUE);
 	}
 	UpdateData(FALSE);
+	return TRUE;
 }
 
 void CSetSysnc::OnBnClickedButtonTesturl()
@@ -196,13 +197,8 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 		}
 		
 	} while (FALSE);
-	std::vector<PasswordColumnInfo*> vecPasswordInfolList;
-	int nTab = g_pTabView->GetTabControl().GetActiveTab();
-	CPasswordView* pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(nTab));
-	SqliteDatabase::GetDBController().GetGroupListInfo(vecPasswordInfolList);
-	if (vecPasswordInfolList.size())
-	{
-		pView->ShowList(vecPasswordInfolList);
-	}
+	CPasswordView* pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(0));
+	pView->DeleteALLPasswordInfo();
+	pView->LoadPasswordInfo();
 	AfxMessageBox("同步成功！");
 }

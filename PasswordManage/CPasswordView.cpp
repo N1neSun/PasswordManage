@@ -124,6 +124,18 @@ void CPasswordView::LoadPasswordInfo()
 	}
 }
 
+void CPasswordView::DeleteALLPasswordInfo()
+{
+	std::vector<PasswordColumnInfo*> vecPasswordInfo;
+	SqliteDatabase::GetDBController().GetPasswordInfoList(vecPasswordInfo);
+	int nTabs = g_pTabView->GetTabControl().GetTabsNum();
+	for (int nTabIndex = 0; nTabIndex < nTabs; nTabIndex++)
+	{
+		CPasswordView* pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(nTabIndex));
+		pView->m_pListCtrl->DeleteAllItems();
+	}
+}
+
 void  CPasswordView::ShowList(std::vector<PasswordColumnInfo*> vectPasswordInfoList)
 {
 	m_pListCtrl->DeleteAllItems();

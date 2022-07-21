@@ -22,6 +22,7 @@ public:
 	//CHeaderCtrl m_header;
 	virtual void OnInitialUpdate();
 	void LoadPasswordInfo();
+	void DeleteALLPasswordInfo();
 	void  ShowList(std::vector<PasswordColumnInfo*> vectPasswordInfoList);
 	void InsertListInfo(PasswordColumnInfo* info);
 	void SetVersion();
