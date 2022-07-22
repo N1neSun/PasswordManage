@@ -141,9 +141,13 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 	// TODO: 在此添加控件通知处理程序代码
 	UpdateData(TRUE);
 	TCHAR szSyncLocalFile[MAX_PATH] = { 0 };
+	TCHAR szSyncLocalFilebak[MAX_PATH] = { 0 };
 	GetModuleFileName(NULL, szSyncLocalFile, MAX_PATH);
+	GetModuleFileName(NULL, szSyncLocalFilebak, MAX_PATH);
 	PathRemoveFileSpec(szSyncLocalFile);
+	PathRemoveFileSpec(szSyncLocalFilebak);
 	PathAppend(szSyncLocalFile, SYNCDATAFILE);
+	PathAppend(szSyncLocalFilebak, SYNCDATAFILEBAK);
 	if (!(m_strWebDavUrl && m_strWebDavUser && m_strWebDavPassword))
 	{
 		AfxMessageBox("未进行配置，请配置同步！");

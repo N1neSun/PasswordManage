@@ -14,6 +14,7 @@
 #define SYNCONFIG_FILE "SysncConfig"
 #define SIGN "N1NESUN"
 #define SYNCDATAFILE "SyncData"
+#define SYNCDATAFILEBAK "SyncData.bak"
 #define SYNCTMPDATAFILE "SyncData.tmp"
 #define SYNCVERSION "version"
 #define SYNCTIME "time"
