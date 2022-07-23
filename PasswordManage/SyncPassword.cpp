@@ -38,9 +38,13 @@ bool SyncPassword::SqliteToJsonFile()
 	do 
 	{
 		TCHAR szKeyFile[MAX_PATH] = { 0 };
+		TCHAR szSyncLocalFilebak[MAX_PATH] = { 0 };
 		GetModuleFileName(NULL, szKeyFile, MAX_PATH);
+		GetModuleFileName(NULL, szSyncLocalFilebak, MAX_PATH);
 		PathRemoveFileSpec(szKeyFile);
+		PathRemoveFileSpec(szSyncLocalFilebak);
 		PathAppend(szKeyFile, SYNCDATAFILE);
+		PathAppend(szSyncLocalFilebak, SYNCDATAFILEBAK);
 		CJson jsFirmware;
 		std::vector<PasswordColumnInfo*> vecPasswordInfo;
 		SqliteDatabase::GetDBController().GetPasswordInfoList(vecPasswordInfo);
@@ -55,7 +59,7 @@ bool SyncPassword::SqliteToJsonFile()
 			CJson jsTmpData;
 			jsTmpData.AddValue("PasswordId", info->PasswordId);
 			m_vecLocalJsonIndex.push_back(info->PasswordId);
-			jsTmpData.AddValue("Name", info->Name);
+			jsTmpData.AddValue("Name", info->Name); 
 			jsTmpData.AddValue("Username", info->Username);
 			jsTmpData.AddValue("Password", info->Password);
 			jsTmpData.AddValue("Url", info->Url);
@@ -74,6 +78,7 @@ bool SyncPassword::SqliteToJsonFile()
 
 		if (!WriteStringToFile(szKeyFile, jsFirmware.FastWrite()))
 			return bRet;
+		CopyFile(szKeyFile, szSyncLocalFilebak, FALSE);
 		//SqliteDatabase::GetDBController().SetVersionInfo(strSyncDataMd5);
 		//SqliteDatabase::GetDBController().SetSyncTimeInfo(uTmpTime);
 	} while (FALSE);
