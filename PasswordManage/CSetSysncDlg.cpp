@@ -196,8 +196,14 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 			AfxMessageBox("对比文件同步出错！");
 			return;
 		}
-		
+		std::unique_ptr<WebDAV::Client> client{ new WebDAV::Client{ m_WebDavOptions } };
+		if (!client->upload(REMOTEFILE, szSyncLocalFile))
+		{
+			AfxMessageBox("向远端文件同步出错！");
+			return;
+		}
 	} while (FALSE);
+
 	CPasswordView* pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(0));
 	pView->DeleteALLPasswordInfo();
 	pView->LoadPasswordInfo();
