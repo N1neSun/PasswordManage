@@ -20,7 +20,7 @@ public:
 	std::vector<std::string> m_vecSyncJsonData;
 
 public:
-	bool SqliteToJsonFile();
+	bool SqliteToJsonFile(BOOL bCopyFile);
 	bool JsonFileToSqlite();
 	int DownloadRemoteJsonData();
 	bool ReadSysncConfig();

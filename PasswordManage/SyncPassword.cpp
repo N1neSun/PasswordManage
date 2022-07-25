@@ -32,7 +32,7 @@ SyncPassword::~SyncPassword()
 
 }
 
-bool SyncPassword::SqliteToJsonFile()
+bool SyncPassword::SqliteToJsonFile(BOOL bCopyFile)
 {
 	bool bRet = false;
 	do 
@@ -78,7 +78,8 @@ bool SyncPassword::SqliteToJsonFile()
 
 		if (!WriteStringToFile(szKeyFile, jsFirmware.FastWrite()))
 			return bRet;
-		CopyFile(szKeyFile, szSyncLocalFilebak, FALSE);
+		if(bCopyFile)
+			CopyFile(szKeyFile, szSyncLocalFilebak, FALSE);
 		//SqliteDatabase::GetDBController().SetVersionInfo(strSyncDataMd5);
 		//SqliteDatabase::GetDBController().SetSyncTimeInfo(uTmpTime);
 	} while (FALSE);

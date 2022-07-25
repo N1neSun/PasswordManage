@@ -169,7 +169,7 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 	SyncPassword sync(m_WebDavOptions, m_bAutoSync);
 	do 
 	{
-		if (!sync.SqliteToJsonFile())
+		if (!sync.SqliteToJsonFile(TRUE))
 		{
 			AfxMessageBox("本地文件同步出错！");
 			return;
@@ -194,6 +194,11 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 		if (!sync.SyncJsonFile())
 		{
 			AfxMessageBox("对比文件同步出错！");
+			return;
+		}
+		if (!sync.SqliteToJsonFile(FALSE))
+		{
+			AfxMessageBox("本地文件同步出错！");
 			return;
 		}
 		std::unique_ptr<WebDAV::Client> client{ new WebDAV::Client{ m_WebDavOptions } };
