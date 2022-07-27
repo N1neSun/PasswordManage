@@ -13,6 +13,8 @@
 #define IDD_DIALOG_SETPASSWORD          135
 #define IDD_RAN_PASSWORD                137
 #define IDD_DIALOG_SYSNC                139
+#define IDD_DIALOG1                     141
+#define IDD_EXPORTXSHELL                141
 #define IDC_EDIT_NAME                   1006
 #define IDC_EDIT_USERNAME               1007
 #define IDC_EDIT_PASSWORD               1008
@@ -42,7 +44,6 @@
 #define IDC_BUTTON_APPLY                1033
 #define IDC_EDIT_WEBDAVUSER             1034
 #define IDC_EDIT_WEBDAVPASSWORD         1035
-#define IDC_BUTTON2                     1036
 #define IDC_BUTTON_SYSNC                1036
 #define ID_32771                        32771
 #define ID_32772                        32772
@@ -61,7 +62,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        141
+#define _APS_NEXT_RESOURCE_VALUE        143
 #define _APS_NEXT_COMMAND_VALUE         32783
 #define _APS_NEXT_CONTROL_VALUE         1037
 #define _APS_NEXT_SYMED_VALUE           101
