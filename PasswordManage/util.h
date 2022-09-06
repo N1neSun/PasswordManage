@@ -34,6 +34,8 @@ std::string aes_256_cbc_encode(const std::string& password, const std::string& d
 
 std::string aes_256_cbc_decode(const std::string& password, const std::string& strData);
 
+void RC4_Decode(const std::string& strKey, const unsigned char* szData, unsigned char* szDecryptData);
+
 void GetRandString(LPSTR szStr, DWORD len);
 
 BOOL CreateUUID(char* szBuffer);
@@ -57,6 +59,10 @@ void GetRandomUpperChar(std::string& strChar, int nCount);
 void GetRandomSymbol(std::string& strSymbol, int nCount);
 
 std::string GetRandomPassword(const std::string& strPassword, int nCount, int nTypeCount);
+
+std::string GetUsernameAndSid();
+
+std::string getNchar(std::string str, int n);
 
 template<typename T>
 std::vector<T> vector_distinct(std::vector<T> result)

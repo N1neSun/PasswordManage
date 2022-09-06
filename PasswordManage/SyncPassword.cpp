@@ -32,7 +32,7 @@ SyncPassword::~SyncPassword()
 
 }
 
-bool SyncPassword::SqliteToJsonFile(BOOL bCopyFile)
+bool SyncPassword::SqliteToJsonFile(bool bCopyFile)
 {
 	bool bRet = false;
 	do 

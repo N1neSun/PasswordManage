@@ -169,7 +169,7 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 	SyncPassword sync(m_WebDavOptions, m_bAutoSync);
 	do 
 	{
-		if (!sync.SqliteToJsonFile(TRUE))
+		if (!sync.SqliteToJsonFile(true))
 		{
 			AfxMessageBox("本地文件同步出错！");
 			return;
@@ -196,7 +196,7 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 			AfxMessageBox("对比文件同步出错！");
 			return;
 		}
-		if (!sync.SqliteToJsonFile(FALSE))
+		if (!sync.SqliteToJsonFile(false))
 		{
 			AfxMessageBox("本地文件同步出错！");
 			return;

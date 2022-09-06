@@ -39,6 +39,7 @@ protected:  // 控件条嵌入成员
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSyncSettings();
+	afx_msg void OnExportXshell();
 	DECLARE_MESSAGE_MAP()
 
 };

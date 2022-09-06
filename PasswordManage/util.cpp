@@ -5,7 +5,8 @@
 #include<openssl/pem.h>
 #include<openssl/err.h>
 #include<atlstr.h>
-
+#include "openssl/sha.h"
+#include <openssl/rc4.h>
 
 #pragma comment(lib,"libcrypto.lib")
 #pragma comment(lib,"libssl.lib")
@@ -165,6 +166,14 @@ std::string aes_256_cbc_decode(const std::string& password, const std::string& s
 	}
 	return strRet;
 }
+
+void RC4_Decode(const std::string& strKey, const unsigned char* szData, unsigned char* szDecryptData)
+{
+	RC4_KEY key;
+	RC4_set_key(&key, strKey.length(), (unsigned char*)strKey.c_str());
+	RC4(&key, strlen((char*)szData), szData, szDecryptData);
+}
+
 
 void GetRandString(LPSTR szStr, DWORD len)
 {
@@ -422,3 +431,62 @@ std::string GetRandomPassword(const std::string& strPassword, int nCount, int nT
 	return strRandomPassword;
 }
 
+std::string GetUsernameAndSid()
+{
+	char userName[MAX_PATH] = "";
+	char sid[MAX_PATH] = "";
+	DWORD nameSize = sizeof(userName);
+	GetUserName(userName, &nameSize);
+
+
+	char userSID[MAX_PATH] = "";
+	char userDomain[MAX_PATH] = "";
+	DWORD sidSize = sizeof(userSID);
+	DWORD domainSize = sizeof(userDomain);
+
+
+	SID_NAME_USE snu;
+	LookupAccountName(NULL,
+		(LPSTR)userName,
+		(PSID)userSID,
+		&sidSize,
+		(LPSTR)userDomain,
+		&domainSize,
+		&snu);
+
+
+	PSID_IDENTIFIER_AUTHORITY psia = GetSidIdentifierAuthority(userSID);
+	sidSize = sprintf(sid, "S-%lu-", SID_REVISION);
+	sidSize += sprintf(sid + strlen(sid), "%-lu", psia->Value[5]);
+
+
+	int i = 0;
+	int subAuthorities = *GetSidSubAuthorityCount(userSID);
+
+
+	for (i = 0; i < subAuthorities; i++)
+	{
+		sidSize += sprintf(sid + sidSize, "-%lu", *GetSidSubAuthority(userSID, i));
+	}
+	char szBuff[1024];
+	sprintf(szBuff, "%.*s%.*s", sizeof(userName), userName, sizeof(sid), sid);
+	return szBuff;
+}
+
+std::string getNchar(std::string str, int n)
+{
+	std::string nChars;
+
+
+	if (n > str.size())
+	{
+		n = str.size();
+	}
+
+	for (size_t i = 0; i < n; i++)
+	{
+		nChars.push_back(str[i]);
+	}
+
+	return nChars;
+}

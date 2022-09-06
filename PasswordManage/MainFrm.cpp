@@ -6,6 +6,7 @@
 #include "framework.h"
 #include "PasswordManage.h"
 #include "CSetSysncDlg.h"
+#include "CExportXshellDlg.h"
 
 #include "MainFrm.h"
 
@@ -20,6 +21,7 @@ IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWnd)
 BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_WM_CREATE()
 	ON_COMMAND(ID_Menu_SYSNC, OnSyncSettings)
+	ON_COMMAND(ID_EXPORTXSHELL, OnExportXshell)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -105,4 +107,10 @@ void CMainFrame::OnSyncSettings()
 {
 	CSetSysnc syncSetting;
 	syncSetting.DoModal();
+}
+
+void CMainFrame::OnExportXshell()
+{
+	CExportXshell exportxshell;
+	exportxshell.DoModal();
 }
