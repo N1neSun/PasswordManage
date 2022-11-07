@@ -104,6 +104,27 @@ std::string base64_decode(std::string& encoded_string) {
 	return ret;
 }
 
+
+char* base64_decode_block(char* inData)
+{
+	if (NULL == inData)
+	{
+		return NULL;
+	}
+
+	int inl, outl, blocksize;
+
+	inl = strlen(inData);
+	blocksize = inl * 6 / 8;
+
+	char buffer[1000];
+	memset(buffer, 0, blocksize);
+
+	outl = EVP_DecodeBlock((unsigned char*)buffer, (unsigned char*)inData, inl);
+
+	return _strdup(buffer);
+}
+
 std::string aes_256_cbc_encode(const std::string& password, const std::string& data)
 {
 	unsigned char iv[AES_BLOCK_SIZE] = { '0','0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0' };
@@ -171,6 +192,13 @@ void RC4_Decode(const std::string& strKey, const unsigned char* szData, unsigned
 {
 	RC4_KEY key;
 	RC4_set_key(&key, strKey.length(), (unsigned char*)strKey.c_str());
+	RC4(&key, strlen((char*)szData), szData, szDecryptData);
+}
+
+void RC4_Decode(const unsigned char* szKey, const unsigned char* szData, unsigned char* szDecryptData)
+{
+	RC4_KEY key;
+	RC4_set_key(&key, 32, szKey);
 	RC4(&key, strlen((char*)szData), szData, szDecryptData);
 }
 

@@ -30,11 +30,15 @@ std::string base64_encode(char const* bytes_to_encode, int in_len);
 
 std::string base64_decode(std::string& encoded_string);
 
+char* base64_decode_block(char* inData);
+
 std::string aes_256_cbc_encode(const std::string& password, const std::string& data);
 
 std::string aes_256_cbc_decode(const std::string& password, const std::string& strData);
 
 void RC4_Decode(const std::string& strKey, const unsigned char* szData, unsigned char* szDecryptData);
+
+void RC4_Decode(const unsigned char* szKey, const unsigned char* szData, unsigned char* szDecryptData);
 
 void GetRandString(LPSTR szStr, DWORD len);
 

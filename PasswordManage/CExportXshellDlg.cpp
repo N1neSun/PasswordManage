@@ -80,9 +80,9 @@ void CExportXshell::OnBnClickedOk()
 	std::string password = "9nGAHfwD288uYf7slWO7MEQ7TjOAkXGumBxLOJ2EclrcwM4/yEjMAGiu";
 	std::string base64Decode = base64_decode(password);
 	std::string strSha256Key;
-	sha256_buffer_string((unsigned char*)key.c_str(), key.length(), strSha256Key);
-	std::transform(strSha256Key.begin(), strSha256Key.end(), strSha256Key.begin(), tolower);
+	unsigned char szBytesSha256[32] = {0};
+	sha256_buffer_byte((unsigned char*)key.c_str(), key.length(), szBytesSha256, 32);
 	std::string strData = getNchar(base64Decode, base64Decode.length() - 32);
-	std::string strDecryptData = "";
-	RC4_Decode(strSha256Key, (unsigned char*)strData.c_str(), (unsigned char*)strDecryptData.c_str());
+	unsigned char szDecryptData[64] = { 0 };
+	RC4_Decode(szBytesSha256, (unsigned char*)strData.c_str(), szDecryptData);
 }
