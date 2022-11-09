@@ -76,8 +76,12 @@ void CExportXshell::OnBnClickedOk()
 		AfxMessageBox(_T("请先选择导入xhell配置文件的目录!"));
 		return;
 	}
+	//C:\Users\N1neSun\Documents\NetSarang Computer\7\Xshell\Sessions\1
+	TCHAR buf[200] = { 0 };
+	//GetPrivateProfileSection(_T(""), buf, 200, m_strXshellPath);
+	GetPrivateProfileString(_T("CONNECTION"), _T("Host"), _T(""), buf, 200, m_strXshellPath);
 	std::string key = GetUsernameAndSid();
-	std::string password = "9nGAHfwD288uYf7slWO7MEQ7TjOAkXGumBxLOJ2EclrcwM4/yEjMAGiu";
+	std::string password = "";
 	std::string base64Decode = base64_decode(password);
 	std::string strSha256Key;
 	unsigned char szBytesSha256[32] = {0};
