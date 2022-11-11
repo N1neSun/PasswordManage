@@ -459,7 +459,7 @@ std::string GetRandomPassword(const std::string& strPassword, int nCount, int nT
 	return strRandomPassword;
 }
 
-std::string GetUsernameAndSid()
+std::string GetUsernameAndSid(bool bReverse)
 {
 	char userName[MAX_PATH] = "";
 	char sid[MAX_PATH] = "";
@@ -497,7 +497,13 @@ std::string GetUsernameAndSid()
 		sidSize += sprintf(sid + sidSize, "-%lu", *GetSidSubAuthority(userSID, i));
 	}
 	char szBuff[1024];
+	if(bReverse){
+		_strrev(userName);
+	}
 	sprintf(szBuff, "%.*s%.*s", sizeof(userName), userName, sizeof(sid), sid);
+	if (bReverse) {
+		_strrev(szBuff);
+	}
 	return szBuff;
 }
 

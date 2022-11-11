@@ -9,7 +9,7 @@ IMPLEMENT_DYNAMIC(CExportXshell, CDialogEx)
 
 CExportXshell::CExportXshell() : CDialogEx(CExportXshell::IDD)
 {
-
+	
 }
 
 CExportXshell::~CExportXshell()
@@ -22,6 +22,8 @@ void CExportXshell::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 
 	DDX_Text(pDX, IDC_EDIT_EXPORTXSHELL, m_strXshellPath);
+	DDX_Control(pDX, IDC_COMBO_EXPORTXSHELL, m_VersionComboBox);
+	DDX_Text(pDX, IDC_COMBO_EXPORTXSHELL, m_strXshellVersion);
 }
 
 BEGIN_MESSAGE_MAP(CExportXshell, CDialogEx)
@@ -33,7 +35,7 @@ END_MESSAGE_MAP()
 BOOL CExportXshell::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-
+	m_VersionComboBox.SetCurSel(0);
 
 	return TRUE;
 }
@@ -78,13 +80,20 @@ void CExportXshell::OnBnClickedOk()
 	}
 	//C:\Users\N1neSun\Documents\NetSarang Computer\7\Xshell\Sessions\1
 	TCHAR szHost[200] = { 0 };
+	TCHAR szPort[200] = { 0 };
 	TCHAR szPassword[200] = { 0 };
 	TCHAR szUserName[200] = { 0 };
+	bool bReverse = false;
 	//GetPrivateProfileSection(_T(""), buf, 200, m_strXshellPath);
 	GetPrivateProfileString(_T("CONNECTION"), _T("Host"), _T(""), szHost, 200, m_strXshellPath);
+	GetPrivateProfileString(_T("CONNECTION"), _T("Port"), _T(""), szPort, 200, m_strXshellPath);
 	GetPrivateProfileString(_T("CONNECTION:AUTHENTICATION"), _T("Password"), _T(""), szPassword, 200, m_strXshellPath);
 	GetPrivateProfileString(_T("CONNECTION:AUTHENTICATION"), _T("UserName"), _T(""), szUserName, 200, m_strXshellPath);
-	std::string key = GetUsernameAndSid();
+	if (m_strXshellVersion == "XShell7")
+	{
+		bReverse = true;
+	}
+	std::string key = GetUsernameAndSid(bReverse);
 	std::string password = szPassword;
 	std::string base64Decode = base64_decode(password);
 	unsigned char szBytesSha256[32] = {0};

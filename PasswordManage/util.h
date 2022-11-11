@@ -64,7 +64,7 @@ void GetRandomSymbol(std::string& strSymbol, int nCount);
 
 std::string GetRandomPassword(const std::string& strPassword, int nCount, int nTypeCount);
 
-std::string GetUsernameAndSid();
+std::string GetUsernameAndSid(bool bReverse);
 
 std::string getNchar(std::string str, int n);
 

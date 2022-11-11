@@ -30,6 +30,8 @@ protected:
 	virtual BOOL OnInitDialog();
 
 	CString m_strXshellPath;
+	CString m_strXshellVersion;
+	CComboBox m_VersionComboBox;
 
 
 	DECLARE_MESSAGE_MAP()
