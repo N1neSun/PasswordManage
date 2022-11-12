@@ -85,11 +85,11 @@ void CExportXshell::OnBnClickedOk()
 	TCHAR szUserName[200] = { 0 };
 	bool bReverse = false;
 	//GetPrivateProfileSection(_T(""), buf, 200, m_strXshellPath);
-	GetPrivateProfileString(_T("CONNECTION"), _T("Host"), _T(""), szHost, 200, m_strXshellPath);
-	GetPrivateProfileString(_T("CONNECTION"), _T("Port"), _T(""), szPort, 200, m_strXshellPath);
-	GetPrivateProfileString(_T("CONNECTION:AUTHENTICATION"), _T("Password"), _T(""), szPassword, 200, m_strXshellPath);
-	GetPrivateProfileString(_T("CONNECTION:AUTHENTICATION"), _T("UserName"), _T(""), szUserName, 200, m_strXshellPath);
-	if (m_strXshellVersion == "XShell7")
+	GetPrivateProfileString(CONNECTION, HOST, _T(""), szHost, 200, m_strXshellPath);
+	GetPrivateProfileString(CONNECTION, PORT, _T(""), szPort, 200, m_strXshellPath);
+	GetPrivateProfileString(AUTHENTICATION, USERNAME, _T(""), szUserName, 200, m_strXshellPath);
+	GetPrivateProfileString(AUTHENTICATION, PASSWORD, _T(""), szPassword, 200, m_strXshellPath);
+	if (m_strXshellVersion == XSHELL7)
 	{
 		bReverse = true;
 	}

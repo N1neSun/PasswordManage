@@ -24,6 +24,15 @@
 #define AUTOSYSNC "AutoSysnc"
 #define REMOTEFILE "Password/SyncData"
 
+#define CONNECTION "CONNECTION"
+#define AUTHENTICATION "CONNECTION:AUTHENTICATION"
+#define HOST "Host"
+#define PORT "Port"
+#define USERNAME "UserName"
+#define PASSWORD "Password"
+#define XSHELL6 "XShell6"
+#define XSHELL7 "XShell7"
+
 typedef std::map<int, std::uniform_int_distribution<unsigned>> RandomTypeFuc;
 
 std::string base64_encode(char const* bytes_to_encode, int in_len);
