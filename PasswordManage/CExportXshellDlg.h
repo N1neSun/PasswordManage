@@ -2,6 +2,7 @@
 #include "resource.h"
 #include <iostream>
 #include "afxdialogex.h"
+#include "SqliteDatabase.h"
 
 class CExportXshell : public CDialogEx
 {
@@ -10,6 +11,8 @@ class CExportXshell : public CDialogEx
 public:
 	CExportXshell();
 	virtual ~CExportXshell();
+	
+	std::string m_strKey;
 
 
 	enum {
@@ -31,7 +34,10 @@ protected:
 
 	CString m_strXshellPath;
 	CString m_strXshellVersion;
-	CComboBox m_VersionComboBox;
+	CString m_strExportGroup;
+
+	CComboBox m_combVersionComboBox;
+	CComboBox m_combExportGroupComboBox;
 
 
 	DECLARE_MESSAGE_MAP()

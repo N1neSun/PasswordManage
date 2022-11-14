@@ -60,6 +60,8 @@ public:
 
 	bool IsExist(const std::string& strName);
 
+	bool IsExistByName(const std::string& strPasswordName);
+
 	bool RemovePasswordInfo(const PasswordColumnInfo& info);
 
 	bool GetVersionInfo(std::string& strVersion);

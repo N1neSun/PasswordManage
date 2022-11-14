@@ -375,6 +375,43 @@ bool SqliteDatabase::IsExist(const std::string& strPasswordId)
 	return bRet;
 }
 
+bool SqliteDatabase::IsExistByName(const std::string& strPasswordName)
+{
+	bool bRet = true;
+
+	CStringA getControlSQL;
+	getControlSQL.Format("SELECT * FROM %s where Name =\"%s\"", MASTER_TABLE, strPasswordName.c_str());
+
+	SQLite::Statement doGetSQL(*db, getControlSQL.GetBuffer());
+	try
+	{
+		doGetSQL.executeStep();
+		if (!doGetSQL.isDone())
+		{
+			if (doGetSQL.getColumn("PasswordId").getString() == strPasswordName)
+			{
+				bRet = true;
+			}
+			else
+			{
+				bRet = false;
+			}
+		}
+		else
+		{
+			bRet = false;
+		}
+	}
+	catch (const SQLite::Exception&)
+	{
+		assert(false);
+		bRet = false;
+		exit(0);
+	}
+
+	return bRet;
+}
+
 bool SqliteDatabase::RemovePasswordInfo(const PasswordColumnInfo& info)
 {
 	CStringA deleteSQL;

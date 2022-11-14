@@ -7,6 +7,7 @@
 #include<atlstr.h>
 #include "openssl/sha.h"
 #include <openssl/rc4.h>
+#include <io.h>
 
 #pragma comment(lib,"libcrypto.lib")
 #pragma comment(lib,"libssl.lib")
@@ -523,4 +524,20 @@ std::string getNchar(std::string str, int n)
 	}
 
 	return nChars;
+}
+
+void readFileNameInDir(IN std::string strDir, std::vector<std::string>& vFileFullPath)
+{
+	std::string strxshDir = strDir + "\\*.xsh";
+	HANDLE file;
+	WIN32_FIND_DATA fileData;
+	file = FindFirstFile(strxshDir.c_str(), &fileData);
+	if (file != INVALID_HANDLE_VALUE)
+	{
+		vFileFullPath.push_back(fileData.cFileName);
+		while (FindNextFile(file, &fileData))
+		{
+			vFileFullPath.push_back(fileData.cFileName);
+		}
+	}
 }

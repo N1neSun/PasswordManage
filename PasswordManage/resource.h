@@ -46,8 +46,9 @@
 #define IDC_EDIT_WEBDAVUSER             1034
 #define IDC_EDIT_WEBDAVPASSWORD         1035
 #define IDC_BUTTON_SYSNC                1036
-#define IDC_COMBO1                      1038
 #define IDC_COMBO_EXPORTXSHELL          1038
+#define IDC_COMBO1                      1039
+#define IDC_COMBO_EXPORTGROUP           1039
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_MENU_ADD                     32773
@@ -69,7 +70,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        144
 #define _APS_NEXT_COMMAND_VALUE         32785
-#define _APS_NEXT_CONTROL_VALUE         1039
+#define _APS_NEXT_CONTROL_VALUE         1040
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

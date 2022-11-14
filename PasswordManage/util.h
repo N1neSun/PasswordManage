@@ -25,6 +25,7 @@
 #define REMOTEFILE "Password/SyncData"
 
 #define CONNECTION "CONNECTION"
+#define CONNECTION_XFP "Connection"
 #define AUTHENTICATION "CONNECTION:AUTHENTICATION"
 #define HOST "Host"
 #define PORT "Port"
@@ -32,6 +33,9 @@
 #define PASSWORD "Password"
 #define XSHELL6 "XShell6"
 #define XSHELL7 "XShell7"
+
+#define XSH "\\*.xsh"
+#define XFP "\\*.xfp"
 
 typedef std::map<int, std::uniform_int_distribution<unsigned>> RandomTypeFuc;
 
@@ -76,6 +80,8 @@ std::string GetRandomPassword(const std::string& strPassword, int nCount, int nT
 std::string GetUsernameAndSid(bool bReverse);
 
 std::string getNchar(std::string str, int n);
+
+void readFileNameInDir(IN std::string strDir, std::vector<std::string>& vFileFullPath);
 
 template<typename T>
 std::vector<T> vector_distinct(std::vector<T> result)
