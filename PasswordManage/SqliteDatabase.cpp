@@ -160,6 +160,29 @@ bool SqliteDatabase::UpdateControlInfo(PasswordColumnInfo& info)
 	return bRet;
 }
 
+bool SqliteDatabase::UpdateControlInfoForXshell(PasswordColumnInfo& info)
+{
+	bool bRet = true;
+
+	CStringA updateControl;
+	updateControl.Format("UPDATE %s SET Username=\"%s\", Password=\"%s\", Url=\"%s\", Notes=\"%s\", GroupName=\"%s\"  WHERE Name=\"%s\"",
+		MASTER_TABLE, info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str(), info.GroupName.c_str(), info.Name.c_str());
+	SQLite::Statement doUpdateSQL(*db, updateControl.GetBuffer());
+
+	try
+	{
+		doUpdateSQL.exec();
+	}
+	catch (const SQLite::Exception&)
+	{
+		assert(false);
+		bRet = false;
+		exit(0);
+	}
+
+	return bRet;
+}
+
 bool SqliteDatabase::GetPasswordInfo(PasswordColumnInfo& info, const std::string& strPasswordId)
 {
 	bool bRet = true;

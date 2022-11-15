@@ -166,7 +166,7 @@ void CExportXshell::OnBnClickedOk()
 		passwordInfo.GroupName = m_strExportGroup;
 		if (SqliteDatabase::GetDBController().IsExistByName(szHost))
 		{
-			SqliteDatabase::GetDBController().UpdateControlInfo(passwordInfo);
+			SqliteDatabase::GetDBController().UpdateControlInfoForXshell(passwordInfo);
 		}
 		else
 		{

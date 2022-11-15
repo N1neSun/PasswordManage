@@ -50,6 +50,8 @@ public:
 
 	bool UpdateControlInfo(PasswordColumnInfo& info);
 
+	bool UpdateControlInfoForXshell(PasswordColumnInfo& info)
+
 	bool GetPasswordInfo(PasswordColumnInfo& control, const std::string& strPasswordId);
 
 	bool GetGroupInfoList(std::vector<std::string>& vecGroupInfo);
