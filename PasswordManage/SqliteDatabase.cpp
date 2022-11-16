@@ -165,8 +165,8 @@ bool SqliteDatabase::UpdateControlInfoForXshell(PasswordColumnInfo& info)
 	bool bRet = true;
 
 	CStringA updateControl;
-	updateControl.Format("UPDATE %s SET Username=\"%s\", Password=\"%s\", Url=\"%s\", Notes=\"%s\", GroupName=\"%s\"  WHERE Name=\"%s\"",
-		MASTER_TABLE, info.Username.c_str(), info.Password.c_str(), info.Url.c_str(), info.Notes.c_str(), info.GroupName.c_str(), info.Name.c_str());
+	updateControl.Format("UPDATE %s SET Name=\"%s\", Username=\"%s\", Password=\"%s\", Notes=\"%s\", GroupName=\"%s\"  WHERE Url=\"%s\"",
+		MASTER_TABLE, info.Name.c_str(), info.Username.c_str(), info.Password.c_str(), info.Notes.c_str(), info.GroupName.c_str(), info.Url.c_str());
 	SQLite::Statement doUpdateSQL(*db, updateControl.GetBuffer());
 
 	try
@@ -398,12 +398,12 @@ bool SqliteDatabase::IsExist(const std::string& strPasswordId)
 	return bRet;
 }
 
-bool SqliteDatabase::IsExistByName(const std::string& strPasswordName)
+bool SqliteDatabase::IsExistByUrl(const std::string& strUrl)
 {
 	bool bRet = true;
 
 	CStringA getControlSQL;
-	getControlSQL.Format("SELECT * FROM %s where Name =\"%s\"", MASTER_TABLE, strPasswordName.c_str());
+	getControlSQL.Format("SELECT * FROM %s where Url =\"%s\"", MASTER_TABLE, strUrl.c_str());
 
 	SQLite::Statement doGetSQL(*db, getControlSQL.GetBuffer());
 	try
@@ -411,7 +411,7 @@ bool SqliteDatabase::IsExistByName(const std::string& strPasswordName)
 		doGetSQL.executeStep();
 		if (!doGetSQL.isDone())
 		{
-			if (doGetSQL.getColumn("PasswordId").getString() == strPasswordName)
+			if (doGetSQL.getColumn("Url").getString() == strUrl)
 			{
 				bRet = true;
 			}

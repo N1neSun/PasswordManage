@@ -129,6 +129,7 @@ void CExportXshell::OnBnClickedOk()
 		pView = DYNAMIC_DOWNCAST(CPasswordView, g_pTabView->GetTabControl().GetTabWnd(nTabs));
 		pView->OnInitialUpdate();
 	}
+	int nInsert=0, nUpdate=0;
 	for each(auto strFilename in vFileFullPath){
 		std::string strTmpSlash = "\\";
 		std::string strTempPath = m_strXshellPath.GetBuffer(0) + strTmpSlash + strFilename;
@@ -164,16 +165,20 @@ void CExportXshell::OnBnClickedOk()
 		sprintf(szUrl, "%s:%s", szHost, szPort);
 		passwordInfo.Url = szUrl;
 		passwordInfo.GroupName = m_strExportGroup;
-		if (SqliteDatabase::GetDBController().IsExistByName(szHost))
+		if (SqliteDatabase::GetDBController().IsExistByUrl(szUrl))
 		{
 			SqliteDatabase::GetDBController().UpdateControlInfoForXshell(passwordInfo);
+			nUpdate++;
 		}
 		else
 		{
 			SqliteDatabase::GetDBController().InsertPasswordInfo(passwordInfo);
+			nInsert++;
 		}
 	}
 	SqliteDatabase::GetDBController().GetGroupListInfo(vecPasswordInfolList, m_strExportGroup.GetBuffer(0));
 	pView->ShowList(vecPasswordInfolList);
-
+	TCHAR szResult[200] = { 0 };
+	sprintf(szResult, "导入xhsell总数%d,插入%d,更新%d", vFileFullPath.size(), nInsert,nUpdate);
+	AfxMessageBox(szResult);
 }

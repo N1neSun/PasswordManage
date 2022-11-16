@@ -50,7 +50,7 @@ public:
 
 	bool UpdateControlInfo(PasswordColumnInfo& info);
 
-	bool UpdateControlInfoForXshell(PasswordColumnInfo& info)
+	bool UpdateControlInfoForXshell(PasswordColumnInfo& info);
 
 	bool GetPasswordInfo(PasswordColumnInfo& control, const std::string& strPasswordId);
 
@@ -62,7 +62,7 @@ public:
 
 	bool IsExist(const std::string& strName);
 
-	bool IsExistByName(const std::string& strPasswordName);
+	bool IsExistByUrl(const std::string& strUrl);
 
 	bool RemovePasswordInfo(const PasswordColumnInfo& info);
 
