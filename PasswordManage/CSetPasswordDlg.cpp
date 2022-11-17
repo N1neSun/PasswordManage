@@ -29,6 +29,7 @@ void CSetPassword::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CSetPassword, CDialogEx)
 	ON_COMMAND(IDOK, OnOK)
+	ON_BN_CLICKED(IDCANCEL, &CSetPassword::OnBnClickedCancel)
 END_MESSAGE_MAP()
 
 BOOL CSetPassword::OnInitDialog()
@@ -79,4 +80,20 @@ void CSetPassword::OnOK()
 		AfxMessageBox(_T("key创建失败！"));
 		return;
 	}
+}
+
+void CSetPassword::OnBnClickedCancel()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	TCHAR szKeyFile[MAX_PATH] = { 0 };
+	GetModuleFileName(NULL, szKeyFile, MAX_PATH);
+	PathRemoveFileSpec(szKeyFile);
+	PathAppend(szKeyFile, KEY_FILE);
+
+	if (PathFileExists(szKeyFile))
+	{
+		DeleteFile(szKeyFile);
+	}
+	CDialogEx::OnCancel();
+	exit(0);
 }
