@@ -55,7 +55,7 @@ void CSetPassword::OnOK()
 {
 	UpdateData();
 
-	if (!m_strPassword || !m_strConfirmPassword)
+	if (m_strPassword.IsEmpty() || m_strConfirmPassword.IsEmpty())
 	{
 		return;
 	}
