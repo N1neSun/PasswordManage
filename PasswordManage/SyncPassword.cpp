@@ -50,7 +50,7 @@ bool SyncPassword::SqliteToJsonFile(bool bCopyFile)
 		SqliteDatabase::GetDBController().GetPasswordInfoList(vecPasswordInfo);
 		if (vecPasswordInfo.empty())
 		{
-			return bRet;
+			return true;
 		}
 		//std::vector<std::string> vecTmpJsonData;
 		std::string strSyncDataMd5 = "";
@@ -80,8 +80,8 @@ bool SyncPassword::SqliteToJsonFile(bool bCopyFile)
 			return bRet;
 		if(bCopyFile)
 			CopyFile(szKeyFile, szSyncLocalFilebak, FALSE);
-		//SqliteDatabase::GetDBController().SetVersionInfo(strSyncDataMd5);
-		//SqliteDatabase::GetDBController().SetSyncTimeInfo(uTmpTime);
+		SqliteDatabase::GetDBController().SetVersionInfo(strSyncDataMd5);
+		SqliteDatabase::GetDBController().SetSyncTimeInfo(uTmpTime);
 	} while (FALSE);
 	return true;
 }
@@ -232,24 +232,29 @@ bool SyncPassword::SyncJsonFile()
 		CJson jsFirmware;
 		std::string strSyncLocalData;
 		if (!ReadFileToString(szSyncLocalFile, strSyncLocalData))
-			return bRet;
-		jsFirmware.Parse(strSyncLocalData.c_str());
-		if (!jsFirmware.IsCorrectValue())
-			return bRet;
-		std::string strJsonVersion = jsFirmware.GetStringValue(SYNCVERSION);
-		unsigned int uJsonTime = jsFirmware.GetUintValue(SYNCTIME);
-		if (m_strSyncJsonVerison == strJsonVersion)
-		{
-			return true;
-		}
-		if (uJsonTime < m_uSyncJsonTime)
 		{
 			CompareSyncFile(m_vecLocalJsonData, m_vecRemoteJsonData);
 		}
-		else
-		{
-			CompareSyncFile(m_vecRemoteJsonData, m_vecLocalJsonData);
+		else {
+			jsFirmware.Parse(strSyncLocalData.c_str());
+			if (!jsFirmware.IsCorrectValue())
+				return bRet;
+			std::string strJsonVersion = jsFirmware.GetStringValue(SYNCVERSION);
+			unsigned int uJsonTime = jsFirmware.GetUintValue(SYNCTIME);
+			if (m_strSyncJsonVerison == strJsonVersion)
+			{
+				return true;
+			}
+			if (uJsonTime < m_uSyncJsonTime)
+			{
+				CompareSyncFile(m_vecLocalJsonData, m_vecRemoteJsonData);
+			}
+			else
+			{
+				CompareSyncFile(m_vecRemoteJsonData, m_vecLocalJsonData);
+			}
 		}
+
 		for each (auto jsinfo in m_vecSyncJsonData)
 		{
 			CJson jsTmpData;
@@ -272,8 +277,8 @@ bool SyncPassword::SyncJsonFile()
 				SqliteDatabase::GetDBController().InsertPasswordInfo(info);
 			}
 		}
-		SqliteDatabase::GetDBController().SetVersionInfo(strJsonVersion);
-		SqliteDatabase::GetDBController().SetSyncTimeInfo(uJsonTime);
+		//SqliteDatabase::GetDBController().SetVersionInfo(strJsonVersion);
+		//SqliteDatabase::GetDBController().SetSyncTimeInfo(uJsonTime);
 	} while (FALSE);
 
 	return true;

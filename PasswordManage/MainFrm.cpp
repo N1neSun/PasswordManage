@@ -7,6 +7,7 @@
 #include "PasswordManage.h"
 #include "CSetSysncDlg.h"
 #include "CExportXshellDlg.h"
+#include "CSetRandomPasswordDlg.h"
 
 #include "MainFrm.h"
 
@@ -20,6 +21,7 @@ IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWnd)
 
 BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_WM_CREATE()
+	ON_COMMAND(ID_RANDPASSWORD, OnRandPassword)
 	ON_COMMAND(ID_Menu_SYSNC, OnSyncSettings)
 	ON_COMMAND(ID_EXPORTXSHELL, OnExportXshell)
 END_MESSAGE_MAP()
@@ -102,6 +104,12 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 
 // CMainFrame 消息处理程序
+
+void CMainFrame::OnRandPassword()
+{
+	CSetRandomPassword randPassword;
+	randPassword.DoModal();
+}
 
 void CMainFrame::OnSyncSettings()
 {
