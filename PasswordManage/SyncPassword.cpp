@@ -64,6 +64,8 @@ bool SyncPassword::SqliteToJsonFile(bool bCopyFile)
 			jsTmpData.AddValue("Password", info->Password);
 			jsTmpData.AddValue("Url", info->Url);
 			jsTmpData.AddValue("GroupName", info->GroupName);
+			jsTmpData.AddValue("Notes", info->Notes);
+			jsTmpData.AddValue("Isdelete", info->Isdelete);
 			m_vecLocalJsonData.push_back(jsTmpData.FastWrite());
 			//jsFirmware.AddArrayValue("data", jsTmpData.FastWrite());
 		}
@@ -268,6 +270,8 @@ bool SyncPassword::SyncJsonFile()
 			info.Password = jsTmpData.GetStringValue("Password");
 			info.Url = jsTmpData.GetStringValue("Url");
 			info.GroupName = jsTmpData.GetStringValue("GroupName");
+			info.Notes = jsTmpData.GetStringValue("Notes");
+			info.Isdelete = jsTmpData.GetIntValue("Isdelete");
 			if (SqliteDatabase::GetDBController().IsExist(info.PasswordId))
 			{
 				SqliteDatabase::GetDBController().UpdateControlInfo(info);
@@ -277,8 +281,16 @@ bool SyncPassword::SyncJsonFile()
 				SqliteDatabase::GetDBController().InsertPasswordInfo(info);
 			}
 		}
-		//SqliteDatabase::GetDBController().SetVersionInfo(strJsonVersion);
-		//SqliteDatabase::GetDBController().SetSyncTimeInfo(uJsonTime);
+		CJson jsTmpFirmware;
+		std::string strSyncDataMd5 = "";
+		jsTmpFirmware.AddArrayValue("data", m_vecSyncJsonData);
+		md5_buffer_string((const unsigned char*)jsTmpFirmware.FastWrite().c_str(), jsTmpFirmware.FastWrite().size(), strSyncDataMd5);
+		if (strSyncDataMd5.empty())
+			return bRet;
+		time_t timeSync = time(0);
+		unsigned int uTmpTime = (unsigned int)timeSync;
+		SqliteDatabase::GetDBController().SetVersionInfo(strSyncDataMd5);
+		SqliteDatabase::GetDBController().SetSyncTimeInfo(uTmpTime);
 	} while (FALSE);
 
 	return true;
