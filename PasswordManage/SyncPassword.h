@@ -6,8 +6,9 @@
 class SyncPassword {
 public:
 	SyncPassword();
-	SyncPassword(std::map<std::string, std::string> WebDavOptions, int bAutoSync);
+	SyncPassword(std::map<std::string, std::string> WebDavOptions, int bAutoSync, std::string strKey);
 	~SyncPassword();
+	std::string m_strKey;
 
 	std::map<std::string, std::string> m_WebDavOptions;
 	int m_bAutoSync;

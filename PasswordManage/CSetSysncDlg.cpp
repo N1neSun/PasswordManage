@@ -185,7 +185,7 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 			std::unique_ptr<WebDAV::Client> client{ new WebDAV::Client{ m_WebDavOptions } };
 			if (!client->upload(REMOTEFILE, szSyncLocalFile))
 			{
-				AfxMessageBox("向远端文件同步出错！");
+				AfxMessageBox("同步远端文件出错！");
 				return;
 			}
 			AfxMessageBox("同步成功！");

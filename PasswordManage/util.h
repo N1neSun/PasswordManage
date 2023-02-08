@@ -16,6 +16,7 @@
 #define SYNCDATAFILE "SyncData"
 #define SYNCDATAFILEBAK "SyncData.bak"
 #define SYNCTMPDATAFILE "SyncData.tmp"
+#define SYNCKEY "key"
 #define SYNCVERSION "version"
 #define SYNCTIME "time"
 #define WEBDAVURL "WebDavUrl"

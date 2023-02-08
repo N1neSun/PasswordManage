@@ -17,7 +17,7 @@ SyncPassword::SyncPassword()
 	m_vecSyncJsonData.clear();
 }
 
-SyncPassword::SyncPassword(std::map<std::string, std::string> WebDavOptions, int bAutoSync)
+SyncPassword::SyncPassword(std::map<std::string, std::string> WebDavOptions, int bAutoSync, std::string strKey)
 {
 	m_WebDavOptions = WebDavOptions;
 	m_bAutoSync = bAutoSync;
@@ -25,6 +25,7 @@ SyncPassword::SyncPassword(std::map<std::string, std::string> WebDavOptions, int
 	m_vecLocalJsonData.clear();
 	m_vecRemoteJsonData.clear();
 	m_vecSyncJsonData.clear();
+	m_strKey = strKey;
 }
 
 SyncPassword::~SyncPassword()
@@ -77,6 +78,9 @@ bool SyncPassword::SqliteToJsonFile(bool bCopyFile)
 		time_t timeSync = time(0);
 		unsigned int uTmpTime = (unsigned int)timeSync;
 		jsFirmware.AddValue(SYNCTIME, uTmpTime);
+		if (!m_strKey.empty()) {
+			jsFirmware.AddValue(SYNCKEY, m_strKey);
+		}
 
 		if (!WriteStringToFile(szKeyFile, jsFirmware.FastWrite()))
 			return bRet;
