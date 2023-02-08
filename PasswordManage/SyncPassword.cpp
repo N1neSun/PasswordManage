@@ -79,7 +79,13 @@ bool SyncPassword::SqliteToJsonFile(bool bCopyFile)
 		unsigned int uTmpTime = (unsigned int)timeSync;
 		jsFirmware.AddValue(SYNCTIME, uTmpTime);
 		if (!m_strKey.empty()) {
-			jsFirmware.AddValue(SYNCKEY, m_strKey);
+			TCHAR szFirmware[MAX_PATH] = { 0 };
+			GetModuleFileName(NULL, szFirmware, MAX_PATH);
+			PathRemoveFileSpec(szFirmware);
+			PathAppend(szFirmware, KEY_FILE);
+			std::string strData = "";
+			ReadFileToString(szFirmware, strData);
+			jsFirmware.AddValue(SYNCKEY, base64_encode(strData.c_str(), strData.length()));
 		}
 
 		if (!WriteStringToFile(szKeyFile, jsFirmware.FastWrite()))

@@ -166,7 +166,7 @@ void CSetSysnc::OnBnClickedButtonSysnc()
 	{
 		m_bAutoSync = FALSE;
 	}
-	SyncPassword sync(m_WebDavOptions, m_bAutoSync);
+	SyncPassword sync(m_WebDavOptions, m_bAutoSync, m_strAppKey);
 	do 
 	{
 		if (!sync.SqliteToJsonFile(true))
