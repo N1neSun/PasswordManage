@@ -498,6 +498,25 @@ bool SqliteDatabase::SetVersionInfo(const std::string& strVersion)
 	return true;
 }
 
+bool SqliteDatabase::InsertVersionInfo(const std::string& strVersion, int nSynctime)
+{
+	CStringA setControlSQL;
+	setControlSQL.Format("INSERT INTO %s(version, synctime)VALUES(\"%s\", %d)", VERSION_TABLE, strVersion, nSynctime);
+
+	SQLite::Statement doSetSQL(*db, setControlSQL.GetBuffer());
+	try
+	{
+		doSetSQL.exec();
+	}
+	catch (const SQLite::Exception&)
+	{
+		assert(false);
+		exit(0);
+	}
+
+	return true;
+}
+
 
 bool SqliteDatabase::GetSyncTimeInfo(unsigned int& uSyncTime)
 {

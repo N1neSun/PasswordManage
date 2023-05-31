@@ -69,6 +69,8 @@ public:
 	bool GetVersionInfo(std::string& strVersion);
 
 	bool SetVersionInfo(const std::string& strVersion);
+	
+	bool InsertVersionInfo(const std::string& strVersion, int nSynctime);
 
 	bool GetSyncTimeInfo(unsigned int& uSyncTime);
 
