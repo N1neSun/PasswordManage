@@ -563,8 +563,6 @@ bool SqliteDatabase::SetSyncTimeInfo(const unsigned int& uSyncTime)
 	return true;
 }
 
-bool 
-
 bool SqliteDatabase::InitSyncInfo()
 {
 	CStringA setControlSQL;
