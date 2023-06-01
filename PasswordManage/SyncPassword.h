@@ -14,6 +14,7 @@ public:
 	int m_bAutoSync;
 	std::string m_strSyncJsonVerison;
 	unsigned int m_uSyncJsonTime;
+	std::string m_strSyncRemoteKey;
 	std::vector<std::string> m_vecLocalJsonData;
 	std::vector<std::string> m_vecLocalJsonIndex;
 	std::vector<std::string> m_vecRemoteJsonData;
