@@ -182,7 +182,7 @@ int SyncPassword::DownloadRemoteJsonData()
 			m_strSyncJsonVerison = jsFirmware.GetStringValue(SYNCVERSION);
 			m_uSyncJsonTime = jsFirmware.GetUintValue(SYNCTIME);
 			jsFirmware.GetArrayValue("data", m_vecRemoteJsonData);
-			m_strSyncRemoteKey = jsFirmware.GetStringValue(SYNCKEY);
+			m_strSyncRemoteKey = base64_decode(jsFirmware.GetStringValue(SYNCKEY));
 			for each (auto jsinfo in m_vecRemoteJsonData)
 			{
 				CJson jsTmpData;
