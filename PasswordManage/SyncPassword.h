@@ -9,6 +9,8 @@ public:
 	SyncPassword(std::map<std::string, std::string> WebDavOptions, int bAutoSync, std::string strKey);
 	~SyncPassword();
 	std::string m_strKey;
+	// Synced files require encryption to protect information
+	std::string m_strSyncKey;
 
 	std::map<std::string, std::string> m_WebDavOptions;
 	int m_bAutoSync;

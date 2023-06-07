@@ -20,6 +20,7 @@ SyncPassword::SyncPassword()
 SyncPassword::SyncPassword(std::map<std::string, std::string> WebDavOptions, int bAutoSync, std::string strKey)
 {
 	m_WebDavOptions = WebDavOptions;
+	m_strSyncKey = WebDavOptions["webdav_password"];
 	m_bAutoSync = bAutoSync;
 	m_uSyncJsonTime = 0;
 	m_vecLocalJsonData.clear();
@@ -218,6 +219,7 @@ bool SyncPassword::ReadSysncConfig()
 		jsFirmware.Parse(strSyncConfigData.c_str());
 		if (!jsFirmware.IsCorrectValue())
 			return bRet;
+		m_strSyncKey = jsFirmware.GetStringValue(WEBDAVPASSWORD);
 		m_WebDavOptions =
 		{
 		  {"webdav_hostname", jsFirmware.GetStringValue(WEBDAVURL)},
