@@ -63,7 +63,7 @@ bool SyncPassword::SqliteToJsonFile(bool bCopyFile)
 			m_vecLocalJsonIndex.push_back(info->PasswordId);
 			jsTmpData.AddValue("Name", info->Name); 
 			jsTmpData.AddValue("Username", info->Username);
-			jsTmpData.AddValue("Password", info->Password);
+			jsTmpData.AddValue("Password", aes_256_cbc_decode(m_strKey, base64_decode(info->Password)));
 			jsTmpData.AddValue("Url", info->Url);
 			jsTmpData.AddValue("GroupName", info->GroupName);
 			jsTmpData.AddValue("Notes", info->Notes);
