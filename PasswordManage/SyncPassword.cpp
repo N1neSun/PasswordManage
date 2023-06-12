@@ -79,15 +79,6 @@ bool SyncPassword::SqliteToJsonFile(bool bCopyFile)
 		time_t timeSync = time(0);
 		unsigned int uTmpTime = (unsigned int)timeSync;
 		jsFirmware.AddValue(SYNCTIME, uTmpTime);
-		if (!m_strKey.empty()) {
-			TCHAR szFirmware[MAX_PATH] = { 0 };
-			GetModuleFileName(NULL, szFirmware, MAX_PATH);
-			PathRemoveFileSpec(szFirmware);
-			PathAppend(szFirmware, KEY_FILE);
-			std::string strData = "";
-			ReadFileToString(szFirmware, strData);
-			jsFirmware.AddValue(SYNCKEY, base64_encode(strData.c_str(), strData.length()));
-		}
 
 		if (!WriteStringToFile(szKeyFile, jsFirmware.FastWrite()))
 			return bRet;
@@ -183,7 +174,6 @@ int SyncPassword::DownloadRemoteJsonData()
 			m_strSyncJsonVerison = jsFirmware.GetStringValue(SYNCVERSION);
 			m_uSyncJsonTime = jsFirmware.GetUintValue(SYNCTIME);
 			jsFirmware.GetArrayValue("data", m_vecRemoteJsonData);
-			m_strSyncRemoteKey = base64_decode(jsFirmware.GetStringValue(SYNCKEY));
 			for each (auto jsinfo in m_vecRemoteJsonData)
 			{
 				CJson jsTmpData;
