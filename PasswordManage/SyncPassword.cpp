@@ -132,7 +132,8 @@ bool SyncPassword::JsonFileToSqlite()
 			info.PasswordId = jsTmpData.GetStringValue("PasswordId");
 			info.Name = jsTmpData.GetStringValue("Name");
 			info.Username = jsTmpData.GetStringValue("Username");
-			info.Password = jsTmpData.GetStringValue("Password");
+			std::string tmppassword = jsTmpData.GetStringValue("Password");
+			info.Password = aes_256_cbc_encode(m_strKey, base64_encode(tmppassword.c_str(), tmppassword.length()));
 			info.Url = jsTmpData.GetStringValue("Url");
 			info.GroupName = jsTmpData.GetStringValue("GroupName");
 			if (SqliteDatabase::GetDBController().IsExist(info.PasswordId))
