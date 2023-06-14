@@ -80,7 +80,7 @@ bool SyncPassword::SqliteToJsonFile(bool bCopyFile)
 		unsigned int uTmpTime = (unsigned int)timeSync;
 		jsFirmware.AddValue(SYNCTIME, uTmpTime);
 
-		if (!WriteStringToFile(szKeyFile, jsFirmware.FastWrite()))
+		if (!WriteStringToFile(szKeyFile, aes_256_cbc_decode(m_strSyncRemoteKey,jsFirmware.FastWrite())))
 			return bRet;
 		if(bCopyFile)
 			CopyFile(szKeyFile, szSyncLocalFilebak, FALSE);
