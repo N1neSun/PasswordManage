@@ -169,7 +169,7 @@ int SyncPassword::DownloadRemoteJsonData()
 		unsigned long long buffer_size;
 		if (client->download_to(REMOTEFILE, szTmpDownloadData, buffer_size))
 		{
-			jsFirmware.Parse(szTmpDownloadData);
+			jsFirmware.Parse(aes_256_cbc_decode(m_strSyncRemoteKey, szTmpDownloadData).c_str());
 			if (!jsFirmware.IsCorrectValue())
 				return bRet;
 			m_strSyncJsonVerison = jsFirmware.GetStringValue(SYNCVERSION);
