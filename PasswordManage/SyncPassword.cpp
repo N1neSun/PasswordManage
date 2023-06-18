@@ -271,7 +271,8 @@ bool SyncPassword::SyncJsonFile()
 			info.PasswordId = jsTmpData.GetStringValue("PasswordId");
 			info.Name = jsTmpData.GetStringValue("Name");
 			info.Username = jsTmpData.GetStringValue("Username");
-			info.Password = aes_256_cbc_encode(m_strKey, jsTmpData.GetStringValue("Password"));
+			std:string strTmp = aes_256_cbc_encode(m_strKey, jsTmpData.GetStringValue("Password"));
+			info.Password = base64_encode(strTmp.c_str(), strTmp.length());
 			info.Url = jsTmpData.GetStringValue("Url");
 			info.GroupName = jsTmpData.GetStringValue("GroupName");
 			info.Notes = jsTmpData.GetStringValue("Notes");
