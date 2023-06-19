@@ -169,7 +169,7 @@ int SyncPassword::DownloadRemoteJsonData()
 		unsigned long long buffer_size;
 		if (client->download_to(REMOTEFILE, szTmpDownloadData, buffer_size))
 		{
-			jsFirmware.Parse(aes_256_cbc_decode(m_strSyncRemoteKey, szTmpDownloadData).c_str());
+			jsFirmware.Parse(szTmpDownloadData);
 			if (!jsFirmware.IsCorrectValue())
 				return bRet;
 			m_strSyncJsonVerison = jsFirmware.GetStringValue(SYNCVERSION);
@@ -242,7 +242,8 @@ bool SyncPassword::SyncJsonFile()
 			CompareSyncFile(m_vecLocalJsonData, m_vecRemoteJsonData);
 		}
 		else {
-			jsFirmware.Parse(strSyncLocalData.c_str());
+			std::string strTmp = aes_256_cbc_decode(m_strSyncRemoteKey, strSyncLocalData).c_str();
+			jsFirmware.Parse(strTmp.c_str());
 			if (!jsFirmware.IsCorrectValue())
 				return bRet;
 			std::string strJsonVersion = jsFirmware.GetStringValue(SYNCVERSION);
