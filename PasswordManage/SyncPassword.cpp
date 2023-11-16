@@ -27,6 +27,7 @@ SyncPassword::SyncPassword(std::map<std::string, std::string> WebDavOptions, int
 	m_vecRemoteJsonData.clear();
 	m_vecSyncJsonData.clear();
 	m_strKey = strKey;
+	m_strSyncRemoteKey = m_strSyncKey;
 }
 
 SyncPassword::~SyncPassword()
@@ -104,10 +105,11 @@ bool SyncPassword::JsonFileToSqlite()
 		PathRemoveFileSpec(szSysncFile);
 		PathAppend(szSysncFile, SYNCDATAFILE);
 		CJson jsFirmware;
-		std::string strJsonData;
+		std::string strEncodeJsonData;
 		std::vector<std::string> vecTmpJsonData;
-		if (!ReadFileToString(szSysncFile, strJsonData))
+		if (!ReadFileToString(szSysncFile, strEncodeJsonData))
 			return bRet;
+		std::string strJsonData = aes_256_cbc_decode(m_strSyncRemoteKey, strEncodeJsonData);
 		jsFirmware.Parse(strJsonData.c_str());
 		if (!jsFirmware.IsCorrectValue())
 			return bRet;
@@ -165,11 +167,12 @@ int SyncPassword::DownloadRemoteJsonData()
 		std::unique_ptr<WebDAV::Client> client{ new WebDAV::Client{ m_WebDavOptions } };
 		
 		CJson jsFirmware;
-		char* szTmpDownloadData;
+		char* szTmpDownloadEncodeData;
 		unsigned long long buffer_size;
-		if (client->download_to(REMOTEFILE, szTmpDownloadData, buffer_size))
+		if (client->download_to(REMOTEFILE, szTmpDownloadEncodeData, buffer_size))
 		{
-			jsFirmware.Parse(szTmpDownloadData);
+			std::string strDownloadData = aes_256_cbc_decode(m_strSyncRemoteKey, szTmpDownloadEncodeData);
+			jsFirmware.Parse(strDownloadData.c_str());
 			if (!jsFirmware.IsCorrectValue())
 				return bRet;
 			m_strSyncJsonVerison = jsFirmware.GetStringValue(SYNCVERSION);
@@ -218,6 +221,7 @@ bool SyncPassword::ReadSysncConfig()
 		  {"webdav_password", jsFirmware.GetStringValue(WEBDAVPASSWORD)}
 		};
 		m_bAutoSync = jsFirmware.GetIntValue(AUTOSYSNC);
+		m_strSyncRemoteKey = m_strSyncKey;
 	} while (FALSE);
 	return true;
 }
